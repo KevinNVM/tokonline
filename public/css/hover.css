@@ -1,0 +1,17 @@
+.shadow-hover { transition: 150ms; }
+.shadow-hover:hover { box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 50px; }
+
+.outline-salmon { transition: all 75ms; }
+.outline-salmon:hover { outline: 2.5px solid salmon; }
+
+.link { text-decoration: none; transition: all 50ms; }
+.link:hover { text-decoration: underline; }
+
+.bg-hover { transition: all 150ms; }
+.bg-hover:hover { background-color: rgba(0, 0, 0, 0.096); }
+
+.bg-hover-lg { transition: all 150ms; }
+.bg-hover-lg:hover { background-color: rgba(0, 0, 0, 0.219); }
+
+.bg-hover-sm { transition: all 150ms; }
+.bg-hover-sm:hover { background-color: rgba(0, 0, 0, 0.030); }
