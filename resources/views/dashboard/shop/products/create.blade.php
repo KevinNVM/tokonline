@@ -75,6 +75,9 @@
                                             {{ $message }}
                                         </div>
                                     @enderror
+                                    <small class="text-muted">
+                                        Nama Produk Tidak Akan Bisa Di Edit Kembali.
+                                    </small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="desc">Deskripsi Produk</label>
