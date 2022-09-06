@@ -48,14 +48,12 @@ class AuthController extends Controller
 
         if (Auth::attempt($request->only($login_type, 'password'), $request->only('remember'))) {
             $request->session()->regenerate();
-
+            // Update user status > Online
             User::setStatus(auth()->user()->id, 1);
-
-
             // Initiate Cart For User
             $cart = User::setCart(auth()->user()->id);
 
-            redirect()->intended('/');
+            redirect()->intended('/cart');
         }
 
         return back()->withErrors([
@@ -69,14 +67,23 @@ class AuthController extends Controller
             'name' => 'required|max:255',
             'username' => 'required|alpha_dash|max:100|unique:users',
             'email' => 'required|email:rfc|unique:users',
-            'password' => array_merge(explode('|', 'required|min:8|max:255'), [Password::min(8)->mixedCase()->letters()->numbers()->uncompromised()]),
+            'password' => ['required', 'min:8', Password::min(8)->mixedCase()->letters()->numbers()->uncompromised()],
             'confirm_password' => 'required|same:password'
         ]);
 
         $validatedData['password'] = bcrypt($validatedData['password']);
-        $user->create($validatedData);
 
-        return redirect()->route('login')->with('msg', ['status' => 'success', 'body' => 'Register Successful Please Login With Your New Credentials.']);
+        $user = $user->create($validatedData);
+
+        event(new \Illuminate\Auth\Events\Registered($user));
+        Auth::login(User::find($user->id), true);
+
+        // Update user status > Online
+        User::setStatus(auth()->user()->id, 1);
+        // Initiate Cart For User
+        $cart = User::setCart(auth()->user()->id);
+
+        return redirect()->to('/home')->with('msg', ['status' => 'success', 'title' => 'Register Successfull!', 'body' => "Welcome Aboard, " . auth()->user()->name ?? 'user']);
     }
 
     public function logout(Request $request)

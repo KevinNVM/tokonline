@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
@@ -12,18 +13,59 @@ use App\Http\Controllers\DashboardShopController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\DashboardMakeShopController;
 use App\Http\Controllers\DashboardProductsController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Auth;
 
-# Redirect
+#TEST ROUTES
+Route::prefix('test')->middleware('throttle:global')->group(function () {
+
+    Route::get('/email-notice', fn () => view('auth.verify_email', ['title' => 'Verify Email']));
+});
+
+## Redirect ##
 Route::redirect('/dashboard/shop', '/shop');
 
-Route::middleware(['throttle:global'])->group(function () {
+## Global Middleware Routes ##
+Route::middleware(['throttle:global', 'verified'])->group(function () {
 
-    # Home
-    Route::controller(HomeController::class)->group(function () {
+
+    ## Home ##
+    Route::controller(HomeController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/{home}', 'index')->where('home', 'home|beranda|')->name('home');
         Route::get('/products', 'searchProducts');
         Route::get('/shops', 'searchShops');
     });
+
+    ## Auth ##
+    Route::controller(AuthController::class)->withoutMiddleware('verified')->group(function () {
+        Route::get('/login', 'login')->name('login')->middleware('guest');
+        Route::get('/register', 'register')->name('register')->middleware('guest');
+        Route::post('/login', 'attemptLogin')->middleware(['guest', 'throttle:login']);
+        Route::post('/register', 'storeRegister')->middleware(['guest', 'throttle:register']);
+        Route::get('/logout', 'logout')->middleware('auth');
+        Route::get('/forgot', 'forgot')->name('auth.forgot');
+    });
+
+    ## Auth > Email Verification ##
+    Route::prefix('email')->withoutMiddleware('verified')->group(function () {
+        Route::get('/verify', function () {
+            return view('auth.verify_email', ['title' => 'Verify Email']);
+        })->middleware('auth')->name('verification.notice');
+
+        Route::get('/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+            $request->fulfill();
+
+            return redirect('/home');
+        })->middleware(['auth', 'signed'])->name('verification.verify');
+
+        Route::post('/verification-notification', function (Request $request) {
+            $request->user()->sendEmailVerificationNotification();
+
+            return back()->with('alert', 'Verification link sent!');
+        })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+    });
+
+
 
     # Utilities
     Route::controller(UtilitiesController::class)->group(function () {
@@ -35,19 +77,9 @@ Route::middleware(['throttle:global'])->group(function () {
     });
 
     # Product Category
-    Route::controller(ProductCategoryController::class)->group(function () {
+    Route::controller(ProductCategoryController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/category', 'index')->name('category.index');
         Route::get('/category/{category}/{sub_category}', 'show');
-    });
-
-    # Auth
-    Route::controller(AuthController::class)->group(function () {
-        Route::get('/login', 'login')->name('login')->middleware('guest');
-        Route::get('/register', 'register')->name('register')->middleware('guest');
-        Route::post('/login', 'attemptLogin')->middleware(['guest', 'throttle:login']);
-        Route::post('/register', 'storeRegister')->middleware(['guest', 'throttle:register']);
-        Route::get('/logout', 'logout')->middleware('auth');
-        Route::get('/forgot', 'forgot')->name('auth.forgot');
     });
 
     # Cart
@@ -83,12 +115,12 @@ Route::middleware(['throttle:global'])->group(function () {
     Route::prefix('dashboard')->middleware('auth')->group(function () {
 
         # Dashboard User
-        Route::resource('/profile', ProfileController::class)->only(['index', 'update', 'destroy']);
+        Route::resource('/profile', ProfileController::class)->only(['index', 'update', 'destroy'])->withoutMiddleware('verified');
         Route::patch('/profile/{profile}/updatePassword', [ProfileController::class, 'updatePassword']);
     });
 
     # Shop
-    Route::controller(ShopController::class)->group(function () {
+    Route::controller(ShopController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/{shop:url}', 'index')->name('shop.index');
         Route::get('/{shop}/products', 'all');
         Route::get('/{shop}/{product}', 'show');

@@ -75,6 +75,15 @@
                                         onfocus="$(this).removeAttr('readonly').removeClass('text-end')"
                                         onblur="$(this).attr('readonly', 'true').addClass('text-end')" name="email"
                                         oninput="$('#btn-save').show(500);" readonly>
+                                    @if ($user->hasVerifiedEmail())
+                                        <div id="email-status" class="text-end text-success">
+                                            <i class="bi bi-check-circle"></i> <small>Verified</small>
+                                        </div>
+                                    @else
+                                        <div id="email-status" class="text-end text-danger">
+                                            <i class="bi bi-exclamation-circle"></i> <small>Not Verified</small>
+                                        </div>
+                                    @endif
                                     @error('email')
                                         <small class="text-danger">{{ $message }}</small>
                                     @enderror

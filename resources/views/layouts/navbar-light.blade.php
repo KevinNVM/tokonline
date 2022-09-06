@@ -1,5 +1,5 @@
 <header>
-    <nav class="navbar navbar-dark fixed-top bg-dark shadow">
+    <nav class="navbar navbar-dark {{ $pos ?? '0' ?: 'fixed-top' }} bg-dark shadow">
         <div class="container">
             <a class="navbar-brand" role="button"
                 onclick="Swal.fire({

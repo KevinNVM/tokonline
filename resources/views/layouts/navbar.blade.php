@@ -55,11 +55,23 @@
                     @auth
                         <li class="nav-item">
                             <div class="dropdown">
-                                <button class="nav-link bg-transparent border-0 dropdown-toggle" type="button"
+                                <button class="nav-link bg-transparent border-0 p-0 dropdown-toggle" type="button"
                                     data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-user"></i> {{ Str::words(auth()->user()->name, 1, '') }}
+                                    @if (!auth()->user()->hasVerifiedEmail())
+                                        <span class="badge rounded-pill text-bg-warning">!</span>
+                                    @endif
+                                    <i class="fa-solid fa-user"></i>
+                                    {{ Str::words(auth()->user()->name, 1, '') }}
                                 </button>
                                 <ul class="dropdown-menu">
+                                    @if (!auth()->user()->hasVerifiedEmail())
+                                        <li>
+                                            <a href="{{ route('verification.notice') }}" class="dropdown-item">
+                                                Verify Your Email
+                                            </a>
+                                        </li>
+                                        <li class="dropdown-divider"></li>
+                                    @endif
                                     <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i>
                                             Notifikasi</a></li>
                                     <li>

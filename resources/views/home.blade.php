@@ -448,6 +448,15 @@
             })
         </script>
     @endif
+    @if (session('msg'))
+        <script>
+            swal.fire({
+                text: '{{ session('msg')['body'] ?? '' }}',
+                title: '{{ session('msg')['title'] ?? '' }}',
+                icon: '{{ session('msg')['status'] ?? '' }}',
+            })
+        </script>
+    @endif
 </body>
 
 </html>
