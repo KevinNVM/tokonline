@@ -7,7 +7,6 @@ use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
-use Illuminate\Support\Facades\DB;
 
 class DashboardProductsController extends Controller
 {
@@ -102,7 +101,7 @@ class DashboardProductsController extends Controller
 
     public function snap()
     {
-        DB::table('products')->where('shop_id', auth()->user()->id)->delete();
+        auth()->user()->shop->products()->delete();
 
         return redirect()->back()->with('alert', 'Deleted All Products');
     }

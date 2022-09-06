@@ -16,11 +16,11 @@ class DashboardShopController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Shop $shop, Product $product)
+    public function index(Shop $shop)
     {
         return view('dashboard.shop.index', [
             'user' => auth()->user(),
-            'shop' => $shop->find(auth()->user()->id)
+            'shop' => $shop->where('user_id', auth()->user()->id)->first()
         ]);
     }
 

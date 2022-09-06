@@ -64,8 +64,8 @@
                                             Notifikasi</a></li>
                                     <li>
                                         <a class="dropdown-item" href="/cart"><i class="fa-solid fa-cart-shopping"></i>
-                                            Keranjang <span
-                                                class="badge text-bg-secondary">{{ \App\Models\Cart::find(auth()->user()->id)->products->count() }}</span></a>
+                                            Keranjang <span @php $user = auth()->user()->cart @endphp
+                                                class="badge text-bg-secondary">{{ $user ? $user->products->count() : '' }}</span></a>
                                     </li>
                                     <li class="dropdown-divider"></li>
                                     <li><a href="/dashboard/profile" class="dropdown-item"><i class="fa-solid fa-user"></i>

@@ -49,10 +49,13 @@ class AuthController extends Controller
         if (Auth::attempt($request->only($login_type, 'password'), $request->only('remember'))) {
             $request->session()->regenerate();
 
-            // Initiate Cart For User
-            User::setCart(auth()->user()->id);
+            User::setStatus(auth()->user()->id, 1);
 
-            return redirect()->intended('/');
+
+            // Initiate Cart For User
+            $cart = User::setCart(auth()->user()->id);
+
+            redirect()->intended('/');
         }
 
         return back()->withErrors([
@@ -79,6 +82,7 @@ class AuthController extends Controller
     public function logout(Request $request)
     {
         if ($request->token !== csrf_token()) return redirect('/')->with('alert', 'Logout Failed! Please Try Again Later.');
+        User::setStatus(auth()->user()->id, 0);
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();

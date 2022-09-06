@@ -47,4 +47,9 @@ class Cart extends Model
     {
         return $this->belongsToMany(Product::class, 'cart_products', 'user_id', 'product_id')->withTimestamps()->withPivot(['count', 'notes', 'created_at', 'subtotal']);
     }
+
+    public function checkout()
+    {
+        return 'true';
+    }
 }

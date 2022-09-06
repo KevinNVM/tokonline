@@ -48,5 +48,23 @@ class RouteServiceProvider extends ServiceProvider
         RateLimiter::for('api', function (Request $request) {
             return Limit::perMinute(60)->by($request->user()?->id ?: $request->ip());
         });
+
+        RateLimiter::for('global', function (Request $request) {
+            return $request->user()->isAdmin ?? false ?
+                Limit::none() :
+                Limit::perMinute(1000);
+        });
+
+        RateLimiter::for('login', function (Request $request) {
+            return Limit::perMinute(15)->by($request->ip())->response(function (Request $request, array $headers) {
+                return response('Too Many Requests, Please Wait a Couple Of Minutes...', 429, $headers);
+            });
+        });
+
+        RateLimiter::for('register', function (Request $request) {
+            return Limit::perMinute(25)->by($request->ip())->response(function (Request $request, array $headers) {
+                return response('Too Many Requests, Please Wait a Couple Of Minutes...', 429, $headers);
+            });
+        });
     }
 }

@@ -15,7 +15,7 @@ class CartController extends Controller
         if (request('token') !== csrf_token()) return '<h3 class="text-danger text-center">Cart Failed To Load</h3>';
         return view('cart_view', [
             'title' => 'Keranjang',
-            'carts' => $user->find(auth()->user()->id)->cart->products,
+            'carts' => auth()->user()->cart->products,
             'subtotal' => $cart->getTotalPrice(auth()->user()->id),
         ]);
     }
@@ -23,7 +23,7 @@ class CartController extends Controller
     {
         return view('cart', [
             'title' => 'Keranjang',
-            'carts' => $user->find(auth()->user()->id)->cart->products,
+            'carts' => auth()->user()->cart->products,
             'subtotal' => $cart->getTotalPrice(auth()->user()->id),
         ]);
     }

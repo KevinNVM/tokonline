@@ -45,6 +45,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    static public function setStatus($user_id, $status)
+    {
+        $user = User::find($user_id);
+        $user->status = $status;
+        $user->save();
+        return $user->status;
+    }
+
     static public function setCart($user_id): bool
     {
         $checkForDuplicate = Cart::firstWhere('user_id', $user_id);

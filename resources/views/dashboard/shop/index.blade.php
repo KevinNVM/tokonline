@@ -149,11 +149,16 @@
                         @endforeach
                     </tbody>
                 </table>
-                @endforeach
-                </tbody>
-                </table>
-                s').DataTable();
+            </div>
+        </div>
+    </div>
+@endsection
 
-                });
-                </script>
-            @endpush
+@push('foot')
+    <script>
+        $(document).ready(function() {
+            $('#table_products').DataTable();
+
+        });
+    </script>
+@endpush
