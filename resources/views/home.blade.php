@@ -367,8 +367,65 @@
         </div><!-- /.container -->
 
 
+        @if (auth()->check())
+            <input type="button" class="btn btn-primary toggle-modal" data-bs-toggle="modal"
+                value="Launch demo modal" id="toggle-modal-email-warn" hidden data-bs-target="#email-warn">
+
+            <div class="modal fade" id="email-warn" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Hello, {{ auth()->user()->name }}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body d-flex justify-content-center my-2 mx-2">
+
+
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <span>
+                                            Verify Your Email Address
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>
+                                            Before you continue, Please verify your email by clicking the link we've
+                                            sent to <span
+                                                class="text-primary">{{ auth()->user()->email ?? 'Your Email' }}</span>.
+                                            You can close this
+                                            window if you already verified your email.
+                                        </p>
+                                        <small class="d-block">This Proccess Shouldn't Take More Than 5
+                                            Minutes.</small>
+                                        <small>
+                                            Didn't Receive The Email?
+                                            <form action="{{ route('verification.send') }}" class="d-inline"
+                                                method="POST">
+                                                @csrf @method('POST')
+                                                <button class="bg-transparent border-0 link-primary link">
+                                                    Re-Send Email Verification
+                                                </button>
+                                            </form>
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary close-123"
+                                data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
 
     </main>
+
     @include('utilities.footer')
     <script src="/js/mobile-check.js"></script>
     <script>
@@ -438,7 +495,7 @@
 
 
         if (!mobileCheck()) {
-            $('#bottombar').remove()
+            $('#bottombar').remove();
         }
     </script>
     @if (session('alert'))
@@ -454,8 +511,18 @@
                 text: '{{ session('msg')['body'] ?? '' }}',
                 title: '{{ session('msg')['title'] ?? '' }}',
                 icon: '{{ session('msg')['status'] ?? '' }}',
+
             })
         </script>
+    @endif
+    @if (auth()->check())
+        @if (!auth()->user()->hasVerifiedEmail())
+            <script>
+                setTimeout(() => {
+                    $('#toggle-modal-email-warn').click();
+                }, 250)
+            </script>
+        @endif
     @endif
 </body>
 

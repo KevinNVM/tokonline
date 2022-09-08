@@ -36,6 +36,7 @@
         </div>
     </div>
     <script src="/js/bootstrap5.js"></script>
+    <script src="/js/mobile-check.js"></script>
     <script>
         window.addEventListener('DOMContentLoaded', event => {
 
@@ -55,6 +56,9 @@
             }
 
         });
+        if (mobileCheck()) {
+            $('.modal-dialog').addClass('modal-fullscreen')
+        }
     </script>
     @if (session('alert'))
         <script>

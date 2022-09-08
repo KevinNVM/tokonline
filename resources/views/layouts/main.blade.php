@@ -65,6 +65,11 @@
             })
         </script>
     @endif
+    <script>
+        if (mobileCheck()) {
+            $('.modal-dialog').remove()
+        }
+    </script>
 </body>
 
 </html>

@@ -68,7 +68,7 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
 
 
     # Utilities
-    Route::controller(UtilitiesController::class)->group(function () {
+    Route::controller(UtilitiesController::class)->withoutMiddleware('verified')->group(function () {
         Route::prefix('utilities')->group(function () {
             Route::get('/autocomplete', 'autocomplete');
             Route::post('/inf-item', 'infiniteItem');
