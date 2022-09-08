@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Shop;
 use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use Illuminate\Support\Arr;
 
 class DashboardProductsController extends Controller
 {
@@ -93,16 +95,43 @@ class DashboardProductsController extends Controller
 
     public function destroy(Product $product)
     {
-        $alert = "Deleted: $product->name";
-        $product->delete();
-
-        return back()->with('alert', $alert);
+        $carts = Cart::all();
+        $exist = false;
+        foreach ($carts as $cart) {
+            foreach ($cart->products as $prod) {
+                if ($prod->id === $product->id) {
+                    $exist = true;
+                }
+            }
+        }
+        if ($exist)
+            return back()->with('alert', "Error Deleting: $product->name, reason: Product is on someone else`s cart");
+        else {
+            $product->delete();
+            return back()->with('alert', "Deleted: $product->name");
+        }
     }
 
     public function snap()
     {
-        auth()->user()->shop->products()->delete();
-
-        return redirect()->back()->with('alert', 'Deleted All Products');
+        $carts = Cart::all();
+        $exist = false;
+        $existing_products_id = [];
+        $products = Shop::where('user_id', auth()->user()->id)->first()->products->pluck('id');
+        foreach ($carts as $cart) {
+            foreach ($cart->products as $prod) {
+                $existing_products_id[] = $prod->id;
+            }
+        }
+        for ($i = 0; $i < $products->count(); $i++) {
+            if (in_array($products[$i], $existing_products_id))
+                $exist = true;
+        }
+        if (!$exist) {
+            auth()->user()->shop->products()->delete();
+            return redirect()->back()->with('alert', 'Deleted All Products');
+        } else {
+            return back()->with('alert', "Error Deleting, reason: Product(s) is on someone else`s cart");
+        }
     }
 }

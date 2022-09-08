@@ -14,6 +14,11 @@ class Cart extends Model
     public $guarded = ['id'];
     protected $primaryKey = 'user_id';
 
+    static public function deleteItem($id)
+    {
+        Cart::find(auth()->user()->id)->products()->detach($id);
+    }
+
     static public function getTotalPrice($user_id)
     {
         $subtotal = [];

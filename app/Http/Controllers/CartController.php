@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class CartController extends Controller
 {
@@ -94,7 +94,7 @@ class CartController extends Controller
     public function deleteItem($slug, $id)
     {
         $id = base64_decode($id);
-        Cart::find(auth()->user()->id)->products()->detach($id);
+        Cart::deleteItem($id);
 
         return redirect()->back();
     }
