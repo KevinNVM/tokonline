@@ -27,7 +27,8 @@ class ProductFactory extends Factory
             'condition' => mt_rand(0, 1),
             'stock' => mt_rand(1, 999),
             'price' => floor(mt_rand(1000, 10e5)),
-            'sold' => mt_rand(1, 200)
+            'sold' => mt_rand(1, 200),
+            'visibility' => mt_rand(0, 2),
         ];
     }
 }

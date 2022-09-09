@@ -77,8 +77,8 @@ class DashboardProductsController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        // return $request->all();
         $valid = $request->validate([
-            'name' => 'required|max:256',
             'desc' => 'required',
             'weight' => 'required|integer|min:0',
             'price' => 'required',
@@ -86,6 +86,7 @@ class DashboardProductsController extends Controller
             'stock' => 'required|integer',
             'catalog_id' => 'required|integer',
             'sub_category_id' => 'required|integer',
+            'visibility' => 'required|integer',
         ]);
 
         $product->update($valid);

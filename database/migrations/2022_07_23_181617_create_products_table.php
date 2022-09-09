@@ -26,6 +26,7 @@ return new class extends Migration
             $table->integer('stock')->default(0);
             $table->bigInteger('price');
             $table->integer('sold')->default(0);
+            $table->integer('visibility')->default(1);
             $table->timestamps();
         });
     }

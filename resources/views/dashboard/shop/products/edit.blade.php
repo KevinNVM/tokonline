@@ -68,14 +68,8 @@
                                 @endif
                                 <div class="mb-3">
                                     <label for="name">Nama Produk</label>
-                                    <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                        name="name" value="{{ old('name', $product->name) }}"
-                                        placeholder="ex: Laptop Gaming Ram 16GB SSD 512GB" required>
-                                    @error('name')
-                                        <div class="invalid-feedback">
-                                            {{ $message }}
-                                        </div>
-                                    @enderror
+                                    <input type="text" class="form-control" value="{{ $product->name }}"
+                                        placeholder="ex: Laptop Gaming Ram 16GB SSD 512GB" disabled readonly>
                                     <small class="text-muted">
                                         Nama Produk Tidak Akan Bisa Di Edit Kembali.
                                     </small>
@@ -106,11 +100,13 @@
                                     <label for="condition">Kondisi Produk</label>
                                     <select name="condition" id="condition"
                                         class="form-select @error('condition') is-invalid @enderror" required>
-                                        <option value="1"
-                                            {{ old('condition', $product->condition) == 1 ? 'selected' : '' }}>Baru</option>
-                                        <option value="0"
-                                            {{ old('condition', $product->condition) != 1 ? '' : 'selected' }}>Bekas
-                                        </option>
+                                        @if (old('condition', $product->condition))
+                                            <option value="1" selected>Baru</option>
+                                            <option value="0">Bekas</option>
+                                        @else
+                                            <option value="1">Baru</option>
+                                            <option value="0" selected>Bekas</option>
+                                        @endif
                                     </select>
                                     @error('condition')
                                         <div class="invalid-feedback">
@@ -172,7 +168,7 @@
                                                 @if ($category->subcategory->count())
                                                     @foreach ($category->subcategory as $subcategory)
                                                         <option value="{{ $subcategory->id }}"
-                                                            {{ old('sub_category_id', $product->sub_category_id) == $subcategory->id ? 'selected' : '' }}>
+                                                            {{ old('sub_category_id', $product->subcategory) == $subcategory->id ? 'selected' : '' }}>
                                                             · {{ $subcategory->name }}
                                                         </option>
                                                     @endforeach
@@ -183,6 +179,34 @@
                                         @endforeach
                                     </select>
                                     @error('sub_category_id')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="mb-3">
+                                    <label for="visibility">Visibilitas</label>
+                                    <select name="visibility" id="visibility" class="form-select" required>
+                                        @switch(old('visibility', $product->visibility))
+                                            @case(1)
+                                                <option value="1" selected>Public</option>
+                                                <option value="2">Unlisted</option>
+                                                <option value="0">Private</option>
+                                            @break
+
+                                            @case(2)
+                                                <option value="1">Public</option>
+                                                <option value="2" selected>Unlisted</option>
+                                                <option value="0">Private</option>
+                                            @break
+
+                                            @default
+                                                <option value="1">Public</option>
+                                                <option value="2">Unlisted</option>
+                                                <option value="0" selected>Private</option>
+                                        @endswitch
+                                    </select>
+                                    @error('visibility')
                                         <div class="invalid-feedback">
                                             {{ $message }}
                                         </div>

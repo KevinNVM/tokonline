@@ -40,13 +40,14 @@ class ShopController extends Controller
         ]);
     }
 
-    public function show(Shop $shop, Product $product)
+    public function show(Shop $shop, Product $product, Request $request)
     {
         try {
             $product = $shop->products->where('slug', $product->slug)->firstOrFail();
         } catch (\Illuminate\Support\ItemNotFoundException $e) {
             abort(404);
         }
+
 
         return view('myshop.show', [
             'title' => $product->name,

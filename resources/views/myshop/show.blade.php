@@ -48,7 +48,11 @@
                 <div class="col-12 col-md-6 col-product-content border-bottom rounded shadow-sm">
                     <div class="card border-0">
                         <div class="card-body">
-                            <h4 class="card-title fw-semibold h4">{{ $product->name }}</h4>
+                            <h4 class="card-title fw-semibold h4">{{ $product->name }} {!! ($product->visibility === 2
+                                    ? '<small title="Only User That Have The Link To This Item Can Access It" class="text-muted fs-6 fst-italic badge border">Unlisted</small>'
+                                    : $product->visibility == 0)
+                                ? '<small title="This Item Is Private" class="text-muted fs-6 fst-italic badge border">Private</small>'
+                                : '' !!}</h4>
                             <h6 class="card-subtitle mb-2 text-muted">Terjual
                                 <span class="font-monospace fw-bold">{{ $product->sold }}</span>
                                 &#8226;
