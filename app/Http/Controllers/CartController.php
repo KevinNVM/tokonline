@@ -7,20 +7,28 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-    public function cart_view(User $user, Cart $cart)
+    public function cart_view(Cart $cart)
     {
-        if (request('token') !== csrf_token()) return '<h3 class="text-danger text-center">Cart Failed To Load</h3>';
+        if (request('token') !== csrf_token() && !Cart::find(auth()->user()->id)) return '<h3 class="text-danger text-center">Cart Failed To Load</h3>';
         return view('cart_view', [
             'title' => 'Keranjang',
             'carts' => auth()->user()->cart->products,
             'subtotal' => $cart->getTotalPrice(auth()->user()->id),
         ]);
     }
-    public function cartView(User $user, Cart $cart)
+    public function cartView(Cart $cart, Request $request)
     {
+        if (!Cart::find(auth()->user()->id)) {
+            User::setStatus(auth()->user()->id, 0);
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect('/login')->with('alert', 'Your Information Was Handled Incorrectly, Please Re-Login With Your Legitimate Credentials.');
+        }
         return view('cart', [
             'title' => 'Keranjang',
             'carts' => auth()->user()->cart->products,
