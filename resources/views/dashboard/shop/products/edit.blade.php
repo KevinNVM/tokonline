@@ -168,7 +168,7 @@
                                                 @if ($category->subcategory->count())
                                                     @foreach ($category->subcategory as $subcategory)
                                                         <option value="{{ $subcategory->id }}"
-                                                            {{ old('sub_category_id', $product->subcategory) == $subcategory->id ? 'selected' : '' }}>
+                                                            {{ old('sub_category_id', $product->sub_category_id) == $subcategory->id ? 'selected' : '' }}>
                                                             · {{ $subcategory->name }}
                                                         </option>
                                                     @endforeach

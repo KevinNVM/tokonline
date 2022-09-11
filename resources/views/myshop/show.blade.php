@@ -48,11 +48,9 @@
                 <div class="col-12 col-md-6 col-product-content border-bottom rounded shadow-sm">
                     <div class="card border-0">
                         <div class="card-body">
-                            <h4 class="card-title fw-semibold h4">{{ $product->name }} {!! ($product->visibility === 2
-                                    ? '<small title="Only User That Have The Link To This Item Can Access It" class="text-muted fs-6 fst-italic badge border">Unlisted</small>'
-                                    : $product->visibility == 0)
-                                ? '<small title="This Item Is Private" class="text-muted fs-6 fst-italic badge border">Private</small>'
-                                : '' !!}</h4>
+                            <h4 class="card-title fw-semibold h4">
+                                {{ $product->name }}
+                            </h4>
                             <h6 class="card-subtitle mb-2 text-muted">Terjual
                                 <span class="font-monospace fw-bold">{{ $product->sold }}</span>
                                 &#8226;
@@ -78,12 +76,20 @@
                                         href="/category/{{ $product->subcategory->category->slug . '/' . $product->subcategory->slug }}"
                                         class="text-success fw-semibold">{{ $product->subcategory->name ?? 'Tidak Ada' }}</a>
                                 </p>
-                                <p class="text-muted m-0 p-0 mb-3">
+                                <p class="text-muted m-0 p-0">
                                     Katalog: <a
                                         href="/{{ $product->catalog->shop->url . '/cat' . 'alog/' . $product->catalog->slug }}"
                                         class="text-success fw-semibold">{{ $product->catalog->name }}</a>
                                 </p>
-                                <div class="desc border-bottom">
+                                @if ($product->getVisibility($product->visibility) !== 'Public')
+                                    <p class="text-muted m-0 p-0">
+                                        Visibilitas: <small title="Only User That Have The Link To This Item Can Access It"
+                                            class="text-muted fst-italic fw-semibold">{{ $product->getVisibility($product->visibility) }}</small>
+                                    </p>
+                                @endif
+
+
+                                <div class="desc border-bottom mt-3">
 
                                     <p class="desc-p">
                                         {!! strlen($product->desc) > 200

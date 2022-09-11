@@ -15,6 +15,22 @@ class Product extends Model
 
     public $guarded = ['id'];
 
+    public function getVisibility($num)
+    {
+        switch ($num):
+            case (1):
+                return 'Public';
+                break;
+
+            case (2):
+                return 'Unlisted';
+                break;
+
+            default:
+                return 'Private';
+        endswitch;
+    }
+
     public function catalog()
     {
         return $this->belongsTo(ShopCatalog::class);

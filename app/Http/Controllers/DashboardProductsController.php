@@ -19,7 +19,7 @@ class DashboardProductsController extends Controller
      */
     public function index()
     {
-        //
+        return back();
     }
 
     /**
@@ -38,6 +38,7 @@ class DashboardProductsController extends Controller
 
     public function store(Request $request)
     {
+        return $request->all();
         $validated = $request->validate([
             'name' => 'required|max:256',
             'desc' => 'required',
@@ -67,6 +68,7 @@ class DashboardProductsController extends Controller
 
     public function edit(Product $product)
     {
+        if ($product->shop->owner->username !== auth()->user()->username) return abort(403);
         return view('dashboard.shop.products.edit', [
             'product' => $product,
             'shop' => Shop::where('user_id', auth()->user()->id)->firstOrFail(),
@@ -77,6 +79,7 @@ class DashboardProductsController extends Controller
 
     public function update(Request $request, Product $product)
     {
+        if ($product->shop->owner->username !== auth()->user()->username) return abort(403);
         // return $request->all();
         $valid = $request->validate([
             'desc' => 'required',
@@ -96,6 +99,7 @@ class DashboardProductsController extends Controller
 
     public function destroy(Product $product)
     {
+        if ($product->shop->owner->username !== auth()->user()->username) return abort(403);
         $carts = Cart::all();
         $exist = false;
         foreach ($carts as $cart) {
