@@ -40,7 +40,7 @@
                 </div>
                 <div class="col-12 col-lg-8">
                     <div class="row row-cols-md-4">
-                        @foreach ($selected->products as $product)
+                        @foreach ($selected->products()->visibility('public')->get() as $product)
                             <div class="col mb-3">
                                 <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
                                     <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
