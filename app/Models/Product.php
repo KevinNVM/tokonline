@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Shop;
 use App\Models\ShopCatalog;
+use Illuminate\Support\Str;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Database\Eloquent\Model;
@@ -14,6 +15,22 @@ class Product extends Model
     use HasFactory;
 
     public $guarded = ['id'];
+
+    public function getVisibility($num)
+    {
+        switch ($num):
+            case (1):
+                return 'Public';
+                break;
+
+            case (2):
+                return 'Unlisted';
+                break;
+
+            default:
+                return 'Private';
+        endswitch;
+    }
 
     public function catalog()
     {
@@ -28,6 +45,22 @@ class Product extends Model
     public function shop()
     {
         return $this->belongsTo(Shop::class, 'shop_id');
+    }
+
+    public function scopeVisibility($query, $visibility)
+    {
+        switch (Str::lower($visibility)) {
+            case 'public':
+                $visibility = 1;
+                break;
+            case 'private':
+                $visibility = 0;
+                break;
+            case 'unlisted':
+                $visibility = 2;
+                break;
+        }
+        return $query->where('visibility', $visibility);
     }
 
     public function scopeLatest($query)

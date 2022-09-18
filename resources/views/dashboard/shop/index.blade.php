@@ -76,7 +76,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nama Produk</th>
-                            <th>Deskripsi Produk</th>
+                            <th>Visibilitas Produk</th>
                             <th>Berat Produk</th>
                             <th>Kondisi Produk</th>
                             <th>Stok Produk</th>
@@ -95,7 +95,10 @@
                                         {{ $product->name }}
                                     </a>
                                 </td>
-                                <td>{{ Str::words($product->desc, 5, '...') }}</td>
+
+                                <td>
+                                    {{ $product->getVisibility($product->visibility) }}
+                                </td>
 
                                 <td title="Double Click To Change Format"
                                     data-format-weight="{{ $product->weight * 1000 }} g" role="button"
@@ -128,8 +131,8 @@
                                         <i class="fa-solid fa-pen-to-square"></i> Edit
                                     </a>
                                     <form action="{{ route('products.destroy', $product->slug) }}" method="POST">
-                                        @csrf
                                         @method('delete')
+                                        @csrf
                                         <button class="border-0 text-danger link rounded" type="button"
                                             onclick="swal.fire({
                                             'text': 'Hapus Item ?',

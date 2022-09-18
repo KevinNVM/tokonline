@@ -158,51 +158,68 @@
                     <div class="col-12 col-lg-8">
                         <div class="row row-cols-md-4 g-3">
                             @foreach ($products as $key => $product)
-                                <div class="col hp">
-                                    <div class="card-product card h-100 shadow-hover">
-                                        <a href="/{{ $product->shop->url . '/' . $product->slug }}">
-                                            <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg"
-                                                class="card-img-top" alt="product.title" />
-                                        </a>
+                                @if ($product->visibility !== 'a')
+                                    <div class="col hp">
+                                        <div class="card-product card h-100 shadow-hover">
+                                            <a href="/{{ $product->shop->url . '/' . $product->slug }}">
+                                                <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg"
+                                                    class="card-img-top" alt="product.title" />
+                                            </a>
 
-                                        <div class="label-top shadow-sm">
-                                            <a class="text-white"
-                                                href="/category/{{ $product->subcategory->category->slug . '/' . $product->subcategory->slug }}">{{ $product->subcategory->name }}</a>
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="clearfix mb-3">
-                                                <span
-                                                    class="float-start badge rounded-pill bg-success">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-
-                                                <span class="float-end"><a
-                                                        href="/{{ $product->shop->url . '/' . $product->slug }}#reviews"
-                                                        class="small text-muted text-uppercase aff-link">reviews</a></span>
+                                            <div class="label-top shadow-sm">
+                                                <a class="text-white"
+                                                    href="/category/{{ $product->subcategory->category->slug . '/' . $product->subcategory->slug }}">{{ $product->subcategory->name }}</a>
                                             </div>
-                                            <h5 class="card-title">
-                                                <a href="#1">{{ $product->name }}</a>
-                                            </h5>
+                                            <div class="card-body">
+                                                <div class="clearfix mb-3">
+                                                    <span
+                                                        class="float-start badge rounded-pill bg-success">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
 
-                                            <div class="d-grid gap-2 my-4">
+                                                    <span class="float-end"><a
+                                                            href="/{{ $product->shop->url . '/' . $product->slug }}#reviews"
+                                                            class="small text-muted text-uppercase aff-link">reviews</a></span>
+                                                </div>
+                                                <h5 class="card-title">
+                                                    <a
+                                                        href="/{{ $product->shop->url . '/' . $product->slug }}">{{ $product->name }}</a>
+                                                </h5>
+                                                <small>
+                                                    @switch($product->visibility)
+                                                        @case(1)
+                                                            public
+                                                        @break
 
-                                                <a href="#" class="btn btn-warning bold-btn">add to cart</a>
+                                                        @case(2)
+                                                            unlisted
+                                                        @break
 
-                                            </div>
-                                            <div class="clearfix mb-1">
+                                                        @default
+                                                            private
+                                                    @endswitch
+                                                </small>
+                                                <div class="d-grid gap-2 my-4">
 
-                                                <span class="float-start" onclick="copyLink('#item-{{ $key }}')">
-                                                    <a href="#"><i class="fas fa-share-nodes"></i></a>
-                                                </span>
-                                                <span class="share-link visually-hidden"
-                                                    id="item-{{ $key }}">{{ url('/') . '/' . $product->shop->url . '/' . $product->slug }}</span>
+                                                    <a href="#" class="btn btn-warning bold-btn">add to cart</a>
 
-                                                <span class="float-end">
-                                                    <i class="far fa-heart" style="cursor: pointer"></i>
+                                                </div>
+                                                <div class="clearfix mb-1">
 
-                                                </span>
+                                                    <span class="float-start"
+                                                        onclick="copyLink('#item-{{ $key }}')">
+                                                        <a href="#"><i class="fas fa-share-nodes"></i></a>
+                                                    </span>
+                                                    <span class="share-link visually-hidden"
+                                                        id="item-{{ $key }}">{{ url('/') . '/' . $product->shop->url . '/' . $product->slug }}</span>
+
+                                                    <span class="float-end">
+                                                        <i class="far fa-heart" style="cursor: pointer"></i>
+
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endif
                             @endforeach
                         </div>
                     </div>

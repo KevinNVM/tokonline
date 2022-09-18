@@ -292,7 +292,7 @@
             </h2>
             <div class="card-container">
                 <div class="row row-cols-xxl-6">
-                    @foreach ($top_on_category->products as $key => $item)
+                    @foreach ($top_on_category->products()->visibility('public')->get() as $key => $item)
                         @break($key == 6)
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
