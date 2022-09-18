@@ -49,7 +49,9 @@ class ShopController extends Controller
         }
 
 
-        if (!$product->visibility) return abort(403);
+        if (auth()->check()) {
+            if (auth()->user()->username !== $product->shop->owner->username && !$product->visibility) return abort(403);
+        } else if (!$product->visibility) return abort(403);
         return view('myshop.show', [
             'title' => $product->name,
             'product' => $product,
