@@ -218,7 +218,8 @@
                                         <input type="hidden" name="count" id="count" value="1">
                                         <input type="hidden" name="notes" id="notes" value="">
                                         <input type="hidden" name="price" value="{{ $product->price }}">
-                                        <button class="h5 checkout-button btn btn-primary" name="cart">
+                                        <button class="h5 checkout-button btn btn-primary" name="cart"
+                                            {{ $product->disabled ? 'disabled title="Product is Inactive"' : '' }}>
                                             <i class="fa-solid fa-cart-arrow-down fa-lg"></i> Keranjang
                                         </button>
                                     </form>

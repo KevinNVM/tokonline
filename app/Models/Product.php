@@ -60,7 +60,7 @@ class Product extends Model
                 $visibility = 2;
                 break;
         }
-        return $query->where('visibility', $visibility);
+        return $query->where([['visibility', $visibility]]);
     }
 
     public function scopeLatest($query)

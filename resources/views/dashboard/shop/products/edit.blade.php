@@ -212,6 +212,27 @@
                                         </div>
                                     @enderror
                                 </div>
+                                <div class="mb-3">
+                                    <label for="disabled">Produk Aktif</label>
+                                    <select name="disabled" id="disabled" class="form-select" required>
+                                        @switch(old('disabled', $product->disabled))
+                                            @case(0)
+                                                <option value="0" selected>Aktif</option>
+                                                <option value="1">Tidak Aktif</option>
+                                            @break
+
+                                            @case(1)
+                                                <option value="0">Aktif</option>
+                                                <option value="1" selected>Tidak Aktif</option>
+                                            @break
+                                        @endswitch
+                                    </select>
+                                    @error('disabled')
+                                        <div class="invalid-feedback">
+                                            {{ $message }}
+                                        </div>
+                                    @enderror
+                                </div>
                             </div>
                             <div class="confirm d-flex flex-column gap-2">
                                 <div class="check user-select-none">

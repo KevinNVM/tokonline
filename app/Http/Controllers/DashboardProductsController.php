@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Arr;
 
 class DashboardProductsController extends Controller
@@ -89,6 +90,7 @@ class DashboardProductsController extends Controller
             'stock' => 'required|integer',
             'catalog_id' => 'required|integer',
             'sub_category_id' => 'required|integer',
+            'disabled' => 'required|integer',
             'visibility' => 'required|integer',
         ]);
 

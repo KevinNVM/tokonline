@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -42,6 +43,9 @@ class CartController extends Controller
             return back()->with('alert', 'Something is wrong please try again later.');
 
         $new = $request->except('_token'); //  type array
+        // return Product::find($new['product_id'])->disabled;
+        if (Product::find($new['product_id'])->disabled) return back()->with('alert', 'Cannot Add Item to Cart Because Product is inactive.');
+
         $new['user_id'] = auth()->user()->id;
         $new['subtotal'] = $new['price'] * $new['count'];
         $old =  DB::table('cart_products')->where('product_id', $new['product_id']);
@@ -54,6 +58,7 @@ class CartController extends Controller
                 'notes' => $new['notes']
             ]);
         } else {
+            // return $cart->find($new['user_id']);
             $cart->find($new['user_id'])->products()->attach($new['product_id'], [
                 'count' => $new['count'],
                 'subtotal' => $new['subtotal'],
