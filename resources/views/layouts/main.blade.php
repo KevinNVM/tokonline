@@ -17,6 +17,24 @@
     <script src="/js/jquery-ui.js"></script>
     <script src="/js/bootstrap5.js"></script>
     @include('utilities.autocomplete')
+    <style>
+        main {
+            margin-top: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        @media only screen and (max-width: 768px) {
+            main {
+                margin-top: 0;
+            }
+        }
+
+        @media print {
+            main {
+                margin-top: 0;
+            }
+        }
+    </style>
     @stack('head')
     <title>{{ $title ?? '' }} · E-Comm</title>
 </head>

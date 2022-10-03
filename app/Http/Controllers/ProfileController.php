@@ -30,7 +30,7 @@ class ProfileController extends Controller
         $validData = $request->validate([
             'name' => 'required|max:120',
             'username' => $validateUsername,
-            'email' => 'required|email:dns',
+            // 'email' => 'required|email:dns',
         ]);
 
         unset($validData['oldPassword']);

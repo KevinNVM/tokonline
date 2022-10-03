@@ -13,10 +13,10 @@ class Midtrans
 
     public function __construct()
     {
-        $this->serverKey = config('midtrans.server_key');
-        $this->isProduction = config('midtrans.is_production');
-        $this->isSanitized = config('midtrans.is_sanitized');
-        $this->is3ds = config('midtrans.is_3ds');
+        $this->serverKey = env('MIDTRANS_SERVER_KEY');
+        $this->isProduction = env('MIDTRANS_IS_PRODUCTION');
+        $this->isSanitized = true;
+        $this->is3ds = true;
 
         $this->_configureMidtrans();
     }

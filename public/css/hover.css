@@ -4,7 +4,7 @@
 .outline-salmon { transition: all 75ms; }
 .outline-salmon:hover { outline: 2.5px solid salmon; }
 
-.link { text-decoration: none; transition: all 50ms; }
+.link { text-decoration: none; }
 .link:hover { text-decoration: underline; }
 
 .bg-hover { transition: all 150ms; }

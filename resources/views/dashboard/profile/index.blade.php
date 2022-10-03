@@ -72,9 +72,7 @@
                                 </div>
                                 <div class="fs-6 fw-semibold">
                                     <input type="email" value="{{ $user->email }}" class="form-control text-end border-0"
-                                        onfocus="$(this).removeAttr('readonly').removeClass('text-end')"
-                                        onblur="$(this).attr('readonly', 'true').addClass('text-end')" name="email"
-                                        oninput="$('#btn-save').show(500);" readonly>
+                                        readonly disabled>
                                     @if ($user->hasVerifiedEmail())
                                         <div id="email-status" class="text-end text-success">
                                             <i class="bi bi-check-circle"></i> <small>Verified</small>

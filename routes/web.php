@@ -13,6 +13,8 @@ use App\Http\Controllers\DashboardShopController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\DashboardMakeShopController;
 use App\Http\Controllers\DashboardProductsController;
+use App\Http\Controllers\OrderController;
+use App\Models\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Auth;
 
@@ -94,6 +96,9 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
             Route::delete('/deleteall', 'deleteAll');
         });
     });
+
+    # Order(s)
+    Route::resource('/orders', OrderController::class)->only(['index', 'show']);
 
     # Create Shop
     Route::resource('/my-shop', DashboardMakeShopController::class)->only(['create', 'store'])->middleware(['auth', 'cors']);

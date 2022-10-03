@@ -1,5 +1,6 @@
 <header>
-    <nav id="topbar" class="navbar navbar-expand-lg navbar-dark text-bg-dark fixed-top" style="z-index: 50">
+    <nav id="topbar" class="navbar navbar-expand-lg navbar-dark text-bg-dark fixed-top d-print-none"
+        style="z-index: 50">
         <div class="container">
             <a class="navbar-brand" href="/">
                 <img src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
@@ -47,8 +48,6 @@
                             name="search" onblur="hotkeys()" placeholder="Cari di.. [/ or K]" aria-label="Search"
                             autocomplete="off" maxlength="300"
                             value="{{ request('search') === str_replace('/', '', request()->getPathInfo()) ? '' : request('search') }}">
-                        <button class="btn btn-outline-primary" type="submit"><i
-                                class="fa-solid fa-magnifying-glass fa-lg"></i></button>
                     </form>
                 </div>
                 <ul class="navbar-nav ms-auto">
@@ -74,6 +73,8 @@
                                     @endif
                                     <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i>
                                             Notifikasi</a></li>
+                                    <li><a class="dropdown-item" href="/orders"><i class="fa-solid fa-list"></i>
+                                            Pesanan</a></li>
                                     <li>
                                         <a class="dropdown-item" href="/cart"><i class="fa-solid fa-cart-shopping"></i>
                                             Keranjang <span @php $user = auth()->user()->cart @endphp
@@ -107,7 +108,7 @@
 
 
 <!-- Bottom Navbar -->
-<nav id="bottombar" class="navbar navbar-dark bg-dark navbar-expand fixed-bottom p-0">
+<nav id="bottombar" class="navbar navbar-dark bg-dark navbar-expand fixed-bottom p-0 d-print-none">
     <ul class="navbar-nav nav-justified w-100 pt-2">
         <li class="nav-item">
             <a href="/home" class="nav-link text-center {{ request()->RouteIs('home') ? 'active' : '' }}">
@@ -143,4 +144,10 @@
             </a>
         </li>
     </ul>
+</nav>
+
+<nav class="d-none d-print-block">
+    <a class="navbar-brand" href="/">
+        <img src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
+    </a>
 </nav>

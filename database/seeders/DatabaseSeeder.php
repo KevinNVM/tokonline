@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Models\Cart;
+use App\Models\Order;
 use App\Models\Shop;
 use App\Models\User;
 use App\Models\Product;
@@ -12,6 +13,7 @@ use App\Models\ShopCatalog;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,6 +24,52 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+
+        Order::create([
+            'number' =>  mt_rand(10000000, 100000000),
+            'user_id' => 2,
+            'products_json' => json_encode([
+                [
+                    'id' => 1,
+                    'name' => 'Lorem',
+                    'shop' => 'Made Store',
+                    'price' => 10000,
+                    'quantity' => 2,
+                    'url' => '/made-store/barang24480'
+                ]
+            ]),
+            'total_price' => 2000000.00,
+            'payment_status' => 2
+        ]);
+
+        Order::create([
+            'number' =>  mt_rand(10000000, 100000000),
+            'user_id' => 2,
+            'products_json' => json_encode([[
+                'id' => 1,
+                'name' => 'Lorem',
+                'shop' => 'Made Store',
+                'price' => 10000,
+                'quantity' => 2,
+                'url' => '/made-store/barang24480   '
+            ], [
+                'id' => 1,
+                'name' => 'Lorem',
+                'shop' => 'Made Store',
+                'price' => 10000,
+                'quantity' => 2,
+                'url' => '/made-store/barang24480   '
+            ], [
+                'id' => 1,
+                'name' => 'Lorem',
+                'shop' => 'Made Store',
+                'price' => 10000,
+                'quantity' => 2,
+                'url' => '/made-store/barang24480   '
+            ]]),
+            'total_price' => 2000000.00,
+            'payment_status' => 2
+        ]);
 
         Product::create([
             'shop_id' => 1,
@@ -42,6 +90,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'kevin',
             'password' => bcrypt('password'),
             'email' => 'kevin@example.com',
+            'phone' => '0812345699'
         ]);
 
         \App\Models\User::factory()->create([
@@ -49,6 +98,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'made',
             'password' => bcrypt('password'),
             'email' => 'made@example.com',
+            'phone' => '0812345699'
         ]);
 
         \App\Models\User::factory(10)->create();
