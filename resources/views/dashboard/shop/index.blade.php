@@ -154,14 +154,65 @@
                 </table>
             </div>
         </div>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                Catalogs
+            </div>
+            <div class="card-body table-responsive">
+                <table id="table_catalogs" class="display">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nama Katalog</th>
+                            <th>Deskripsi Katalog</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($shop->catalog as $catalog)
+                            <tr class="position-relative">
+                                <td>{{ $loop->iteration }}</td>
+                                <td><a href="{{ route('catalogs.show', $catalog->slug) }}"
+                                        class="link link-dark">{{ $catalog->name }}</a>
+                                </td>
+                                <td>{{ $catalog->desc }}</td>
+                                <td class="d-flex gap-2">
+                                    <a href="{{ route('catalogs.edit', $catalog->slug) }}" class="text-success link">
+                                        <i class="fa-solid fa-pen-to-square"></i> Edit
+                                    </a>
+                                    <form action="{{ route('catalogs.destroy', $catalog->slug) }}" method="POST">
+                                        @method('delete')
+                                        @csrf
+                                        <button class="border-0 text-danger link rounded" type="button"
+                                            onclick="swal.fire({
+                                            'text': 'Hapus Item ?',
+                                            'icon': 'question',
+                                            'confirmButtonText': 'Yes',
+                                            'showCancelButton': true,
+                                            'reverseButtons': true
+                                        }).then(result => {
+                                            if (result.isConfirmed) $(this).parents('form:first').submit();
+                                        })">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 @endsection
 
 @push('foot')
     <script>
         $(document).ready(function() {
-            $('#table_products').DataTable();
-
+            $('table').each((i, el) => {
+                $(el).DataTable();
+            });
         });
     </script>
 @endpush

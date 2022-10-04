@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\DashboardCatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\ProfileController;
@@ -106,13 +107,18 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     # Dashboard Shop
     Route::controller(DashboardShopController::class)->middleware(['auth', 'UserHasShop'])->group(function () {
         Route::get('/shop', 'index');
-        Route::delete('/shop', 'destroy');
+        // Route::delete('/shop', 'destroy');
     });
 
     ## Dashboard Shop > Products
     Route::prefix('shop')->middleware(['auth', 'UserHasShop'])->group(function () {
         Route::delete('/products/deleteall', [DashboardProductsController::class, 'snap'])->name('products.snap');
         Route::resource('/products', DashboardProductsController::class)->except('index');
+    });
+
+    ## Dashboard Shop > Catalog
+    Route::prefix('shop')->middleware(['auth', 'UserHasShop'])->group(function () {
+        Route::resource('/catalogs', DashboardCatalogController::class)->except('index');
     });
 
     # Dashboard

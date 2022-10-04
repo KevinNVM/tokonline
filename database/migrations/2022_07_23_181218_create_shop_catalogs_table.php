@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('shop_id');
             $table->string('name');
             $table->string('slug');
-            $table->string('desc');
+            $table->string('desc')->nullable(true);
             $table->timestamps();
         });
     }

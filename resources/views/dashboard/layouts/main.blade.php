@@ -67,6 +67,15 @@
             })
         </script>
     @endif
+    @if (session('msg'))
+        <script>
+            swal.fire({
+                text: '{{ session('msg')['body'] ?? '' }}',
+                icon: '{{ session('msg')['status'] ?? '' }}',
+                title: '{{ session('msg')['title'] ?? '' }}'
+            })
+        </script>
+    @endif
     @stack('foot')
 </body>
 

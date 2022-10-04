@@ -34,8 +34,8 @@
                             href="{{ route('products.create') }}">
                             <i class="fa-solid fa-plus"></i> Produk Baru
                         </a>
-                        <a class="d-flex gap-2 nav-link {{ request()->is('shop/create') ? 'active' : '' }}"
-                            href="/dashboard/shop/catalog/create">
+                        <a class="d-flex gap-2 nav-link {{ request()->is('shop/catalog/create') ? 'active' : '' }}"
+                            href="{{ route('catalogs.create') }}">
                             <i class="fa-solid fa-plus"></i> Katalog Baru
                         </a>
                     </nav>
