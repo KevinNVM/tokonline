@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="weight">Berat Produk</label>
-                                    <input type="number" class="form-control @error('weight') is-invalid @enderror"
+                                    <input type="text" class="form-control @error('weight') is-invalid @enderror"
                                         min="0" name="weight" value="{{ old('weight') }}"
                                         placeholder="ex: 1 -> 1Kg, 0.5 -> 500g/0.5Kg" required>
                                     @error('weight')

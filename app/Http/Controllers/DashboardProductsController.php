@@ -39,11 +39,10 @@ class DashboardProductsController extends Controller
 
     public function store(Request $request)
     {
-        return $request->all();
         $validated = $request->validate([
             'name' => 'required|max:256',
             'desc' => 'required',
-            'weight' => 'required|integer|min:0',
+            'weight' => 'required|min:0',
             'price' => 'required',
             'condition' => 'required|integer',
             'stock' => 'required|integer',
@@ -84,7 +83,7 @@ class DashboardProductsController extends Controller
         // return $request->all();
         $valid = $request->validate([
             'desc' => 'required',
-            'weight' => 'required|integer|min:0',
+            'weight' => 'required|min:0',
             'price' => 'required',
             'condition' => 'required|integer',
             'stock' => 'required|integer',

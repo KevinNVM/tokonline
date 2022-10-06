@@ -71,18 +71,12 @@ class DatabaseSeeder extends Seeder
             'payment_status' => 2
         ]);
 
-        Product::create([
-            'shop_id' => 1,
-            'catalog_id' => 1,
-            'sub_category_id' => 1,
-            'name' => "Dummy Item",
-            'slug' => 'dummy-item',
-            'desc' => 'lorem ipsum',
-            'weight' => 0,
-            'condition' => 0,
-            'stock' => 0,
-            'price' => 0,
-            'sold' => 0
+        \App\Models\User::factory()->create([
+            'name' => 'Made',
+            'username' => 'made',
+            'password' => bcrypt('password'),
+            'email' => 'made@example.com',
+            'phone' => '0812345699'
         ]);
 
         \App\Models\User::factory()->create([
@@ -93,18 +87,10 @@ class DatabaseSeeder extends Seeder
             'phone' => '0812345699'
         ]);
 
-        \App\Models\User::factory()->create([
-            'name' => 'Made',
-            'username' => 'made',
-            'password' => bcrypt('password'),
-            'email' => 'made@example.com',
-            'phone' => '0812345699'
-        ]);
-
         \App\Models\User::factory(10)->create();
 
         Shop::create([
-            'user_id' => 2,
+            'user_id' => 1,
             'name' => 'Made Store',
             'location' => 'Bogor',
             'whatsapp' => '085904312300',
@@ -112,7 +98,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Shop::create([
-            'user_id' => 1,
+            'user_id' => 2,
             'name' => 'Toko Kevin',
             'location' => 'Jakarta Timur',
             'whatsapp' => '085904312300',

@@ -52,7 +52,8 @@
                                 </div>
                                 <div class="mb-3 d-flex justify-content-between">
                                     <div>
-                                        <input type="checkbox" name="remember" id="remember" checked>
+                                        <input type="checkbox" class="form-check-input" name="remember" id="remember"
+                                            checked>
                                         <label for="remember" class="user-select-none">Remember Me</label>
                                     </div>
                                     <a href="/forgot" class="link">Forgot Password</a>

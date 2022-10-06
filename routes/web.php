@@ -15,9 +15,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\DashboardMakeShopController;
 use App\Http\Controllers\DashboardProductsController;
 use App\Http\Controllers\OrderController;
-use App\Models\Order;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Auth;
 
 #TEST ROUTES
 Route::prefix('test')->middleware('throttle:global')->group(function () {
@@ -27,6 +25,7 @@ Route::prefix('test')->middleware('throttle:global')->group(function () {
 
 ## Redirect ##
 Route::redirect('/dashboard/shop', '/shop');
+Route::redirect('/shop/catalogs', '/dashboard/shop#table_catalogs');
 
 ## Global Middleware Routes ##
 Route::middleware(['throttle:global', 'verified'])->group(function () {

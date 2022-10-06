@@ -53,7 +53,7 @@
                                 @enderror
                                 <code>
                                     <div class="text-muted d-inline">URL Katalog :</div>
-                                    {{ env('APP_URL') }}/{{ auth()->user()->shop->url }}/<span
+                                    {{ env('APP_URL') }}/{{ auth()->user()->shop->url }}/catalog/<span
                                         id="catalog_url">[NamaKatalog]</span>
                                 </code>
                             </div>

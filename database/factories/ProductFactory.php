@@ -17,8 +17,8 @@ class ProductFactory extends Factory
     public function definition()
     {
         return [
-            'shop_id' => mt_rand(1, 2),
-            'catalog_id' => mt_rand(1, 4),
+            'shop_id' => 1,
+            'catalog_id' => 1,
             'sub_category_id' => mt_rand(1, 5),
             'name' => "Barang " . mt_rand(1, 10e5),
             'slug' => \Illuminate\Support\Str::of('Barang' . mt_rand(1, 10e5))->slug('-'),
