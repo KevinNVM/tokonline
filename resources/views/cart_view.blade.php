@@ -73,7 +73,6 @@
         <div class="d-grid mt-3">
             <form action="{{ route('orders.store') }}" class="d-grid" method="POST">
                 @csrf
-
                 <input type="hidden" name="products_json" value="{{ $carts }}">
                 <button class="btn btn-primary my-1">Beli ({{ $carts->count() }})</button>
             </form>
