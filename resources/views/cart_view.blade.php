@@ -4,6 +4,7 @@
             <span class="text-primary">Daftar Keranjang</span>
             <span class="badge bg-primary rounded-pill">{{ $carts->count() }}</span>
         </h4>
+
         <ul class="list-group mb-3">
             @foreach ($carts as $item)
                 <li class="list-group-item d-flex justify-content-between lh-sm">
@@ -70,7 +71,12 @@
             </div>
         </form>
         <div class="d-grid mt-3">
-            <button class="btn btn-primary my-1">Beli ({{ $carts->count() }})</button>
+            <form action="{{ route('orders.store') }}" class="d-grid" method="POST">
+                @csrf
+
+                <input type="hidden" name="products_json" value="{{ $carts }}">
+                <button class="btn btn-primary my-1">Beli ({{ $carts->count() }})</button>
+            </form>
             <form action="/cart/deleteall?token={{ csrf_token() }}" method="POST">
                 @method('delete')
                 @csrf

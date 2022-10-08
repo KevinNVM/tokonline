@@ -115,7 +115,7 @@ class CartController extends Controller
     public function deleteAll()
     {
         if (request()->token !== csrf_token()) return back();
-        Cart::find(auth()->user()->id)->products()->detach();
+        Cart::snap();
 
         return redirect()->back();
     }

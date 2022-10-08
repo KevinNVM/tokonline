@@ -92,7 +92,7 @@
                                     <strong>Nama Toko</strong>
                                     <ul>
                                         @foreach ($order->products as $product)
-                                            <li><a href="{{ $product->url }}" class="link">{{ $product->name }}</a>
+                                            <li><a href="/{{ $product->url }}" class="link">{{ $product->name }}</a>
                                                 x{{ $product->quantity }}</li>
                                         @endforeach
                                     </ul>

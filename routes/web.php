@@ -98,7 +98,7 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     });
 
     # Order(s)
-    Route::resource('/orders', OrderController::class)->only(['index', 'show']);
+    Route::resource('/orders', OrderController::class)->only(['index', 'show', 'store']);
 
     # Create Shop
     Route::resource('/my-shop', DashboardMakeShopController::class)->only(['create', 'store'])->middleware(['auth', 'cors']);

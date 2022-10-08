@@ -51,21 +51,21 @@ class DatabaseSeeder extends Seeder
                 'shop' => 'Made Store',
                 'price' => 10000,
                 'quantity' => 2,
-                'url' => '/made-store/barang24480   '
+                'url' => '/made-store/barang24480'
             ], [
                 'id' => 1,
                 'name' => 'Lorem',
                 'shop' => 'Made Store',
                 'price' => 10000,
                 'quantity' => 2,
-                'url' => '/made-store/barang24480   '
+                'url' => '/made-store/barang24480'
             ], [
                 'id' => 1,
                 'name' => 'Lorem',
                 'shop' => 'Made Store',
                 'price' => 10000,
                 'quantity' => 2,
-                'url' => '/made-store/barang24480   '
+                'url' => '/made-store/barang24480'
             ]]),
             'total_price' => 2000000.00,
             'payment_status' => 2

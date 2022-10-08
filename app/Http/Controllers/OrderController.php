@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Order;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Illuminate\Http\Request;
@@ -25,7 +26,6 @@ class OrderController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -36,8 +36,30 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $products = json_decode($request->products_json, true);
+        $products_json = [];
+        foreach ($products as $product) {
+            $product['quantity'] = $product['pivot']['count'];
+            $product['shop'] = $product['shop']['url'];
+            $product['url'] = "{$product['shop']}/{$product['slug']}";
+            $products_json[] = $product;
+        }
+        $products_json = json_encode($products_json);
+        $params = [
+            'number' =>  mt_rand(10000000, 100000000),
+            'user_id' => auth()->user()->id,
+            'products_json' => $products_json,
+            'total_price' => Cart::find(auth()->user()->id)->getTotalPrice(auth()->user()->id),
+            'payment_status' => 2
+        ];
+        Order::create($params);
+
+        // Clear user's cart
+        Cart::snap();
+
+        return redirect()->to('/orders')->with('alert', 'Order Created');
     }
+
 
     /**
      * Display the specified resource.

@@ -43,6 +43,11 @@ class Cart extends Model
             return false;
     }
 
+    static public function snap()
+    {
+        Cart::find(auth()->user()->id)->products()->detach();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

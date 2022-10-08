@@ -10,6 +10,7 @@ class Order extends Model
     use HasFactory;
 
     public $primaryKey = 'number';
+    public $guarded = ['id'];
 
     static public function getTotalPrice($json)
     {
