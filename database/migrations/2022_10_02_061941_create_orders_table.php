@@ -19,7 +19,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->string('type')->default('Belanja');
             $table->text('products_json')->nullable();
-            $table->bigInteger('total_price');
+            $table->decimal('total_price');
             $table->enum('payment_status', [1, 2, 3, 4])->comment('1:success, 2:waiting, 3:expired, 4:failed');
             $table->string('snap_token')->nullable();
             $table->timestamps();

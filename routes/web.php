@@ -4,22 +4,23 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\DashboardCatalogController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ShopController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UtilitiesController;
 use App\Http\Controllers\DashboardShopController;
+use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\ProductCategoryController;
+use App\Http\Controllers\DashboardCatalogController;
 use App\Http\Controllers\DashboardMakeShopController;
 use App\Http\Controllers\DashboardProductsController;
-use App\Http\Controllers\OrderController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
-#TEST ROUTES
+#Unsigned
+Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 Route::prefix('test')->middleware('throttle:global')->group(function () {
-
     Route::get('/email-notice', fn () => view('auth.verify_email', ['title' => 'Verify Email']));
 });
 

@@ -25,51 +25,51 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        Order::create([
-            'number' =>  mt_rand(10000000, 100000000),
-            'user_id' => 2,
-            'products_json' => json_encode([
-                [
-                    'id' => 1,
-                    'name' => 'Lorem',
-                    'shop' => 'Made Store',
-                    'price' => 10000,
-                    'quantity' => 2,
-                    'url' => '/made-store/barang24480'
-                ]
-            ]),
-            'total_price' => 2000000.00,
-            'payment_status' => 2
-        ]);
+        // Order::create([
+        //     'number' =>  mt_rand(10000000, 100000000),
+        //     'user_id' => 2,
+        //     'products_json' => json_encode([
+        //         [
+        //             'id' => 1,
+        //             'name' => 'Lorem',
+        //             'shop' => 'Made Store',
+        //             'price' => 10000,
+        //             'quantity' => 2,
+        //             'url' => '/made-store/barang24480'
+        //         ]
+        //     ]),
+        //     'total_price' => 2000000.00,
+        //     'payment_status' => 2
+        // ]);
 
-        Order::create([
-            'number' =>  mt_rand(10000000, 100000000),
-            'user_id' => 2,
-            'products_json' => json_encode([[
-                'id' => 1,
-                'name' => 'Lorem',
-                'shop' => 'Made Store',
-                'price' => 10000,
-                'quantity' => 2,
-                'url' => '/made-store/barang24480'
-            ], [
-                'id' => 1,
-                'name' => 'Lorem',
-                'shop' => 'Made Store',
-                'price' => 10000,
-                'quantity' => 2,
-                'url' => '/made-store/barang24480'
-            ], [
-                'id' => 1,
-                'name' => 'Lorem',
-                'shop' => 'Made Store',
-                'price' => 10000,
-                'quantity' => 2,
-                'url' => '/made-store/barang24480'
-            ]]),
-            'total_price' => 2000000.00,
-            'payment_status' => 2
-        ]);
+        // Order::create([
+        //     'number' =>  mt_rand(10000000, 100000000),
+        //     'user_id' => 2,
+        //     'products_json' => json_encode([[
+        //         'id' => 1,
+        //         'name' => 'Lorem',
+        //         'shop' => 'Made Store',
+        //         'price' => 10000,
+        //         'quantity' => 2,
+        //         'url' => '/made-store/barang24480'
+        //     ], [
+        //         'id' => 1,
+        //         'name' => 'Lorem',
+        //         'shop' => 'Made Store',
+        //         'price' => 10000,
+        //         'quantity' => 2,
+        //         'url' => '/made-store/barang24480'
+        //     ], [
+        //         'id' => 1,
+        //         'name' => 'Lorem',
+        //         'shop' => 'Made Store',
+        //         'price' => 10000,
+        //         'quantity' => 2,
+        //         'url' => '/made-store/barang24480'
+        //     ]]),
+        //     'total_price' => 2000000.00,
+        //     'payment_status' => 2
+        // ]);
 
         \App\Models\User::factory()->create([
             'name' => 'Made',

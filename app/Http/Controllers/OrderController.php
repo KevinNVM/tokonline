@@ -49,13 +49,14 @@ class OrderController extends Controller
             'number' =>  mt_rand(10000000, 100000000),
             'user_id' => auth()->user()->id,
             'products_json' => $products_json,
-            'total_price' => Cart::find(auth()->user()->id)->getTotalPrice(auth()->user()->id),
+            'total_price' => Cart::getTotalPrice(auth()->user()->id) . '.00',
             'payment_status' => 2
         ];
         Order::create($params);
 
         // Clear user's cart
         Cart::snap();
+        Cart::setTotalPrice(auth()->user()->id, 0);
 
         return redirect()->to('/orders')->with('alert', 'Order Created');
     }
