@@ -29,12 +29,12 @@
                                         <i class="fa-brands fa-facebook fa-2xl"></i>
                                     </a>
 
-                                    <a onclick="Share.twitter('http:/'+'/127.0.0.1:8000/toko-kevin','Toko Kevin')"
-                                        title="Twitter" class="mx-2 fs-2 link-info" role="button">
+                                    <a onclick="Share.twitter({{ url()->current() }},'Toko Kevin')" title="Twitter"
+                                        class="mx-2 fs-2 link-info" role="button">
                                         <i class="fa-brands fa-twitter fa-2xl"></i>
                                     </a>
 
-                                    <a href="whatsapp://send?text=%2ACoba+Cek+Toko+Ini+Deh%21+Dijamin+Ga+Bakal+Nyesel%2A%0D%0Ahttp://localhost:8000{{ request()->getPathInfo() }}"
+                                    <a href="whatsapp://send?text=%2ACoba+Cek+Toko+Ini+Deh%21+Dijamin+Ga+Bakal+Nyesel%2A%0D%0A{{ url()->current() }}"
                                         data-action="share/whatsapp/share" title="Whatsapp" class="mx-2 fs-2 link-success">
                                         <i class="fa-brands fa-whatsapp fa-2xl"></i>
                                     </a>

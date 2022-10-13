@@ -8,8 +8,11 @@ use App\Services\Midtrans\CallbackService;
 
 class PaymentCallbackController extends Controller
 {
-    public function receive()
+    public function receive(Request $request)
     {
+        if (!isset($request->merchant_id) && $request->merchant_id !== config('midtrans.merchant_id'))
+            return abort(403, 'Invalid Request');
+
         $callback = new CallbackService;
 
         if ($callback->isSignatureKeyVerified()) {

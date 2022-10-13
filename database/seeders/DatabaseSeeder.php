@@ -38,7 +38,7 @@ class DatabaseSeeder extends Seeder
         //             'url' => '/made-store/barang24480'
         //         ]
         //     ]),
-        //     'total_price' => 2000000.00,
+        //     'total_price' => 270000,
         //     'payment_status' => 2
         // ]);
 
@@ -67,9 +67,11 @@ class DatabaseSeeder extends Seeder
         //         'quantity' => 2,
         //         'url' => '/made-store/barang24480'
         //     ]]),
-        //     'total_price' => 2000000.00,
+        //     'total_price' => 270000,
         //     'payment_status' => 2
         // ]);
+
+        Order::factory(10)->create();
 
         \App\Models\User::factory()->create([
             'name' => 'Made',
