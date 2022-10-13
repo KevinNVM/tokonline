@@ -50,7 +50,7 @@ class OrderController extends Controller
             'user_id' => auth()->user()->id,
             'products_json' => $products_json,
             'total_price' => Cart::getTotalPrice(auth()->user()->id) . '.00',
-            'payment_status' => 2
+            'payment_status' => 1
         ];
         Order::create($params);
 

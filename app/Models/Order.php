@@ -26,14 +26,15 @@ class Order extends Model
     {
         switch ($status) {
             case 1:
-                return 'Berhasil';
+                return 'Menunggu Pembayaran';
                 break;
             case 2:
-                return 'Menunggu Pembayaran';
+                return 'Berhasil';
                 break;
             case 3:
                 return 'Kadaluarsa';
                 break;
+            case 4:
             default:
                 return 'Dibatalkan';
                 break;

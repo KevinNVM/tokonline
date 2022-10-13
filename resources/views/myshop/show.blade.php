@@ -219,14 +219,15 @@
                                         <input type="hidden" name="notes" id="notes" value="">
                                         <input type="hidden" name="price" value="{{ $product->price }}">
                                         <button class="h5 checkout-button btn btn-primary" name="cart"
-                                            {{ $product->disabled ? 'disabled title="Product is Inactive"' : '' }}>
+                                            {{ $product->disabled || $product->stock <= 0 ? 'disabled title="Product is Inactive"' : '' }}>
                                             <i class="fa-solid fa-cart-arrow-down fa-lg"></i> Keranjang
                                         </button>
                                     </form>
-                                    <form action="/cart/checkout" method="POST">
+                                    <form action="/cart" method="POST">
                                         @csrf
                                         <div class="input-group">
-                                            <button class="checkout-button btn btn-outline-primary w-50" name="direct">
+                                            <button class="checkout-button btn btn-outline-primary w-50" name="direct"
+                                                disabled>
                                                 Beli Langsung
                                             </button>
                                             <select class="form-select">

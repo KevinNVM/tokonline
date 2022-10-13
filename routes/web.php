@@ -19,7 +19,7 @@ use App\Http\Controllers\DashboardProductsController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 #Unsigned
-Route::resource('orders', OrderController::class)->only(['index', 'show']);
+Route::resource('orders', OrderController::class)->only(['index', 'show', 'store']);
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 Route::prefix('test')->middleware('throttle:global')->group(function () {
     Route::get('/email-notice', fn () => view('auth.verify_email', ['title' => 'Verify Email']));

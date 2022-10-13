@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\Midtrans\CallbackService;
 
@@ -23,6 +24,12 @@ class PaymentCallbackController extends Controller
                 Order::where('id', $order->id)->update([
                     'payment_status' => 2,
                 ]);
+                foreach (json_decode($order->products_json) as $product) {
+                    $selected = Product::find($product->id);
+                    $selected->stock = $selected->stock - $product->pivot->count;
+                    if ($selected->stock < 0) $selected->stock = 0;
+                    $selected->save();
+                }
             }
 
             if ($callback->isExpire()) {

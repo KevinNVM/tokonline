@@ -71,7 +71,7 @@ class DatabaseSeeder extends Seeder
         //     'payment_status' => 2
         // ]);
 
-        Order::factory(10)->create();
+        // Order::factory(10)->create();
 
         \App\Models\User::factory()->create([
             'name' => 'Made',
