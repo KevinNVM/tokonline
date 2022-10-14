@@ -37,6 +37,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $products = json_decode($request->products_json, true);
+
         $products_json = [];
         foreach ($products as $product) {
             $product['quantity'] = $product['pivot']['count'];
@@ -52,11 +53,17 @@ class OrderController extends Controller
             'total_price' => Cart::getTotalPrice(auth()->user()->id) . '.00',
             'payment_status' => 1
         ];
-        Order::create($params);
+
+        try {
+            Order::create($params);
+        } catch (\Illuminate\Database\QueryException $err) {
+            return back()->with('alert', 'Total Harga Terlalu Tinggi Dalam Satu Waktu! Harap Kurangi Barang Belanja Anda');
+        }
 
         // Clear user's cart
         Cart::snap();
         Cart::setTotalPrice(auth()->user()->id, 0);
+
 
         return redirect()->to('/orders')->with('alert', 'Order Created');
     }
@@ -70,6 +77,8 @@ class OrderController extends Controller
      */
     public function show(Order $order)
     {
+        if (auth()->user()->id !== $order->user_id) return abort(404, 'Order Not Found');
+
         $snapToken = $order->snap_token;
         if (empty($snapToken)) {
             // Jika snap token masih NULL, buat token snap dan simpan ke database

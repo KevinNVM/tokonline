@@ -12,7 +12,7 @@
             <div class="row">
                 <div class="col">
                     @foreach ($orders as $order)
-                        <div class="card border-0 rounded-4 shadow">
+                        <div class="card border-0 rounded-4 shadow mb-3">
                             <div class="card-body">
                                 <div class="d-flex justify-content-between">
                                     <div class="text-muted fw-semibold">
