@@ -237,8 +237,8 @@
             <div class="row">
                 @foreach ($top_shops as $key => $item)
                     <div class="col-lg-4">
-                        <img src="/img/icons-512.png" alt="" width="140" height="140"
-                            class="img-fluid rounded-circle">
+                        <img src="{{ asset('storage/images/profiles/' . $item->owner->image) }}" width="140"
+                            height="140" class="img-fixed rounded-circle border ">
 
                         <h2 class="fw-normal">{{ $item->name }}</h2>
                         <p>{{ $item->desc ?? 'Some representative placeholder content foreach the three columns of text below the carousel. This is the first column.' }}

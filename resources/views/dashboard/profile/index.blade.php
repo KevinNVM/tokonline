@@ -3,6 +3,28 @@
 @push('head')
     <link rel="stylesheet" href="/css/hover.css">
     <link rel="stylesheet" href="/css/color.css">
+    <style>
+        #imageWrapper {
+            transition: all 300ms;
+        }
+
+        #imageWrapper:hover {
+            transform: scale(1.1);
+        }
+    </style>
+@endpush
+
+@push('foot')
+    <script>
+        const imgInp = document.querySelector('#image'),
+            img = document.querySelector('#imagePreview')
+        imgInp.onchange = evt => {
+            const [file] = imgInp.files
+            if (file) {
+                img.src = URL.createObjectURL(file)
+            }
+        }
+    </script>
 @endpush
 
 @section('main')
@@ -29,9 +51,30 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                     @endif
-                    <form action="{{ route('profile.update', $user->username) }}" method="post">
+                    <form action="{{ route('profile.update', $user->username) }}" method="post"
+                        enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <section class="py-3 border-bottom">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="fs-6 fw-semibold">
+                                    Profile Picture
+                                </div>
+                                <div class="fs-6 fw-semibold">
+                                    <label for="image">
+                                        <div class="p-1 border rounded" role="button" id="imageWrapper">
+                                            <img src="{{ asset('storage/images/profiles/' . $user->image) }}"
+                                                id="imagePreview" alt="Profile Picture" width="100">
+                                        </div>
+                                    </label>
+                                    <input id="image" type="file" name="image" class="visually-hidden"
+                                        accept="image/*" onfocus="$('#btn-save').show(500);">
+                                    @error('image')
+                                        <small class="text-danger">{{ $message }}</small>
+                                    @enderror
+                                </div>
+                            </div>
+                        </section>
                         <section class="py-3 border-bottom">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="fs-6 fw-semibold">
@@ -90,6 +133,7 @@
                         </section>
 
                         <section class="py-3 text-end" id="btn-save">
+                            <button type="button" class="btn btn-dark" onclick="$('#btn-save').hide(500);">Cancel</button>
                             <button class="btn btn-outline-dark">Save</button>
                         </section>
                     </form>

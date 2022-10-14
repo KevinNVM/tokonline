@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Rules\MatchOldPassword;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 
 class ProfileController extends Controller
@@ -20,6 +21,7 @@ class ProfileController extends Controller
 
     public function update(Request $request, User $user)
     {
+
         $old = $user->find(auth()->user()->id);
 
         if ($request->username !== $old->username)
@@ -31,9 +33,19 @@ class ProfileController extends Controller
             'name' => 'required|max:120',
             'username' => $validateUsername,
             // 'email' => 'required|email:dns',
+            'image' => 'image|mimes:png,jpg,jpeg|max:2048',
         ]);
 
         unset($validData['oldPassword']);
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . "_" . $image->hashName();
+            $image->storeAs('/images/profiles', $imageName, 'public');
+            $validData['image'] = $imageName;
+            // Storage::delete($old->image);
+            // unlink('/storage/app/public/images/profiles/' . $old->image);
+            // if (File::exists('storage/app/public/images/profiles/' . $old->image))
+        }
         $user->where('id', auth()->user()->id)->update($validData);
 
         return redirect()->back();

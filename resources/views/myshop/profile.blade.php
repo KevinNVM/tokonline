@@ -4,7 +4,8 @@
             <div class="col-md-4 rounded d-flex justify-content-center"
                 style="background: rgb(221,41,198);
                 background: linear-gradient(145deg, rgba(221,41,198,1) 0%, rgba(170,255,170,1) 100%);">
-                <img src="/img/icons-512.png" class="img-fluid rounded-circle py-4" width="175">
+                <img src="{{ asset('storage/images/profiles/' . $shop->owner->image) }}"
+                    class="img-fluid rounded-circle py-4" width="175">
             </div>
             <div class="col-md-8">
                 <div class="card-body">
