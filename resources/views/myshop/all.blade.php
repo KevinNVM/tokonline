@@ -54,13 +54,12 @@
                             </label>
                         </div>
                         <div class="col-3">
-                            <select class="form-select" aria-label="Order" name="orderBy">
+                            <select class="form-select" aria-label="Order" name="orderBy"
+                                onchange="$(this).parents('form:first').submit()">
                                 <option disabled>Order By</option>
-                                <option value="latest" {{ request()->orderBy == 'latest' ? 'selected' : '' }}
-                                    onclick="$(this).parents('form:first').submit()">Latest
+                                <option value="latest" {{ request()->orderBy == 'latest' ? 'selected' : '' }}>Latest
                                 </option>
-                                <option value="oldest" {{ request()->orderBy == 'oldest' ? 'selected' : '' }}
-                                    onclick="$(this).parents('form:first').submit()">
+                                <option value="oldest" {{ request()->orderBy == 'oldest' ? 'selected' : '' }}>
                                     Oldest
                                 </option>
                             </select>
@@ -73,7 +72,8 @@
                             @foreach ($products as $key => $product)
                                 <div class="col mb-3">
                                     <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                        <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
+                                        <img src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
+                                            class="card-img-top p-2" alt="Product Thumbnail">
                                         <div class="card-body">
                                             <small class="badge text-bg-warning">{{ $product->catalog->name }}</small>
                                             <h5 title="{{ $product->name }}">

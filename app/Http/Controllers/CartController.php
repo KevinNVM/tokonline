@@ -14,10 +14,12 @@ class CartController extends Controller
 {
     public function cart_view(Cart $cart)
     {
+        $cart = $cart->find(auth()->user()->id);
+        if (!$cart) User::setCart(auth()->user()->id);
         if (request('token') !== csrf_token() && !Cart::find(auth()->user()->id)) return '<h3 class="text-danger text-center">Cart Failed To Load</h3>';
         return view('cart_view', [
             'title' => 'Keranjang',
-            'carts' => auth()->user()->cart->products,
+            'carts' => $cart->products,
             'subtotal' => $cart->getTotalPrice(auth()->user()->id),
         ]);
     }

@@ -260,7 +260,8 @@
                         @break($key == 6)
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
+                                <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                    class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="{{ 'Lorem ipsum dolor sit amet' }}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
@@ -296,7 +297,8 @@
                         @break($key == 6)
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
+                                <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                    class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="{{ $item->name }}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
@@ -331,7 +333,8 @@
                         @break($key == 6)
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
+                                <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                    class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="{{ $item->name }}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
@@ -471,7 +474,7 @@
                         $('.inf-col').append(`
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
+                                <img src="${JSON.parse(valueOfElement.image)[0]}" class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="${valueOfElement.name}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"

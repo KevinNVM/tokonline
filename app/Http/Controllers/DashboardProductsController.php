@@ -48,7 +48,19 @@ class DashboardProductsController extends Controller
             'stock' => 'required|integer',
             'catalog_id' => 'required|integer',
             'sub_category_id' => 'required|integer',
+            'image.*' =>  'image|mimes:png,jpg,jpeg'
         ]);
+
+        $imgNames = [];
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $imageName = $image->hashName();
+                $image->storeAs('/images/products', $imageName, 'public');
+                $imgNames[] = $imageName;
+            }
+        } else $valid['image'] = ['default_product.png'];
+
+        $valid['image'] = json_encode($imgNames);
 
         $validated['shop_id'] = Shop::where('user_id', auth()->user()->id)->sum('user_id');
         $validated['slug'] = Str::of($validated['name'])->slug();
@@ -91,8 +103,19 @@ class DashboardProductsController extends Controller
             'sub_category_id' => 'required|integer',
             'disabled' => 'required|integer',
             'visibility' => 'required|integer',
+            'image.*' =>  'image|mimes:png,jpg,jpeg'
         ]);
 
+        $imgNames = [];
+        if ($request->hasFile('image')) {
+            foreach ($request->file('image') as $image) {
+                $imageName = $image->hashName();
+                $image->storeAs('/images/products', $imageName, 'public');
+                $imgNames[] = $imageName;
+            }
+        } else $valid['image'] = ['default_product.png'];
+
+        $valid['image'] = json_encode($imgNames);
         $product->update($valid);
 
         return redirect('/dashboard/shop')->with('alert', "Updated: $product->name");

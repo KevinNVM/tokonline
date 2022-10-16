@@ -4,6 +4,16 @@
     <link rel="stylesheet" href="/css/hover.css">
 @endpush
 
+@push('foot')
+    <script src="/js/previewImage.js"></script>
+    <script>
+        previewImage('#imgPreview1', '#img1')
+        previewImage('#imgPreview2', '#img2')
+        previewImage('#imgPreview3', '#img3')
+        previewImage('#imgPreview4', '#img4')
+    </script>
+@endpush
+
 @section('main')
     <div class="main p-3">
         @include('utilities.breadcrumb', ['title' => 'Post Produk Baru'])
@@ -21,40 +31,46 @@
                             @method('POST')
                             @csrf
                             <div class="d-flex flex-column">
-                                {{-- <div class="d-flex flex-column align-items-center">
+                                <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex flex-column align-items-center">
                                         <div class="mb-3">
-                                            <img src="/img/icons-512.png" width="250">
+                                            <label for="img1" role="button">
+                                                <img id="imgPreview1" src="/img/icons-512.png" width="250">
+                                            </label>
                                         </div>
                                         <div class="d-block d-lg-flex flex-row">
                                             <div class="mb-3">
-                                                <img src="/img/icons-512.png" width="125" class="mx-1">
+                                                <label for="img2" role="button">
+                                                    <img id="imgPreview2" src="/img/icons-512.png" width="125"
+                                                        class="mx-1">
+                                                </label>
                                             </div>
                                             <div class="mb-3">
-                                                <img src="/img/icons-512.png" width="125" class="mx-1">
+                                                <label for="img3" role="button">
+                                                    <img id="imgPreview3" src="/img/icons-512.png" width="125"
+                                                        class="mx-1">
+                                                </label>
                                             </div>
                                             <div class="mb-3">
-                                                <img src="/img/icons-512.png" width="125" class="mx-1">
+                                                <label for="img4" role="button">
+                                                    <img id="imgPreview4" src="/img/icons-512.png" width="125"
+                                                        class="mx-1">
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="thumbnail1">Gambar Produk Utama</label>
-                                        <input type="file" class="form-control" id="thumbnail1" name="img1">
+                                        <label for="img1">Gambar Produk Utama</label>
+                                        <input type="file" class="form-control" id="img1" name="img1"
+                                            id="img1" accept="image/*">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="thumbnail2">Gambar Produk 2</label>
-                                        <input type="file" class="form-control" id="thumbnail2" name="img2">
+                                    <div class="mb-3 d-flex flex-column gap-1">
+                                        <label>Gambar Produk Lainnya</label>
+                                        <input type="file" class="form-control" id="img2" name="img2">
+                                        <input type="file" class="form-control" id="img3" name="img3">
+                                        <input type="file" class="form-control" id="img4" name="img4">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="thumbnail3">Gambar Produk 3</label>
-                                        <input type="file" class="form-control" id="thumbnail3" name="img3">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="thumbnail4">Gambar Produk 4</label>
-                                        <input type="file" class="form-control" id="thumbnail4" name="img4">
-                                    </div>
-                                </div> --}}
+                                </div>
                                 @if ($errors->any())
                                     <div class="alert alert-danger pt-4 my-2">
                                         <h6 class="fw-semibold">Error!</h6>
@@ -131,7 +147,8 @@
                                         <span class="input-group-text">Rp</span>
                                         <input type="text"
                                             class="form-control @error('price') is-invalid @enderror rounded-end"
-                                            min="0" value="{{ old('price') }}" placeholder="ex: 100000 -> 100.000"
+                                            min="0" value="{{ old('price') }}"
+                                            placeholder="ex: 100000 -> 100.000"
                                             onchange="this.value = $.number( $('input[name=price]').val(), 0, ',', '.' )"
                                             oninput="$('input[name=price]').val(this.value)" required>
                                         <input type="hidden" name="price">

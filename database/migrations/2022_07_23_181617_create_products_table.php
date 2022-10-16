@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
+            $table->text('image')->default(json_encode(['default_product.png']));
             $table->foreignId('shop_id');
             $table->foreignId('catalog_id');
             $table->foreignId('sub_category_id');

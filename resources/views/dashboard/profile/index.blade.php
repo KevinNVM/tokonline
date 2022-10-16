@@ -62,16 +62,17 @@
                                 </div>
                                 <div class="fs-6 fw-semibold">
                                     <label for="image">
-                                        <div class="p-1 border rounded" role="button" id="imageWrapper">
+                                        <div class="p-1 border rounded d-flex justify-content-center" role="button"
+                                            id="imageWrapper">
                                             <img src="{{ asset('storage/images/profiles/' . $user->image) }}"
                                                 id="imagePreview" alt="Profile Picture" width="100">
                                         </div>
+                                        @error('image')
+                                            <small class="text-danger">{{ $message }}</small>
+                                        @enderror
                                     </label>
                                     <input id="image" type="file" name="image" class="visually-hidden"
                                         accept="image/*" onfocus="$('#btn-save').show(500);">
-                                    @error('image')
-                                        <small class="text-danger">{{ $message }}</small>
-                                    @enderror
                                 </div>
                             </div>
                         </section>

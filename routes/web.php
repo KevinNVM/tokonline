@@ -83,6 +83,7 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     # Product Category
     Route::controller(ProductCategoryController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/category', 'index')->name('category.index');
+        Route::redirect('/category/{category}/', '/category');
         Route::get('/category/{category}/{sub_category}', 'show');
     });
 
@@ -135,6 +136,7 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     Route::controller(ShopController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/{shop:url}', 'index')->name('shop.index');
         Route::get('/{shop}/products', 'all');
+        Route::redirect('/{shop}/catalog', '/{shop}#tabs-2');
         Route::get('/{shop}/{product}', 'show');
         Route::get('/{shop}/catalog/{catalog}', 'catalog');
     });

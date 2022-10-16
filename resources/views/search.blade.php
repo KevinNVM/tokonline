@@ -162,7 +162,7 @@
                                     <div class="col hp">
                                         <div class="card-product card h-100 shadow-hover">
                                             <a href="/{{ $product->shop->url . '/' . $product->slug }}">
-                                                <img src="https://m.media-amazon.com/images/I/81gK08T6tYL._AC_SL1500_.jpg"
+                                                <img src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
                                                     class="card-img-top" alt="product.title" />
                                             </a>
 

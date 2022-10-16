@@ -109,29 +109,29 @@ class DatabaseSeeder extends Seeder
 
         ShopCatalog::create([
             'shop_id' => 1,
-            'slug' => 'barang-teknologi',
-            'name' => 'Barang Teknologi',
+            'slug' => 'barang-MADE',
+            'name' => 'Barang MADE',
             'desc' => 'Lorem Ipsum'
         ]);
 
         ShopCatalog::create([
             'shop_id' => 1,
-            'slug' => 'barang-murah',
-            'name' => 'Barang Murah',
+            'slug' => 'barang-murah-MADE',
+            'name' => 'Barang Murah-MADE',
             'desc' => 'Lorem Ipsum'
         ]);
 
         ShopCatalog::create([
             'shop_id' => 2,
-            'slug' => 'barang-teknologi',
-            'name' => 'Barang Teknologi',
+            'slug' => 'barang-teknologi-KEVIN',
+            'name' => 'Barang Teknologi-KEVIN',
             'desc' => 'Lorem Ipsum'
         ]);
 
         ShopCatalog::create([
             'shop_id' => 2,
-            'slug' => 'barang-murah',
-            'name' => 'Barang Murah',
+            'slug' => 'barang-murah-KEVIn',
+            'name' => 'Barang Murah-KEVIn',
             'desc' => 'Lorem Ipsum'
         ]);
 
@@ -180,7 +180,21 @@ class DatabaseSeeder extends Seeder
             'slug' => 'baju-pria'
         ]);
 
+        Product::create([
+            'shop_id' => 0,
+            'catalog_id' => 0,
+            'sub_category_id' => mt_rand(1, 5),
+            'name' => "Barang " . mt_rand(1, 10e5),
+            'slug' => \Illuminate\Support\Str::of('Barang' . mt_rand(1, 10e5))->slug('-'),
+            'desc' => 'Lorem Ipsum',
+            'weight' => mt_rand(1, 10),
+            'condition' => mt_rand(0, 1),
+            'stock' => mt_rand(1, 999),
+            'price' => floor(mt_rand(1000, 10e5)),
+            'sold' => mt_rand(1, 200),
+            'visibility' => mt_rand(0, 2),
+        ]);
 
-        Product::factory(75)->create();
+        // Product::factory(75)->create();
     }
 }

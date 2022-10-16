@@ -48,7 +48,7 @@
 
     <main>
         <div class="container py-3">
-            @include('utilities.breadcrumb', ['title' => 'ODR-' . $order->number])
+            @include('utilities.breadcrumb', ['title' => '#' . $order->number])
 
             <a href="/orders" class="btn btn-outline-warning btn-sm d-print-none"><i class="bi bi-arrow-left"></i> Back</a>
             <h4 class="text-muted py-3">{{ $title }}</h4>

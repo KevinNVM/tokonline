@@ -33,7 +33,7 @@ class ProfileController extends Controller
             'name' => 'required|max:120',
             'username' => $validateUsername,
             // 'email' => 'required|email:dns',
-            'image' => 'image|mimes:png,jpg,jpeg|max:2048',
+            'image' => 'image|mimes:png,jpg,jpeg|max:2048|max:2048|dimensions:min_width=100,min_height=100,max_width=1000,max_height=1000',
         ]);
 
         unset($validData['oldPassword']);

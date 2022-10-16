@@ -14,6 +14,11 @@ class Cart extends Model
     public $guarded = ['id'];
     protected $primaryKey = 'user_id';
 
+    static public function setCart($user_id)
+    {
+        User::setCart($user_id);
+    }
+
     static public function deleteItem($id)
     {
         Cart::find(auth()->user()->id)->products()->detach($id);

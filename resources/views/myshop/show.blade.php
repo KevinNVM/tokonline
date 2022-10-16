@@ -27,20 +27,20 @@
                         <div class="card border-0 product-image">
                             <div class="row justify-content-center">
                                 <div class="col col-md-6 col-lg-12">
-                                    <img src="/img/icons-512.png" class="card-img img-main-thumbnail"
-                                        alt="Product Thumbnail">
+
+                                    <img role="button" data-bs-toggle="modal" data-bs-target="#showImage"
+                                        onclick="$('#ImagePreview').attr('src', this.src)"
+                                        src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
+                                        class="card-img img-main-thumbnail" alt="Product Thumbnail" id="mainImg">
+
                                 </div>
                             </div>
                             <div class="card-body d-flex justify-content-center">
-                                <img src="/img/icons-512.png" width="50"
-                                    class="img-sub-thumbnail img-fluid rounded shadow-sm mx-1 outline-salmon"
-                                    style="width: 50px;">
-                                <img src="/img/icons-512.png" width="50"
-                                    class="img-sub-thumbnail img-fluid rounded shadow-sm mx-1 outline-salmon"
-                                    style="width: 50px;">
-                                <img src="/img/icons-512.png" width="50"
-                                    class="img-sub-thumbnail img-fluid rounded shadow-sm mx-1 outline-salmon"
-                                    style="width: 50px;">
+                                @foreach (json_decode($product->image) as $img)
+                                    <img src="{{ asset('storage/images/products/' . $img) }}" width="50" height="50"
+                                        class="img-sub-thumbnail img-fixed rounded shadow-sm mx-1 outline-salmon"
+                                        style="width: 50px;" onclick="$('#mainImg').attr('src', this.src)">
+                                @endforeach
                             </div>
                         </div>
                     </div>
@@ -105,8 +105,8 @@
                                     <div class="row g-0 justify-content-center">
                                         <div class="col-12 d-flex align-items-center">
                                             <a href="#" class="fw-semibold text-decoration-none link-dark ms-3">
-                                                <img src="/img/icons-512.png" alt="Seller Profile" width="40"
-                                                    class="img-fluid rounded-circle">
+                                                <img src="{{ asset('storage/images/profiles/' . $product->shop->owner->image) }}"
+                                                    alt="Seller Profile" width="40" class="img-fluid rounded-circle">
                                             </a>
                                             <h5><a href="/{{ $product->shop->url }}"
                                                     class="fw-semibold text-decoration-none link-dark ms-3">{{ $product->shop->name }}</a>
@@ -116,7 +116,9 @@
                                             </button>
                                         </div>
                                         <div class="col px-2">
-                                            <small class="d-block">{!! $product->shop->owner->status ? 'Online' : 'Terakhir Online <b>2 Jam Lalu</b>' !!}</small>
+                                            <small class="d-block">{!! $product->shop->owner->status
+                                                ? 'Online'
+                                                : 'Last Seen <b>' . $product->shop->owner->updated_at->diffForHumans(null) . '</b>' !!}</small>
                                             <small><i class="bi bi-star-fill"></i> 5.0 Rata rata ulasan</small>
                                         </div>
                                     </div>
@@ -443,8 +445,8 @@
                                 <div class="user-info border-bottom my-1 py-2 px-2 d-flex">
                                     <div class="row g-0 justify-content-center">
                                         <div class="col-12 d-flex align-items-center">
-                                            <img src="/img/icons-512.png" alt="Seller Profile" width="40"
-                                                class="img-fluid rounded-circle">
+                                            <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                                alt="Seller Profile" width="40" class="img-fluid rounded-circle">
                                             <h5 class="fw-semibold ms-3">User Name</h5>
                                         </div>
                                         <div class="col mt-2">
@@ -490,8 +492,8 @@
                                 <div class="my-1 py-2 px-2 d-flex border rounded mb-4">
                                     <div class="row g-0justify-content-center">
                                         <div class="col-12 d-flex align-items-center">
-                                            <img src="/img/icons-512.png" alt="Seller Profile" width="35"
-                                                class="img-fluid rounded-circle">
+                                            <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                                alt="Seller Profile" width="35" class="img-fluid rounded-circle">
                                             <h5 class="fw-semibold ms-3">Buyers Name · <small
                                                     class="fs-6 fw-light font-monospace">26
                                                     Jul</small>
@@ -507,7 +509,8 @@
                                             </p>
                                             <div class="bg-light border rounded px-2 py-2">
                                                 <div class="col-12 d-flex align-items-center">
-                                                    <img src="/img/icons-512.png" alt="Seller Profile" width="30"
+                                                    <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                                        alt="Seller Profile" width="30"
                                                         class="img-fluid rounded-circle">
                                                     <h6 class="fw-semibold ms-3">Seller Name · <small
                                                             class="fs-6 fw-light font-monospace">26
@@ -523,7 +526,8 @@
                                                     voluptatum?
                                                 </p>
                                                 <div class="col-12 d-flex align-items-center">
-                                                    <img src="/img/icons-512.png" alt="Seller Profile" width="35"
+                                                    <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                                        alt="Seller Profile" width="35"
                                                         class="img-fluid rounded-circle me-2">
                                                     <textarea onfocus="$('.btn-send{{ $i }}').show()" type="text" class="form-control input-discuss"
                                                         placeholder="Komentar Untuk Bergabung Diskusi" rows="1"></textarea>
@@ -541,7 +545,23 @@
             </div>
         </div>
     </main>
+    {{-- Modal Image --}}
+    <div class="modal fade" id="showImage" tabindex="-1" aria-labelledby="showImageLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="showImageLabel">Product Image</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body d-flex justify-content-center align-items-center p-4">
+                    <img src="" id="ImagePreview" class="img-fluid" onclick="openNewTab(this.src)"
+                        role="button">
+                </div>
+            </div>
+        </div>
+    </div>
     @include('utilities.footer')
+    <script src="/js/openNewTab.js"></script>
     <script>
         function descMore() {
             $('p.desc-p').html(
