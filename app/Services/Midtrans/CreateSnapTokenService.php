@@ -27,6 +27,7 @@ class CreateSnapTokenService extends Midtrans
                 'first_name' => 'Martin Mulyo Syahidin',
                 'email' => 'mulyosyahidin95@gmail.com',
                 'phone' => '081234567890',
+                'address' => ''
             ]
         ];
 

@@ -39,7 +39,7 @@ class DashboardProductsController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $valid = $request->validate([
             'name' => 'required|max:256',
             'desc' => 'required',
             'weight' => 'required|min:0',
@@ -51,22 +51,23 @@ class DashboardProductsController extends Controller
             'image.*' =>  'image|mimes:png,jpg,jpeg'
         ]);
 
-        $imgNames = [];
+
         if ($request->hasFile('image')) {
+            $imgNames = [];
             foreach ($request->file('image') as $image) {
                 $imageName = $image->hashName();
                 $image->storeAs('/images/products', $imageName, 'public');
                 $imgNames[] = $imageName;
             }
-        } else $valid['image'] = ['default_product.png'];
+            $valid['image'] = json_encode($imgNames);
+        } else $valid['image'] = json_encode(['default_product.png']);
 
-        $valid['image'] = json_encode($imgNames);
 
-        $validated['shop_id'] = Shop::where('user_id', auth()->user()->id)->sum('user_id');
-        $validated['slug'] = Str::of($validated['name'])->slug();
-        $validated['sold'] = 0;
+        $valid['shop_id'] = Shop::where('user_id', auth()->user()->id)->sum('user_id');
+        $valid['slug'] = Str::of($valid['name'])->slug();
+        $valid['sold'] = 0;
 
-        Product::create($validated);
+        Product::create($valid);
 
         return redirect('/dashboard/shop')->with('alert', 'Produk Berhasil Ditambahkan!');
     }
@@ -106,16 +107,16 @@ class DashboardProductsController extends Controller
             'image.*' =>  'image|mimes:png,jpg,jpeg'
         ]);
 
-        $imgNames = [];
         if ($request->hasFile('image')) {
+            $imgNames = [];
             foreach ($request->file('image') as $image) {
                 $imageName = $image->hashName();
                 $image->storeAs('/images/products', $imageName, 'public');
                 $imgNames[] = $imageName;
             }
-        } else $valid['image'] = ['default_product.png'];
+            $valid['image'] = json_encode($imgNames);
+        } else $valid['image'] = json_encode(['default_product.png']);
 
-        $valid['image'] = json_encode($imgNames);
         $product->update($valid);
 
         return redirect('/dashboard/shop')->with('alert', "Updated: $product->name");

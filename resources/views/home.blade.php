@@ -265,7 +265,7 @@
                                 <div class="card-body">
                                     <h5 title="{{ 'Lorem ipsum dolor sit amet' }}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
-                                            href="/{{ $item->shop->url }}/{{ $item->slug }}">
+                                            href="/{{ $item->shop->url ?? '' }}/{{ $item->slug }}">
                                             {{ Str::limit($item->name, 25, '...') }}
                                         </a>
                                     </h5>

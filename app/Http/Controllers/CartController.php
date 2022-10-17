@@ -41,35 +41,39 @@ class CartController extends Controller
 
     public function addToCart(Request $request, Cart $cart)
     {
+        $new = $request->except('_token'); //  type array
+
         if ($request->_token !== csrf_token())
             return back()->with('alert', 'Something is wrong please try again later.');
 
-        $new = $request->except('_token'); //  type array
-        // return Product::find($new['product_id'])->disabled;
         if (Product::find($new['product_id'])->disabled) return back()->with('alert', 'Cannot Add Item to Cart Because Product is inactive.');
 
-        $new['user_id'] = auth()->user()->id;
         $new['subtotal'] = $new['price'] * $new['count'];
-        $old =  DB::table('cart_products')->where('product_id', $new['product_id']);
+        $old =  DB::table('cart_products')->where('product_id', $new['product_id'])->first();
+
 
         // Insert Or Update;
-        if ($old->get()->count()) {
-            $cart->find($new['user_id'])->products()->updateExistingPivot($new['product_id'], [
-                'count' => $old->sum('count') + $new['count'],
-                'subtotal' => $old->sum('subtotal') + $new['subtotal'],
+        $cart_products = $cart->find(auth()->user()->id)->products();
+        if ($old) {
+            $cart_products->updateExistingPivot($new['product_id'], [
+                'count' => $old->count + $new['count'],
+                'subtotal' => $old->subtotal + $new['subtotal'],
                 'notes' => $new['notes']
             ]);
+            $wkwk = 'true';
         } else {
             // return $cart->find($new['user_id']);
-            $cart->find($new['user_id'])->products()->attach($new['product_id'], [
+            $cart_products->attach($new['product_id'], [
                 'count' => $new['count'],
                 'subtotal' => $new['subtotal'],
                 'notes' => $new['notes']
             ]);
+            $wkwk = 'false';
         }
 
+
         // update totalprice column on table carts
-        Cart::setTotalPrice($new['user_id'], Cart::getTotalPrice($new['user_id']));
+        Cart::setTotalPrice(auth()->user()->id, Cart::getTotalPrice(auth()->user()->id));
 
         return back()->with('alert', 'Ditambahkan Ke Keranjang');
     }

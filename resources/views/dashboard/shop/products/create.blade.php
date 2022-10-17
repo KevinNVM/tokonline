@@ -61,14 +61,14 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="img1">Gambar Produk Utama</label>
-                                        <input type="file" class="form-control" id="img1" name="img1"
+                                        <input type="file" class="form-control" id="img1" name="image[]"
                                             id="img1" accept="image/*">
                                     </div>
                                     <div class="mb-3 d-flex flex-column gap-1">
                                         <label>Gambar Produk Lainnya</label>
-                                        <input type="file" class="form-control" id="img2" name="img2">
-                                        <input type="file" class="form-control" id="img3" name="img3">
-                                        <input type="file" class="form-control" id="img4" name="img4">
+                                        <input type="file" class="form-control" id="img2" name="image[]">
+                                        <input type="file" class="form-control" id="img3" name="image[]">
+                                        <input type="file" class="form-control" id="img4" name="image[]">
                                     </div>
                                 </div>
                                 @if ($errors->any())
