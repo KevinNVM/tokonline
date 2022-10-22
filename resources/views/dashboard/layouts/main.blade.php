@@ -76,6 +76,13 @@
             })
         </script>
     @endif
+    <script>
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+            }
+        });
+    </script>
     @stack('foot')
 </body>
 

@@ -12,6 +12,8 @@ use App\Models\Product;
 use App\Models\ShopCatalog;
 use App\Models\ProductCategory;
 use App\Models\ProductSubCategory;
+use App\Models\Wishlist;
+use Auth;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -178,21 +180,6 @@ class DatabaseSeeder extends Seeder
             'category_id' => 3,
             'name' => 'Baju Pria',
             'slug' => 'baju-pria'
-        ]);
-
-        Product::create([
-            'shop_id' => 0,
-            'catalog_id' => 0,
-            'sub_category_id' => 0,
-            'name' => "null",
-            'slug' => "null",
-            'desc' => "null",
-            'weight' => mt_rand(1, 10),
-            'condition' => mt_rand(0, 1),
-            'stock' => mt_rand(1, 999),
-            'price' => floor(mt_rand(1000, 10e5)),
-            'sold' => mt_rand(1, 200),
-            'visibility' => mt_rand(0, 2),
         ]);
 
         Product::factory(75)->create();
