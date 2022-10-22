@@ -2,6 +2,18 @@
 
 @push('head')
     <link rel="stylesheet" href="/css/hover.css">
+    <style>
+        iframe {
+            display: block;
+            /* iframes are inline by default */
+            background: #000;
+            border: none;
+            /* Reset default border */
+            height: 100vh;
+            /* Viewport-relative units */
+            width: 100vw;
+        }
+    </style>
 @endpush
 
 @section('content')
@@ -214,7 +226,7 @@
                                     <span class="font-monospace fw-bold">{{ $product->stock }}</span>
                                 </h6>
                                 <div class="d-grid">
-                                    <form class="d-grid" action="/cart" method="POST">
+                                    <form id="form-buy" class="d-grid" action="/cart" method="POST">
                                         @csrf
                                         <input type="hidden" name="product_id" value="{{ $product->id }}">
                                         <input type="hidden" name="count" id="count" value="1">
@@ -606,6 +618,29 @@
                         text: response.responseText
                     })
                 }
+            });
+        })
+    </script>
+    <script>
+        $('#form-buy').on('submit', (e) => {
+            e.preventDefault();
+            var data = $('#form-buy').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.ajax({
+                type: "POST",
+                url: '/cart',
+                data: data,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                success: function(response) {
+                    swal.fire({
+                        icon: 'success',
+                        text: 'Added {{ $product->name }} To Cart'
+                    })
+                },
             });
         })
     </script>

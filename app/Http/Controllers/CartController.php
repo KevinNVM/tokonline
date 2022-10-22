@@ -75,7 +75,7 @@ class CartController extends Controller
         // update totalprice column on table carts
         Cart::setTotalPrice(auth()->user()->id, Cart::getTotalPrice(auth()->user()->id));
 
-        return back()->with('alert', 'Ditambahkan Ke Keranjang');
+        return response('Success', 200);
     }
 
     public function editItem($id)
