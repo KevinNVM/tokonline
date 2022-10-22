@@ -195,6 +195,6 @@ class DatabaseSeeder extends Seeder
             'visibility' => mt_rand(0, 2),
         ]);
 
-        // Product::factory(75)->create();
+        Product::factory(75)->create();
     }
 }
