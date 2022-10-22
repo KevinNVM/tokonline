@@ -474,7 +474,7 @@
                         $('.inf-col').append(`
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="${JSON.parse(valueOfElement.image)[0]}" class="card-img-top p-2" alt="Product Thumbnail">
+                                <img src="/storage/images/products/${JSON.parse(valueOfElement.image)[0]}" class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="${valueOfElement.name}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"

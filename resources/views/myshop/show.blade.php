@@ -241,7 +241,7 @@
                                 </div>
                                 </form>
                                 <div class="btn-group d-flex justify-content-center mt-2 " role="group">
-                                    <button class="border-0 bg-transparent mx-1">
+                                    <button class="border-0 bg-transparent mx-1" id="wishlist">
                                         <svg version="1.1" width="25" id="Capa_1"
                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                             x="0px" y="0px" viewBox="0 0 47.94 47.94"
@@ -580,5 +580,33 @@
                 scrollTop: $('#product-info').offset().top - 90
             }, 50)
         }
+    </script>
+    <script>
+        $('button#wishlist').click(() => {
+            $.ajax({
+                type: "POST",
+                url: "/wishlist",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                data: {
+                    product: "{{ $product->slug }}"
+                },
+                success: function(response) {
+                    console.log(response)
+                    swal.fire({
+                        icon: 'success',
+                        text: 'Product Added To Wishlist',
+                    })
+                },
+                error: function(response) {
+                    console.log(response)
+                    swal.fire({
+                        icon: 'warning',
+                        text: response.responseText
+                    })
+                }
+            });
+        })
     </script>
 @endsection
