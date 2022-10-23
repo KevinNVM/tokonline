@@ -71,7 +71,8 @@
                                         </li>
                                         <li class="dropdown-divider"></li>
                                     @endif
-                                    <li><a class="dropdown-item" href="/notification"><i class="fa-solid fa-bell"></i>
+                                    <li><a class="dropdown-item" role="button" data-bs-toggle="modal"
+                                            data-bs-target="#notificationModal"><i class="fa-solid fa-bell"></i>
                                             Notifikasi</a></li>
                                     <li><a class="dropdown-item" href="/orders"><i class="fa-solid fa-list"></i>
                                             Pesanan</a></li>
@@ -101,7 +102,8 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a href="/login" class="nav-link"><i class="fa-solid fa-arrow-right-to-bracket"></i> Login</a>
+                            <a href="/login" class="nav-link"><i class="fa-solid fa-arrow-right-to-bracket"></i>
+                                Login</a>
                         </li>
                     @endauth
                 </ul>
@@ -156,3 +158,191 @@
         <img src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
     </a>
 </nav>
+<div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen-lg-down modal-lg" style="overflow-x: hidden;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="notificationModalLabel">Notification</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="notification-wrapper">
+                    <div class="row row-cols-1 g-2">
+
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        @if (auth()->user()->isAdmin)
+                            <a role="button" data-bs-toggle="modal" data-bs-target="#newNotificationModal"
+                                class="text-muted link">
+                                Manage
+                            </a>
+                        @endif
+                        <a role="button" onclick="getNotification(); notifNew ? '' : this.remove()"
+                            class="text-muted link">
+                            Load More
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (auth()->user()->isAdmin)
+    <div class="modal fade" id="newNotificationModal" tabindex="-1" aria-labelledby="newNotificationModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-lg-down modal-lg"
+            style="overflow-x: hidden;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="newNotificationModalLabel">Manage Notification</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="new-notification-wrapper">
+                        <div class="row row-cols-1 g-2">
+                            <div class="col border-bottom">
+                                <h4 class="text-muted fw-semibold">
+                                    Create new
+                                </h4>
+                                <div class="card-body">
+                                    <ul class="list-group list-notification">
+
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col border-bottom">
+                                <h4 class="text-muted fw-semibold">
+                                    Create New
+                                </h4>
+                                <div class="card-body">
+                                    <form action="{{ route('notification.store') }}" id="notifStore">
+                                        <div class="mb-3">
+                                            <label for="name">
+                                                Name
+                                            </label>
+                                            <input required class="form-control" type="text" name="name"
+                                                id="name" />
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="body">
+                                                Body
+                                            </label>
+                                            <textarea required class="form-control" type="text" name="body" id="body" cols="30"
+                                                rows="10"></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="receiver">
+                                                Receiver
+                                            </label>
+                                            <input required type="text" class="form-control" name="receiver"
+                                                id="receiver">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <button class="btn btn-primary">Create</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
+<script src="/js/nl2br.js"></script>
+<script>
+    let notifPage = 1;
+    let notifNew = true;
+
+    function getNotification() {
+        $.ajax({
+            type: "get",
+            url: "/notification?page=" + notifPage,
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name=_token]').attr('content')
+            },
+            success: function(response) {
+                notifPage++
+                if (!response.next_page_url) notifNew = false;
+                for (const i in response.data) {
+                    let date = new Date(response.data[i].created_at),
+                        readableDate =
+                        `${date.getHours()}:${date.getMinutes()} ${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+                    $('.notification-wrapper > .row').append(`
+                            <div class="col border-bottom pb-3">
+                                <div class="text-muted d-flex align-items-center justify-content-between">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <h4>${response.data[i].name}</h4>
+                                        <?php if (auth()->user()->isAdmin) : ?>
+                                        <small class="badge bg-danger rounded-pill ms-4">
+                                                    <a role="button" onclick="deleteNotif(this, '${response.data[i].slug}')" class="bg-transparent border-0 text-white btn-sm"><i
+                                                            class="fa fa-trash"></i></a>
+                                            </small>
+                                        <?php endif; ?>
+                                        </div>
+                                    <small>${readableDate}</small>
+                                </div>
+                                <div class="notification-body">
+                                    ${nl2br(response.data[i].body)}
+                                </div>
+                            </div>
+                            `);
+                }
+            }
+        });
+    }
+    getNotification()
+</script>
+@if (auth()->user()->isAdmin)
+    <script>
+        $('form#notifStore').on('submit', (e) => {
+            e.preventDefault()
+            var data = $('form#notifStore').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+
+
+            $.ajax({
+                type: "POST",
+                url: "{{ route('notification.store') }}",
+                data: data,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name=_token]').attr('content')
+                },
+                success: function(response) {
+                    swal.fire('Notification Created', 'success');
+                    $('.notification-wrapper > .row').html('')
+                    getNotification();
+                    $.each($('form#notifStore input'), (i, el) => {
+                        el.value = ''
+                    })
+                    $.each($('form#notifStore textarea'), (i, el) => {
+                        el.value = ''
+                    })
+                },
+                error: () => swal.fire('Failed', 'error')
+            });
+
+        });
+    </script>
+    <script>
+        function deleteNotif(el, id) {
+            $(el.parentNode.parentNode.parentNode.parentNode).hide(200)
+            $.ajax({
+                type: "DELETE",
+                url: "/notification/" + id,
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name=_token]').attr('content')
+                },
+
+            });
+        }
+    </script>
+@endif

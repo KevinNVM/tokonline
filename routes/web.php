@@ -30,11 +30,8 @@ Route::get('/test/var', function () {
 
 # Untitled
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
-Route::prefix('test')->middleware('throttle:global')->group(function () {
-    Route::get('/email-notice', fn () => view('auth.verify_email', ['title' => 'Verify Email']));
-});
 
-Route::resource('notification', NotificationController::class);
+Route::resource('notification', NotificationController::class)->only(['index', 'store', 'destroy']);
 
 ## Redirect ##
 Route::redirect('/dashboard/shop', '/shop');

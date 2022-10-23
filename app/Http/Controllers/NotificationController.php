@@ -15,8 +15,12 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        $data = Notification::where('receiver', Auth::user()->username)->orWhere('receiver', '*')->get();
-        return response()->json(compact('data'));
+        if (!Auth::user()->isAdmin)
+            $data = Notification::where('receiver', Auth::user()->username)->orWhere('receiver', '*')->paginate(10);
+        else
+            $data = Notification::paginate(100);
+
+        return response()->json($data);
     }
 
     /**
@@ -26,7 +30,6 @@ class NotificationController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
@@ -37,7 +40,17 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if (!Auth::user()->isAdmin) return abort(404);
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'body' => 'required',
+            'receiver' => 'required'
+        ]);
+
+        Notification::create($validated);
+
+        return response('', 200);
     }
 
     /**
@@ -59,7 +72,7 @@ class NotificationController extends Controller
      */
     public function edit(Notification $notification)
     {
-        //
+        if (!Auth::user()->isAdmin) return abort(404);
     }
 
     /**
@@ -71,7 +84,7 @@ class NotificationController extends Controller
      */
     public function update(Request $request, Notification $notification)
     {
-        //
+        if (!Auth::user()->isAdmin) return abort(404);
     }
 
     /**
@@ -82,6 +95,8 @@ class NotificationController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        //
+        if (!Auth::user()->isAdmin) return abort(404);
+        $notification->delete();
+        return response('', 200);
     }
 }

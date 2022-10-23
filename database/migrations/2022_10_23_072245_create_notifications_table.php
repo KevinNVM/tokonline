@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('slug')->nullable();
             $table->text('body')->nullable();
             $table->string('receiver')->default('*')->nullable();
             $table->timestamps();
