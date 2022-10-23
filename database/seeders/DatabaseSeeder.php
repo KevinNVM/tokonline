@@ -78,7 +78,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Made',
             'username' => 'made',
-            'password' => bcrypt('password'),
+            'password' => bcrypt(''),
             'email' => 'made@example.com',
             'phone' => '0812345699'
         ]);
@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\User::factory()->create([
             'name' => 'Kevin',
             'username' => 'kevin',
-            'password' => bcrypt('password'),
+            'password' => bcrypt(''),
             'email' => 'kevin@example.com',
             'phone' => '0812345699'
         ]);
@@ -96,7 +96,7 @@ class DatabaseSeeder extends Seeder
         Shop::create([
             'user_id' => 1,
             'name' => 'Made Store',
-            'location' => 'Bogor',
+            'location' => json_encode(['province' => 'DKI JAKARTA', 'regency' => "BOGOR"]),
             'whatsapp' => '085904312300',
             'url' => 'made-store'
         ]);
@@ -104,7 +104,7 @@ class DatabaseSeeder extends Seeder
         Shop::create([
             'user_id' => 2,
             'name' => 'Toko Kevin',
-            'location' => 'Jakarta Timur',
+            'location' => json_encode(['province' => 'DKI JAKARTA', 'regency' => 'Jakarta Timur']),
             'whatsapp' => '085904312300',
             'url' => 'toko-kevin'
         ]);

@@ -77,13 +77,13 @@
                                             Pesanan</a></li>
                                     <li>
                                         <a class="dropdown-item" href="/cart"><i class="fa-solid fa-cart-shopping"></i>
-                                            Keranjang <span @php $user = auth()->user()->cart @endphp
-                                                class="badge text-bg-secondary">{{ $user ? $user->products->count() : '!!!' }}</span></a>
+                                            Keranjang <span @php $user = auth()->user() @endphp
+                                                class="badge text-bg-secondary">{{ $user->cart ? $user->cart->products->count() : '!!!' }}</span></a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="/wishlist"><i class="fa-regular fa-heart"></i>
                                             Wishlist <span
-                                                class="badge text-bg-secondary">{{ auth()->user()->wishlist->first()->products->count() }}</span></a>
+                                                class="badge text-bg-secondary">{{ $user->wishlist->count() ? $user->wishlist->first()->products->count() : '!!!' }}</span></a>
                                     </li>
                                     <li class="dropdown-divider"></li>
                                     <li><a href="/dashboard/profile" class="dropdown-item"><i class="fa-solid fa-user"></i>

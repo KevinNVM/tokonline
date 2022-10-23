@@ -86,7 +86,11 @@
                                                             </h5>
                                                             <span
                                                                 class="h5 fw-bold d-block">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-                                                            <small>{{ $product->shop->location }}</small>
+                                                            <small>
+                                                                @if ($product->shop->location)
+                                                                    {{ json_decode($product->shop->location, 1)['regency'] }}
+                                                                @endif
+                                                            </small>
                                                             <p class="card-text">
                                                                 <i class="bi bi-star-half"></i> 5.0 <i
                                                                     class="bi bi-dot"></i>
@@ -122,7 +126,11 @@
                                                                 </h5>
                                                                 <span
                                                                     class="h5 fw-bold d-block">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-                                                                <small>{{ $product->shop->location }}</small>
+                                                                <small>
+                                                                    @if ($product->shop->location)
+                                                                        {{ json_decode($product->shop->location, 1)['regency'] }}
+                                                                    @endif
+                                                                </small>
                                                                 <p class="card-text">
                                                                     <i class="bi bi-star-half"></i> 5.0 <i
                                                                         class="bi bi-dot"></i>
@@ -181,14 +189,19 @@
                                         <span class="d-block">{{ date('d/M/Y', strtotime($shop->created_at)) }}</span>
                                         <hr>
                                         <small class="d-block fw-bold">Deskripsi Toko</small>
-                                        {{ $shop->desc ?? 'Lorem Ipsum' }}
+                                        {!! preg_replace('/\r\n/', '<br>', $shop->desc) ?? 'Lorem Ipsum' !!}
                                         <hr>
                                         <small class="d-block fw-bold">Tautan</small>
                                         @if ($shop->link)
-                                            @php $links = explode(',', $shop->link); @endphp
+                                            @php
+                                                $links = json_decode($link, true);
+                                                dd($links);
+                                            @endphp
                                             @foreach ($links as $link)
-                                                <a href="{{ $link }}"
-                                                    class="d-block link-primary">{{ $link }}</a>
+                                                @if (filter_var($link, FILTER_VALIDATE_EMAIL))
+                                                    <a href="{{ $link }}"
+                                                        class="d-block link-primary">{{ $link }}</a>
+                                                @endif
                                             @endforeach
                                         @endif
                                     </div>
@@ -215,14 +228,15 @@
                                         <hr>
                                         <small class="d-block fw-bold">Deskripsi Toko</small>
                                         <p>
-                                            {{ $shop->desc ?? 'Lorem Ipsum' }}
+                                            <?= nl2br(e($shop->desc)) ?>
                                         </p>
                                         <hr>
                                         <small class="d-block fw-bold">Tautan</small>
                                         @if ($shop->link)
-                                            @php $links = explode(',', $shop->link); @endphp
+                                            @php $links = json_decode($shop->link) @endphp
                                             @foreach ($links as $link)
-                                                <a href="{{ $link }}">{{ $link }}</a>
+                                                <a href="{{ $link }}" class="link d-block"
+                                                    target="_blank">{{ $link }}</a>
                                             @endforeach
                                         @endif
                                     </div>

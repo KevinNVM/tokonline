@@ -139,7 +139,11 @@
                                     <h6 class="fw-bold">Pengirim</h6>
                                     <small class="d-block">
                                         <i class="bi bi-geo-alt-fill"></i> Dikirim Dari
-                                        <b>{{ $product->shop->location }}</b>
+                                        <b>
+                                            @if ($product->shop->location)
+                                                {{ json_decode($product->shop->location, 1)['regency'] }}
+                                            @endif
+                                        </b>
                                     </small>
                                     <small class="d-block">
                                         <i class="bi bi-truck"></i> Ongkir : <i class="bi bi-plus-slash-minus"></i>12K |
@@ -594,7 +598,8 @@
         }
     </script>
     <script>
-        $('button#wishlist').click(() => {
+        $('button#wishlist').click((e) => {
+            $('button#wishlist').attr('disabled', '')
             $.ajax({
                 type: "POST",
                 url: "/wishlist",

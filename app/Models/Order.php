@@ -12,6 +12,11 @@ class Order extends Model
     public $primaryKey = 'number';
     public $guarded = ['id'];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     static public function getTotalPrice($json)
     {
         $arr1 = collect(json_decode($json, false));

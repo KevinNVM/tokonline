@@ -22,12 +22,12 @@ class HomeController extends Controller
 
     public function searchProducts(Request $request)
     {
-        $products = Product::latest()->search($request->search)->visibility('public')->get();
+        // $products = Product::order()->search($request->search)->visibility('public')->get();
         // $products = $products->count() ? $products : Product::latest()->get();
         return view('search', [
             'title' => 'Semua Produk',
-            'products' => $products,
-            'others' => Product::oldest()->visibility('public')->get(),
+            'products' => Product::query(request('search'))->filters(request(['subcategory', 'shop']))->visibility('public')->get(),
+            'others' => Product::visibility('public')->get(),
             'store_location' => Shop::all()->pluck('location'),
         ]);
     }

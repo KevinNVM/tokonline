@@ -57,7 +57,7 @@
                             <select class="form-select" aria-label="Order" name="orderBy"
                                 onchange="$(this).parents('form:first').submit()">
                                 <option disabled>Order By</option>
-                                <option value="latest" {{ request()->orderBy == 'latest' ? 'selected' : '' }}>Latest
+                                <option value="asc" {{ request()->orderBy == 'asc' ? 'selected' : '' }}>Latest
                                 </option>
                                 <option value="oldest" {{ request()->orderBy == 'oldest' ? 'selected' : '' }}>
                                     Oldest
@@ -84,7 +84,11 @@
                                             </h5>
                                             <span
                                                 class="h5 fw-bold d-block">Rp{{ number_format($product->price, 0, ',', '.') }}</span>
-                                            <small>{{ $product->shop->location }}</small>
+                                            <small>
+                                                @if ($product->shop->location)
+                                                    {{ json_decode($product->shop->location, 1)['regency'] }}
+                                                @endif
+                                            </small>
                                             <p class="card-text">
                                                 <i class="bi bi-star-half"></i> 5.0 <i class="bi bi-dot"></i>
                                                 Terjual {{ $product->sold }}

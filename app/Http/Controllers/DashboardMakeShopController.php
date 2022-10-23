@@ -23,19 +23,19 @@ class DashboardMakeShopController extends Controller
         $validatedData = $request->validate([
             'name' => 'required',
             'url' => 'required|unique:shops',
-            'whatsapp' => 'required|min:8|max:14'
+            'whatsapp' => 'required|min:8|max:14',
+            'desc' => 'string'
         ]);
 
         $otherData = [
             'user_id' => auth()->user()->id,
-            'desc' => $request->desc,
-            'link' => implode(',', [$request->link_1, $request->link_2]),
-            'location' => implode('/', [$request->input('location.province'), $request->input('location.regency')]),
+            'location' => json_encode($request->location),
+            'link' => json_encode($request->link),
+            'phone' => $validatedData['whatsapp'],
+            'desc' => preg_replace('/\r\n/', PHP_EOL, $request->desc)
         ];
 
-        $validatedData = array_merge($validatedData, $otherData);
-
-        $shop->create($validatedData);
+        $shop->create(array_merge($validatedData, $otherData));
 
         return redirect()->back()->with('alert', 'Toko Telah Berhasil Dibuat!');
     }

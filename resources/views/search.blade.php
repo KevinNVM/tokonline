@@ -47,12 +47,12 @@
                                     <div class="col-12">
                                         <div class="row">
                                             <div class="col rounded pb-3">
-                                                <form action="">
+                                                <form>
                                                     <div class="filter-order">
                                                         <small class="fw-semibold">Urutkan</small>
-                                                        <select class="form-select" aria-label="Default select example">
+                                                        <select class="form-select" name="orderBy">
                                                             <option selected>Terbaru</option>
-                                                            <option value="1">Terlama</option>
+                                                            <option value="asc">Terlama</option>
                                                         </select>
                                                     </div>
                                                     <hr class="semi-thick">
@@ -60,7 +60,7 @@
                                                         <small class="fw-semibold">Ratings</small>
                                                         <div class="form-check">
                                                             <input class="form-check-input" type="checkbox" value=""
-                                                                id="star-5">
+                                                                name="ratings" id="star-5">
                                                             <label class="form-check-label" for="star-5">
                                                                 <span class="fa fa-star"></span> 5
                                                             </label>
@@ -98,12 +98,13 @@
                                                     <div class="filter-location">
                                                         <small class="fw-semibold">Lokasi Toko</small>
                                                         @foreach ($store_location as $location)
+                                                            <?php $location = json_decode($location, true); ?>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="location-{{ $location }}">
+                                                                    id="location-{{ $location['regency'] }}">
                                                                 <label class="form-check-label"
-                                                                    for="location-{{ $location }}">
-                                                                    {{ $location }}
+                                                                    for="location-{{ $location['regency'] }}">
+                                                                    {{ $location['regency'] }}
                                                                 </label>
                                                             </div>
                                                         @endforeach
@@ -158,7 +159,7 @@
                     <div class="col-12 col-lg-8">
                         <div class="row row-cols-md-4 g-3">
                             @foreach ($products as $key => $product)
-                                @if ($product->visibility !== 'a')
+                                @if ($product->visibility !== 0)
                                     <div class="col hp">
                                         <div class="card-product card h-100 shadow-hover">
                                             <a href="/{{ $product->shop->url . '/' . $product->slug }}">
@@ -197,6 +198,9 @@
                                                             private
                                                     @endswitch
                                                 </small>
+                                                <small><a class="link link-muted" href="/{{ $product->shop->url }}">
+                                                        {{ $product->shop->name }}
+                                                    </a></small>
                                                 <div class="d-grid gap-2 my-4">
 
                                                     <a href="#" class="btn btn-warning bold-btn">add to cart</a>
@@ -212,8 +216,9 @@
                                                         id="item-{{ $key }}">{{ url('/') . '/' . $product->shop->url . '/' . $product->slug }}</span>
 
                                                     <span class="float-end">
-                                                        <i class="far fa-heart" style="cursor: pointer"></i>
-
+                                                        <button class="border-0 bg-transparent" id="wishlist">
+                                                            <i class="far fa-heart" style="cursor: pointer"></i>
+                                                        </button>
                                                     </span>
                                                 </div>
                                             </div>
@@ -268,5 +273,32 @@
                 $('.toast').toggleClass('show')
             }, 1500);
         }
+    </script>
+    <script>
+        $('button#wishlist').click((e) => {
+            console.log(e.currentTarget.firstElementChild.classList.add('fa'));
+            $.ajax({
+                type: "POST",
+                url: "/wishlist",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                },
+                data: {
+                    product: "{{ $product->slug }}"
+                },
+                success: function(response) {
+                    swal.fire({
+                        icon: 'success',
+                        text: 'Product Added To Wishlist',
+                    })
+                },
+                error: function(response) {
+                    swal.fire({
+                        icon: 'warning',
+                        text: response.responseText
+                    })
+                }
+            });
+        })
     </script>
 @endsection

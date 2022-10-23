@@ -19,14 +19,15 @@
                     <small class="badge text-bg-{{ $shop->owner->status ? 'success' : 'danger' }}">
                         {{ $shop->owner->status ? 'Online' : 'Offline' }}
                     </small>
-                    <p class="card-text"><i class="bi bi-geo-alt-fill"></i> {{ $shop->location ?? '' }}</p>
+                    <p class="card-text"><i class="bi bi-geo-alt-fill"></i>
+                        {{ join(' / ', json_decode($shop->location, true)) ?? '' }}</p>
                     <span class="card-text d-block mb-3"><i class="bi bi-star-half"></i> 4.5 Rata-rata
                         Ulasan
                         Produk</span>
                     <button class="btn btn-primary mb-1"><i class="bi bi-chat-dots"></i> Chat
                         Seller</button>
                     <button class="btn btn-outline-primary mb-1" data-bs-toggle="modal"
-                        data-bs-target="#exampleModal"><i class="bi bi-info-circle"></i>
+                        data-bs-target="#aboutShopModal"><i class="bi bi-info-circle"></i>
                         Tentang
                         Toko</button>
                     <button class="btn btn-outline-primary mb-1" data-bs-toggle="modal" data-bs-target="#ShareButton">
@@ -37,11 +38,11 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="aboutShopModal" tabindex="-1" aria-labelledby="aboutShopModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Tentang Toko</h5>
+                <h5 class="modal-title" id="aboutShopModalLabel">Tentang Toko</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -50,16 +51,19 @@
 
                         <h3 class="fw-semibold">{{ $shop->name ?? '' }}</h3>
                         <small class="d-block fw-bold">Bergabung Sejak</small>
-                        <span class="d-block">{{ date('d/M/Y', strtotime($shop->created_at)) }}</span>
+                        <span class="d-block">{{ date('d m Y', strtotime($shop->created_at)) }}</span>
                         <hr>
                         <small class="d-block fw-bold">Deskripsi Toko</small>
-                        {{ $shop->desc ?? 'Lorem Ipsum' }}
+                        <p>
+                            {{ $shop->desc ?? 'Lorem Ipsum' }}
+                        </p>
                         <hr>
                         <small class="d-block fw-bold">Tautan</small>
                         @if ($shop->link)
-                            @php $links = explode(',', $shop->link); @endphp
+                            @php $links = json_decode($shop->link) @endphp
                             @foreach ($links as $link)
-                                <a href="{{ $link }}" class="d-block link-primary">{{ $link }}</a>
+                                <a href="{{ $link }}" class="link d-block"
+                                    target="_blank">{{ $link }}</a>
                             @endforeach
                         @endif
                     </div>

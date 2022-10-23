@@ -271,7 +271,11 @@
                                     </h5>
                                     <span
                                         class="h5 fw-bold d-block">Rp{{ number_format($item->price, 0, ',', '.') ?? '' }}</span>
-                                    <small>{{ $item->shop->location ?? '' }}</small>
+                                    <small>
+                                        @if ($item->shop->location)
+                                            {{ json_decode($item->shop->location, 1)['regency'] }}
+                                        @endif
+                                    </small>
                                     <p class="card-text">
                                         <i class="bi bi-star-half"></i> {{ $item->rating ?? '0.0' }}
                                         <i class="bi bi-dot"></i>
@@ -308,7 +312,11 @@
                                     </h5>
                                     <span
                                         class="h5 fw-bold d-block">Rp{{ number_format($item->price, 0, ',', '.') ?? '' }}</span>
-                                    <small>{{ $item->shop->location ?? '' }}</small>
+                                    <small>
+                                        @if ($item->shop->location)
+                                            {{ json_decode($item->shop->location, 1)['regency'] }}
+                                        @endif
+                                    </small>
                                     <p class="card-text">
                                         <i class="bi bi-star-half"></i> {{ $item->rating ?? '5.0' }}
                                         <i class="bi bi-dot"></i> Terjual
@@ -344,7 +352,11 @@
                                     </h5>
                                     <span
                                         class="h5 fw-bold d-block">Rp{{ number_format($item->price, 0, ',', '.') ?? '' }}</span>
-                                    <small>{{ $item->shop->location }}</small>
+                                    <small>
+                                        @if ($item->shop->location)
+                                            {{ json_decode($item->shop->location, 1)['regency'] }}
+                                        @endif
+                                    </small>
                                     <p class="card-text">
                                         <i class="bi bi-star-half"></i> 5.0 <i class="bi bi-dot"></i> Terjual
                                         {{ $item->sold }}
@@ -484,7 +496,7 @@
                                     </h5>
                                     <span
                                         class="h5 fw-bold d-block">${formatter.format(valueOfElement.price)}</span>
-                                    <small>${valueOfElement.shop.location}</small>
+                                    <small>${(JSON.parse(valueOfElement.shop.location))['regency']}</small>
                                     <p class="card-text">
                                         <i class="bi bi-star-half"></i> 5.0 <i class="bi bi-dot"></i> Terjual
                                         ${valueOfElement.sold}

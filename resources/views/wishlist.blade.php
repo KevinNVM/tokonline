@@ -60,9 +60,13 @@
     @include('layouts.navbar')
     <div class="container" style="margin-top: 3em; max-width: 90%">
         <main class="mb-5">
-            <div class="py-5 text-center">
+            <div class="py-5">
                 @include('utilities.breadcrumb')
-                <h2>Wishlist</h2>
+
+                <h2 class="text-center">Wishlist</h2>
+            </div>
+
+            <div class="filters">
 
             </div>
 

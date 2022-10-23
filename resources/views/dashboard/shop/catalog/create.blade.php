@@ -38,7 +38,7 @@
                     <div class="col">
 
                         {{-- Main Form --}}
-                        <form action="{{ route('catalogs.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('catalogs.store') }}" method="POST">
                             @csrf
                             <input type="hidden" name="slug" id="slug">
                             <div class="mb-3">

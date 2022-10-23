@@ -14,14 +14,18 @@
                         </h5>
                         <span
                             class="h5 fw-bold d-block">Rp{{ number_format($product->price, 0, ',', '.') ?? '' }}</span>
-                        <small>{{ $product->shop->location }}</small>
+                        <small>
+                            @if ($product->shop->location)
+                                {{ json_decode($product->shop->location, 1)['regency'] }}
+                            @endif
+                        </small>
                         <p class="card-text">
                             <i class="bi bi-star-half"></i> 5.0 <i class="bi bi-dot"></i> Terjual
                             {{ $product->sold }}
                         </p>
                     </div>
                     <div class="buttons position-absolute rounded-4"
-                        style="width: 100%; height: 100px; background: linear-gradient(to bottom ,rgba(0, 0, 0, .2),rgba(0, 0, 0, .02), rgba(0, 0, 0, 0)); z-index:2;">
+                        style="width: 100%; height: 100px; background: linear-gradient(to bottom left ,rgba(0, 0, 0, .2),rgba(0, 0, 0, .02), rgba(0, 0, 0, 0)); z-index:2;">
                         <div class="button-groups d-flex justify-content-end">
                             <button class="btn btn-sm text-danger rounded-4"
                                 onclick="deleteItem('{{ $product->slug }}', this.parentNode.parentNode.parentNode)">

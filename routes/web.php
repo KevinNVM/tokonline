@@ -19,6 +19,14 @@ use App\Http\Controllers\DashboardMakeShopController;
 use App\Http\Controllers\DashboardProductsController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
+# Test Route
+Route::get('/test', function () {
+    return 'test';
+});
+Route::get('/test/var', function () {
+    return request()->all();
+});
+
 #Unsigned
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 Route::prefix('test')->middleware('throttle:global')->group(function () {
@@ -27,7 +35,6 @@ Route::prefix('test')->middleware('throttle:global')->group(function () {
 
 ## Redirect ##
 Route::redirect('/dashboard/shop', '/shop');
-Route::redirect('/shop/catalogs', '/dashboard/shop#table_catalogs');
 
 ## Global Middleware Routes ##
 Route::middleware(['throttle:global', 'verified'])->group(function () {
@@ -83,7 +90,9 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     # Product Category
     Route::controller(ProductCategoryController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/category', 'index')->name('category.index');
-        Route::redirect('/category/{category}/', '/category');
+        Route::get('/category/{category}/', function () {
+            return redirect('/category');
+        });
         Route::get('/category/{category}/{sub_category}', 'show');
     });
 
@@ -140,7 +149,9 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     Route::controller(ShopController::class)->withoutMiddleware('verified')->group(function () {
         Route::get('/{shop:url}', 'index')->name('shop.index');
         Route::get('/{shop}/products', 'all');
-        Route::redirect('/{shop}/catalog', '/{shop}#tabs-2');
+        Route::get('/{shop}/catalog', function () {
+            return redirect('/{shop}#tabs-2');
+        });
         Route::get('/{shop}/{product}', 'show');
         Route::get('/{shop}/catalog/{catalog}', 'catalog');
     });

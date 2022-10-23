@@ -15,6 +15,7 @@ class Product extends Model
     use HasFactory;
 
     public $guarded = ['id'];
+    public $with = ['shop', 'subcategory'];
 
     public function getVisibility($num)
     {
@@ -63,6 +64,21 @@ class Product extends Model
         return $query->where([['visibility', $visibility]]);
     }
 
+    public function scopeFilters($query, $filters = [])
+    {
+        $query->when($filters['shop'] ?? false, function ($query, $shop) {
+            $query->whereHas('shop', function ($query) use ($shop) {
+                $query->where('url', $shop)->orWhere('name', 'LIKE', "%{$shop}%");
+            });
+        });
+
+        $query->when($filters['category'] ?? $filters['subcategory'] ?? false, function ($query, $subcategory) {
+            $query->whereHas('subcategory', function ($query) use ($subcategory) {
+                return $query->where('slug', $subcategory);
+            });
+        });
+    }
+
     public function scopeLatest($query)
     {
         return $query->orderBy('created_at', 'desc');
@@ -70,6 +86,7 @@ class Product extends Model
 
     public function scopeOldest($query)
     {
+
         return $query->orderBy('created_at', 'asc');
     }
 
@@ -78,7 +95,7 @@ class Product extends Model
         return $query->orderBy('sold', 'desc');
     }
 
-    public function scopeSearch($query, $search)
+    public function scopeQuery($query, $search)
     {
         $query->when($search ?? false, function ($query, $search) {
             return $query->where('name', 'LIKE', "%{$search}%")->orWhere('desc', 'LIKE', "%{$search}%");

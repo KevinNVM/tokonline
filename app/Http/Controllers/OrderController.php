@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use App\Models\Order;
 use App\Services\Midtrans\CreateSnapTokenService;
+use Auth;
 use Illuminate\Http\Request;
 
 class OrderController extends Controller
@@ -16,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return view('orders.index', ['orders' => Order::get(), 'title' => 'Daftar Pesanan']);
+        return view('orders.index', ['orders' => Auth::user()->order, 'title' => 'Daftar Pesanan']);
     }
 
     /**

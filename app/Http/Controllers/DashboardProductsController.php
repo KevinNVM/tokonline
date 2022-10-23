@@ -69,7 +69,7 @@ class DashboardProductsController extends Controller
 
         Product::create($valid);
 
-        return redirect('/dashboard/shop')->with('alert', 'Produk Berhasil Ditambahkan!');
+        return redirect('/shop')->with('alert', 'Produk Berhasil Ditambahkan!');
     }
 
 
@@ -119,7 +119,7 @@ class DashboardProductsController extends Controller
 
         $product->update($valid);
 
-        return redirect('/dashboard/shop')->with('alert', "Updated: $product->name");
+        return redirect('/shop')->with('alert', "Updated: $product->name");
     }
 
     public function destroy(Product $product)

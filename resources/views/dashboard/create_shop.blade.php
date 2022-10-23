@@ -58,7 +58,7 @@
                             <div class="mb-2">
                                 <small class="d-block">Provinsi</small>
                                 <select class="form-select @error('location.province') is-invalid @enderror"
-                                    name="location.province" id="location_province" required>
+                                    name="location[province]" id="location_province" required>
                                     <option selected value="{{ old('location.province') }}">
                                         {{ old('location.province') ?? 'Pilih Provinsi' }}</option>
                                     {{-- Foreach Location Using Ajax --}}
@@ -70,7 +70,7 @@
                             <div class="">
                                 <small class="d-block">Kabupaten/Kota</small>
                                 <select class="form-select @error('location.regency') is-invalid @enderror"
-                                    name="location.regency" id="location_regency" required>
+                                    name="location[regency]" id="location_regency" required>
                                     <option selected value="{{ old('location.province') }}">
                                         {{ old('location.province') ?? 'Pilih Provinsi Terlebih Dahulu' }}</option>
                                     {{-- Foreach Location Using Ajax --}}
@@ -106,9 +106,9 @@
                         </div>
                         <div class="col-12 mb-3">
                             <label for="link_1">Tautan Eksternal 1</label>
-                            <input type="url" placeholder="Masukkan Url Lengkap" name="link_1" id="link_1"
-                                cols="30" rows="5" class="form-control @error('link_1') is-invalid @enderror">
-                            @error('link_1')
+                            <input type="text" placeholder="Masukkan Url Lengkap" name="link[]" id="link_1"
+                                cols="30" rows="5" class="form-control @error('link[]') is-invalid @enderror">
+                            @error('link[]')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -116,9 +116,9 @@
                         </div>
                         <div class="col-12 mb-3">
                             <label for="link_2">Tautan Eksternal 2</label>
-                            <input type="url" placeholder="Masukkan Url Lengkap" name="link_2" id="link_2"
-                                cols="30" rows="5" class="form-control @error('link_2') is-invalid @enderror">
-                            @error('link_2')
+                            <input type="text" placeholder="Masukkan Url Lengkap" name="link[]" id="link_2"
+                                cols="30" rows="5" class="form-control @error('link[]') is-invalid @enderror">
+                            @error('link[]')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreignId('sub_category_id');
             $table->string('name', 255);
             $table->string('slug');
-            $table->text('desc')->nullable();
+            $table->mediumText('desc')->nullable();
             $table->integer('weight');
             $table->integer('condition');
             $table->integer('stock')->default(0);

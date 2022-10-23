@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -35,7 +36,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'login' => 'required',
-            'password' => 'required'
+            'password' => ''
         ]);
 
         $login_type = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL)
@@ -52,6 +53,7 @@ class AuthController extends Controller
             User::setStatus(auth()->user()->id, 1);
             // Initiate Cart For User
             $cart = User::setCart(auth()->user()->id);
+            Wishlist::createWishlist(auth()->user()->id, 'General');
 
             redirect()->intended('/cart');
         }
@@ -82,6 +84,7 @@ class AuthController extends Controller
         User::setStatus(auth()->user()->id, 1);
         // Initiate Cart For User
         $cart = User::setCart(auth()->user()->id);
+        Wishlist::createWishlist(auth()->user()->id, 'General');
 
         return redirect()->to('/home')->with('msg', ['status' => 'success', 'title' => 'Register Successfull!', 'body' => "Welcome Aboard, " . auth()->user()->name ?? 'user']);
     }
