@@ -26,7 +26,7 @@
                         </a>
                         <div class="sb-sidenav-menu-heading">Pesanan</div>
                         <a class="d-flex gap-2 nav-link {{ request()->is('shop/create') ? 'active' : '' }}"
-                            href="/dashboard/shop/catalog/create">
+                            href="/shop/order-list">
                             <i class="fa-solid fa-plus"></i> Daftar Pesanan
                         </a>
                         <div class="sb-sidenav-menu-heading">Tambah Data</div>

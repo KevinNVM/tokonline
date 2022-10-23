@@ -172,7 +172,7 @@
 
                     </div>
                     <div class="d-flex justify-content-between">
-                        @if (auth()->user()->isAdmin)
+                        @if (auth()->user()->isAdmin ?? false)
                             <a role="button" data-bs-toggle="modal" data-bs-target="#newNotificationModal"
                                 class="text-muted link">
                                 Manage
@@ -188,7 +188,7 @@
         </div>
     </div>
 </div>
-@if (auth()->user()->isAdmin)
+@if (auth()->user()->isAdmin ?? false)
     <div class="modal fade" id="newNotificationModal" tabindex="-1" aria-labelledby="newNotificationModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-fullscreen-lg-down modal-lg"
@@ -279,7 +279,7 @@
                                 <div class="text-muted d-flex align-items-center justify-content-between">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <h4>${response.data[i].name}</h4>
-                                        <?php if (auth()->user()->isAdmin) : ?>
+                                        <?php if (auth()->user()->isAdmin ?? false) : ?>
                                         <small class="badge bg-danger rounded-pill ms-4">
                                                     <a role="button" onclick="deleteNotif(this, '${response.data[i].slug}')" class="bg-transparent border-0 text-white btn-sm"><i
                                                             class="fa fa-trash"></i></a>
@@ -299,7 +299,7 @@
     }
     getNotification()
 </script>
-@if (auth()->user()->isAdmin)
+@if (auth()->user()->isAdmin ?? false)
     <script>
         $('form#notifStore').on('submit', (e) => {
             e.preventDefault()

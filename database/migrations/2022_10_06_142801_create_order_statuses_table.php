@@ -15,11 +15,9 @@ return new class extends Migration
     {
         Schema::create('order_statuses', function (Blueprint $table) {
             $table->id();
-            $table->integer('buyer_id');
-            $table->integer('product_id');
-            $table->integer('shop_id');
-            $table->enum('status', [1, 2, 3, 4, 5, 6])->comment(' 1=waiting, 2=packed, 3=sending, 4=sent, 5=success, 6=failed');
-            $table->string('reason')->nullable(true);
+            $table->foreignId('shop_id');
+            $table->foreignId('product_id');
+            $table->string('status');
             $table->timestamps();
         });
     }

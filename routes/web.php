@@ -16,6 +16,7 @@ use App\Http\Controllers\PaymentCallbackController;
 use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\DashboardCatalogController;
 use App\Http\Controllers\DashboardMakeShopController;
+use App\Http\Controllers\DashboardOrderListController;
 use App\Http\Controllers\DashboardProductsController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -129,6 +130,7 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
     Route::prefix('shop')->middleware(['auth', 'UserHasShop'])->group(function () {
         Route::delete('/products/deleteall', [DashboardProductsController::class, 'snap'])->name('products.snap');
         Route::resource('/products', DashboardProductsController::class)->except('index');
+        Route::resource('/order-list', DashboardOrderListController::class)->only(['index', 'update', 'destroy']);
     });
 
     ## Dashboard Shop > Catalog

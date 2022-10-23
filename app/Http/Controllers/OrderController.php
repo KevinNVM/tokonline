@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Order;
+use App\Models\OrderStatus;
 use App\Services\Midtrans\CreateSnapTokenService;
 use Auth;
 use Illuminate\Http\Request;
@@ -57,6 +58,13 @@ class OrderController extends Controller
 
         try {
             Order::create($params);
+            foreach ($products as $product) {
+                OrderStatus::create([
+                    'product_id' => $product['id'],
+                    'shop_id' => $product['shop']['id'],
+                    'status' => 'Un-Confirmed',
+                ]);
+            }
         } catch (\Illuminate\Database\QueryException $err) {
             return back()->with('alert', 'Total Harga Terlalu Tinggi Dalam Satu Waktu! Harap Kurangi Barang Belanja Anda');
         }

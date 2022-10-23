@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\OrderStatus;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use App\Services\Midtrans\CallbackService;
@@ -29,6 +30,15 @@ class PaymentCallbackController extends Controller
                     $selected->stock = $selected->stock - $product->pivot->count;
                     if ($selected->stock < 0) $selected->stock = 0;
                     $selected->save();
+
+                    //
+
+                    OrderStatus::where([
+                        ['product_id', $product->id],
+                        ['shop_id', $product->shop_id]
+                    ])->first()->update([
+                        'status' => 'Confirmed & Paid'
+                    ]);
                 }
             }
 

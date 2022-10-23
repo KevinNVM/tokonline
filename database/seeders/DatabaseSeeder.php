@@ -89,7 +89,8 @@ class DatabaseSeeder extends Seeder
             'username' => 'kevin',
             'password' => bcrypt(''),
             'email' => 'kevin@example.com',
-            'phone' => '0812345699'
+            'phone' => '0812345699',
+            'isAdmin' => true
         ]);
 
         \App\Models\User::factory(10)->create();
@@ -107,7 +108,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Toko Kevin',
             'location' => json_encode(['province' => 'DKI JAKARTA', 'regency' => 'Jakarta Timur']),
             'whatsapp' => '085904312300',
-            'url' => 'toko-kevin'
+            'url' => 'toko-kevin',
         ]);
 
         ShopCatalog::create([
