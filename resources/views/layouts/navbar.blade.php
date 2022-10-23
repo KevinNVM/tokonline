@@ -71,7 +71,7 @@
                                         </li>
                                         <li class="dropdown-divider"></li>
                                     @endif
-                                    <li><a class="dropdown-item" href="#"><i class="fa-solid fa-bell"></i>
+                                    <li><a class="dropdown-item" href="/notification"><i class="fa-solid fa-bell"></i>
                                             Notifikasi</a></li>
                                     <li><a class="dropdown-item" href="/orders"><i class="fa-solid fa-list"></i>
                                             Pesanan</a></li>

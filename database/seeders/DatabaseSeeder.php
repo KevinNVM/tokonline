@@ -16,6 +16,7 @@ use App\Models\Wishlist;
 use Auth;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Notification;
 
 class DatabaseSeeder extends Seeder
 {

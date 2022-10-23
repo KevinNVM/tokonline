@@ -17,6 +17,7 @@ use App\Http\Controllers\ProductCategoryController;
 use App\Http\Controllers\DashboardCatalogController;
 use App\Http\Controllers\DashboardMakeShopController;
 use App\Http\Controllers\DashboardProductsController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 # Test Route
@@ -27,11 +28,13 @@ Route::get('/test/var', function () {
     return request()->all();
 });
 
-#Unsigned
+# Untitled
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 Route::prefix('test')->middleware('throttle:global')->group(function () {
     Route::get('/email-notice', fn () => view('auth.verify_email', ['title' => 'Verify Email']));
 });
+
+Route::resource('notification', NotificationController::class);
 
 ## Redirect ##
 Route::redirect('/dashboard/shop', '/shop');
