@@ -20,16 +20,18 @@ class UtilitiesController extends Controller
     {
         if (!$request->ajax()) return abort(404);
         elseif (request()->token !== csrf_token()) return abort(404);
-        else
+        else $products = Product::select('name', 'slug')->query($request->search)->visibility('public')->get()->pluck('name');
 
-            $products = Product::select('name', 'slug')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name');
         $categories = ProductCategory::select('name', 'slug')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name');
+
         $shops = Shop::select('name', 'url')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name');
-        if (!empty($products) || !empty($categories) || !empty($shops)) return [
-            'product' => Product::select('name', 'slug')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name'),
-            'category' => ProductCategory::select('name', 'slug')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name'),
-            'shop' => Shop::select('name', 'url')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name')
-        ];
+
+        if (!empty($products) || !empty($categories) || !empty($shops))
+            return [
+                'product' => Product::select('name', 'slug')->query($request->search)->visibility('public')->get()->pluck('name'),
+                'category' => ProductCategory::select('name', 'slug')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name'),
+                'shop' => Shop::select('name', 'url')->where('name', 'LIKE', '%' . $request->search . '%')->get()->pluck('name')
+            ];
 
         return [];
     }

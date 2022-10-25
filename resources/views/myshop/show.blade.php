@@ -19,7 +19,7 @@
 @section('content')
     @include('layouts.navbar')
     <main style="margin-top: 4rem;">
-        <div class="container py-3">
+        <div class="container-xl py-3">
             @include('utilities.breadcrumb')
             <div class="row g-3">
                 <div class="col-12 px-5 col-navtop">
@@ -104,13 +104,7 @@
                                 <div class="desc border-bottom mt-3">
 
                                     <p class="desc-p">
-                                        {!! strlen($product->desc) > 200
-                                            ? Str::limit(
-                                                $product->desc,
-                                                200,
-                                                '... <a role="button" class="link-success fw-semibold text-decoration-none" onclick="descMore()">Read More</a>',
-                                            )
-                                            : $product->desc !!}
+                                        <?= strlen($product->desc) > 200 ? Str::limit(nl2br(e($product->desc)), 200, '... <a role="button" class="link-success fw-semibold text-decoration-none" onclick="descMore()">Read More</a>') : nl2br(e($product->desc)) ?>
                                     </p>
                                 </div>
                                 <div class="seller-info border-bottom my-1 py-2 px-2 d-flex">
@@ -448,7 +442,7 @@
                                     <form action="">
                                         <div class="d-grid">
                                             <button class="btn btn-primary mb-2">Apply</button>
-                                            <button class="btn btn-outline-primary">Reset</button>
+                                            <button class="btn btn-outline-primary" type="button">Reset</button>
                                         </div>
                                     </form>
                                 </div>
@@ -599,7 +593,6 @@
     </script>
     <script>
         $('button#wishlist').click((e) => {
-            $('button#wishlist').attr('disabled', '')
             $.ajax({
                 type: "POST",
                 url: "/wishlist",
@@ -610,22 +603,29 @@
                     product: "{{ $product->slug }}"
                 },
                 success: function(response) {
-                    console.log(response)
-                    swal.fire({
-                        icon: 'success',
+                    // console.log(response)
+                    Toastify({
                         text: 'Product Added To Wishlist',
-                    })
+                        close: true,
+                        style: {
+                            background: "linear-gradient(to right, #4ade80, #bbf7d0)"
+                        }
+                    }).showToast()
                 },
                 error: function(response) {
-                    console.log(response)
-                    swal.fire({
-                        icon: 'warning',
-                        text: response.responseText
-                    })
+                    // console.log(response)
+                    Toastify({
+                        text: response.responseText,
+                        close: true,
+                        style: {
+                            background: "linear-gradient(to right, salmon, #fecdd3)"
+                        }
+                    }).showToast()
                 }
             });
         })
     </script>
+
     <script>
         $('#form-buy').on('submit', (e) => {
             e.preventDefault();
@@ -649,4 +649,5 @@
             });
         })
     </script>
+
 @endsection

@@ -23,11 +23,11 @@ return new class extends Migration
             $table->string('slug');
             $table->mediumText('desc')->nullable();
             $table->integer('weight');
-            $table->integer('condition');
+            $table->enum('condition', [1, 2])->comment('2=bekas, 1=baru');
             $table->integer('stock')->default(0);
             $table->bigInteger('price');
             $table->integer('sold')->default(0);
-            $table->integer('visibility')->default(1);
+            $table->integer('visibility')->default(1)->comment('public=1, private=0, unlisted=2');
             $table->integer('disabled')->default(0);
             $table->timestamps();
         });

@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="/css/hover.css">
     <link rel="stylesheet" href="/css/color.css">
     <link rel="stylesheet" href="/css/autocomplete.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/jquery-ui.js"></script>
     <script src="/js/bootstrap5.js"></script>
@@ -49,17 +51,7 @@
         const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
         const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl));
 
-        function hotkeys() {
-            $('header').on('keydown', function(e) {
-                if (e.code === 'KeyK' || e.which === 191) {
-                    e.preventDefault();
-                    $('#search').focus()
-                } else if (e.which === 27) {
-                    $('#search').blur()
-                }
-            });
-        }
-        hotkeys();
+
 
         if (mobileCheck()) {
             $('#topbar').removeClass('fixed-top')

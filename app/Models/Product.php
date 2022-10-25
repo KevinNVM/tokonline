@@ -66,6 +66,30 @@ class Product extends Model
 
     public function scopeFilters($query, $filters = [])
     {
+
+        $query->when($filters['order'] ?? false, function ($query, $order) {
+            $order = strtolower($order);
+            if ($order == 'latest') $query->orderBy('created_at', 'desc');
+            elseif ($order == 'oldest')  $query->orderBy('created_at', 'asc');
+            elseif ($order == 'ratings')  $query->orderBy('ratings', 'asc');
+            elseif ($order == 'lowest_price') $query->orderBy('price', 'asc');
+            elseif ($order == 'highest_price') $query->orderBy('price', 'desc');
+        });
+
+        $query->when($filters['ratings'] ?? false, function ($query, $ratings) {
+            for ($i = 0; $i < count($ratings); $i++) {
+                $query->where('ratings', $ratings[$i])->orWhere('ratings', $ratings[$i]);
+            }
+        });
+
+        $query->when($filters['location'] ?? false, function ($query, $location) {
+            $query->whereHas('shop', function ($query) use ($location) {
+                for ($i = 0; $i < count($location); $i++) {
+                    $query->where('location', "%$location[$i]%");
+                }
+            });
+        });
+
         $query->when($filters['shop'] ?? false, function ($query, $shop) {
             $query->whereHas('shop', function ($query) use ($shop) {
                 $query->where('url', $shop)->orWhere('name', 'LIKE', "%{$shop}%");
@@ -74,8 +98,18 @@ class Product extends Model
 
         $query->when($filters['category'] ?? $filters['subcategory'] ?? false, function ($query, $subcategory) {
             $query->whereHas('subcategory', function ($query) use ($subcategory) {
-                return $query->where('slug', $subcategory);
+                $query->where('slug', $subcategory);
             });
+        });
+
+        $query->when($filters['condition'] ?? false, function ($query, $condition) {
+            if ($condition != 'all') $query->where('condition', $condition);
+        });
+
+        $query->when($filters['min_price'] ?? false, function ($query, $min_price) {
+            $query->where('price', '>', $min_price);
+        })->when($filters['max_price'] ?? false, function ($query, $max_price) {
+            $query->where('price', '<=', $max_price);
         });
     }
 

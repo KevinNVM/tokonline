@@ -18,7 +18,7 @@
         </div>
     </div>
     <main style="margin-top: 4em;">
-        <div class="container py-3">
+        <div class="container-xl py-3">
             @include('utilities.breadcrumb')
 
 
@@ -47,50 +47,83 @@
                                     <div class="col-12">
                                         <div class="row">
                                             <div class="col rounded pb-3">
-                                                <form>
+                                                <form id="filters">
+                                                    <input type="hidden" name="search" value="{{ request('search') }}">
                                                     <div class="filter-order">
                                                         <small class="fw-semibold">Urutkan</small>
-                                                        <select class="form-select" name="orderBy">
-                                                            <option selected>Terbaru</option>
-                                                            <option value="asc">Terlama</option>
+                                                        <select class="form-select" name="order">
+                                                            <option value="latest"
+                                                                {{ request('order') == 'latest' ? 'selected' : '' }}>Terbaru
+                                                            </option>
+                                                            <option value="oldest"
+                                                                {{ request('order') == 'oldest' ? 'selected' : '' }}>Terlama
+                                                            </option>
+                                                            <option value="ratings"
+                                                                {{ request('order') == 'ratings' ? 'selected' : '' }}>Ratings
+                                                            </option>
+                                                            <option value="highest_price"
+                                                                {{ request('order') == 'highest_price' ? 'selected' : '' }}>
+                                                                Harga Tertinggi</option>
+                                                            <option value="lowest_price"
+                                                                {{ request('order') == 'lowest_price' ? 'selected' : '' }}>Harga
+                                                                Terendah</option>
                                                         </select>
                                                     </div>
                                                     <hr class="semi-thick">
                                                     <div class="filter-ratings">
                                                         <small class="fw-semibold">Ratings</small>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
-                                                                name="ratings" id="star-5">
+                                                            <input class="form-check-input" type="checkbox" value="5"
+                                                                name="ratings[]"
+                                                                {{ in_array('5', request('ratings') ?? []) ? 'checked' : '' }}
+                                                                id="star-5">
                                                             <label class="form-check-label" for="star-5">
                                                                 <span class="fa fa-star"></span> 5
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
+                                                            <input class="form-check-input" type="checkbox" value="4"
+                                                                name="ratings[]"
+                                                                {{ in_array('4', request('ratings') ?? []) ? 'checked' : '' }}
                                                                 id="star-4">
                                                             <label class="form-check-label" for="star-4">
                                                                 <span class="fa fa-star"></span> 4
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
+                                                            <input class="form-check-input" type="checkbox" value="3"
+                                                                name="ratings[]"
+                                                                {{ in_array('3', request('ratings') ?? []) ? 'checked' : '' }}
                                                                 id="star-3">
                                                             <label class="form-check-label" for="star-3">
                                                                 <span class="fa fa-star"></span> 3
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
+                                                            <input class="form-check-input" type="checkbox" value="2"
+                                                                name="ratings[]"
+                                                                {{ in_array('2', request('ratings') ?? []) ? 'checked' : '' }}
                                                                 id="star-2">
                                                             <label class="form-check-label" for="star-2">
                                                                 <span class="fa fa-star"></span> 2
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" value=""
+                                                            <input class="form-check-input" type="checkbox" value="1"
+                                                                name="ratings[]"
+                                                                {{ in_array('1', request('ratings') ?? []) ? 'checked' : '' }}
                                                                 id="star-1">
                                                             <label class="form-check-label" for="star-1">
                                                                 <span class="fa fa-star"></span> 1
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="checkbox" value="0"
+                                                                name="ratings[]"
+                                                                {{ in_array('0', request('ratings') ?? []) ? 'checked' : '' }}
+                                                                id="star-1">
+                                                            <label class="form-check-label" for="star-1">
+                                                                <span class="fa fa-star"></span> 0
                                                             </label>
                                                         </div>
                                                     </div>
@@ -101,7 +134,8 @@
                                                             <?php $location = json_decode($location, true); ?>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox"
-                                                                    id="location-{{ $location['regency'] }}">
+                                                                    id="location-{{ $location['regency'] }}"
+                                                                    name="location[]" value="{{ $location['regency'] }}">
                                                                 <label class="form-check-label"
                                                                     for="location-{{ $location['regency'] }}">
                                                                     {{ $location['regency'] }}
@@ -113,15 +147,18 @@
                                                     <div class="filter-price">
                                                         <small class="fw-semibold">Harga</small>
                                                         <div class="input-group mb-3">
-                                                            <span class="input-group-text fw-semibold" id="min-price">Rp</span>
-                                                            <input type="text" class="form-control"
+                                                            <span class="input-group-text fw-semibold"
+                                                                id="min-price">Rp</span>
+                                                            <input type="text" class="form-control" name="min_price"
+                                                                value="{{ request('min_price') }}"
                                                                 placeholder="Harga Minimum" aria-label="Minimum Price"
                                                                 aria-describedby="min-price">
                                                         </div>
                                                         <div class="input-group mb-3">
                                                             <span class="input-group-text fw-semibold"
                                                                 id="max-price">Rp</span>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" name="max_price"
+                                                                value="{{ request('max_price') }}"
                                                                 placeholder="Harga Maksimum" aria-label="Maximal Price"
                                                                 aria-describedby="max-price">
                                                         </div>
@@ -130,22 +167,35 @@
                                                     <div class="filter-condition">
                                                         <small class="fw-semibold">Kondisi Barang</small>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="cond-new">
+                                                            <input class="form-check-input" type="radio" id="cond-new"
+                                                                value="1" name="condition"
+                                                                {{ request('condition') ? 'checked' : '' }}>
                                                             <label class="form-check-label" for="cond-new">
                                                                 Baru
                                                             </label>
                                                         </div>
                                                         <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox" id="cond-old">
+                                                            <input class="form-check-input" type="radio" id="cond-old"
+                                                                value="2" name="condition"
+                                                                {{ request('condition') === '2' ? 'checked' : '' }}>
                                                             <label class="form-check-label" for="cond-old">
                                                                 Bekas
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input class="form-check-input" type="radio" id="cond-all"
+                                                                value="all" name="condition"
+                                                                {{ request('condition') == 'all' || !request('condition') ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="cond-all">
+                                                                Semua
                                                             </label>
                                                         </div>
                                                     </div>
                                                     <hr class="thick">
                                                     <div class="d-grid">
                                                         <button class="btn btn-primary mb-2">Apply</button>
-                                                        <button class="btn btn-outline-primary">Reset</button>
+                                                        <button class="btn btn-outline-primary" type="button"
+                                                            onclick="resetFilters()">Reset</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -178,32 +228,27 @@
 
                                                     <span class="float-end"><a
                                                             href="/{{ $product->shop->url . '/' . $product->slug }}#reviews"
-                                                            class="small text-muted text-uppercase aff-link">reviews</a></span>
+                                                            class="small text-muted text-decoration-none">
+                                                            {{ number_format($product->ratings, 1, '.', '.') }}
+                                                        </a></span>
                                                 </div>
                                                 <h5 class="card-title">
                                                     <a
                                                         href="/{{ $product->shop->url . '/' . $product->slug }}">{{ $product->name }}</a>
                                                 </h5>
                                                 <small>
-                                                    @switch($product->visibility)
-                                                        @case(1)
-                                                            public
-                                                        @break
-
-                                                        @case(2)
-                                                            unlisted
-                                                        @break
-
-                                                        @default
-                                                            private
-                                                    @endswitch
+                                                    {{ $product->condition == 2 ? 'Bekas' : 'Baru' }}
                                                 </small>
                                                 <small><a class="link link-muted" href="/{{ $product->shop->url }}">
                                                         {{ $product->shop->name }}
                                                     </a></small>
+                                                <small>
+                                                    {{ json_decode($product->shop->location)->regency }}
+                                                </small>
                                                 <div class="d-grid gap-2 my-4">
 
-                                                    <a href="#" class="btn btn-warning bold-btn">add to cart</a>
+                                                    <a href="/{{ $product->shop->url }}/{{ $product->slug }}?cart=1"
+                                                        class="btn btn-warning bold-btn">add to cart</a>
 
                                                 </div>
                                                 <div class="clearfix mb-1">
@@ -215,11 +260,22 @@
                                                     <span class="share-link visually-hidden"
                                                         id="item-{{ $key }}">{{ url('/') . '/' . $product->shop->url . '/' . $product->slug }}</span>
 
-                                                    <span class="float-end">
-                                                        <button class="border-0 bg-transparent" id="wishlist">
-                                                            <i class="far fa-heart" style="cursor: pointer"></i>
-                                                        </button>
-                                                    </span>
+                                                    @if (auth()->user())
+                                                        <span class="float-end">
+                                                            @php
+                                                                $wishlist =
+                                                                    auth()
+                                                                        ->user()
+                                                                        ->wishlist()
+                                                                        ->first() ?? false;
+                                                            @endphp
+                                                            <button class="border-0 bg-transparent" id="wishlist"
+                                                                onclick="addWishlist(this, '{{ $product->slug }}'); this.firstElementChild.classList.toggle('fa')">
+                                                                <i class="@if ($wishlist) {{ $wishlist->products()->where('id', $product->id)->count()? 'fa': 'far' }} @endif fa-heart"
+                                                                    style="cursor: pointer"></i>
+                                                            </button>
+                                                        </span>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -275,8 +331,7 @@
         }
     </script>
     <script>
-        $('button#wishlist').click((e) => {
-            console.log(e.currentTarget.firstElementChild.classList.add('fa'));
+        function addWishlist(el, id) {
             $.ajax({
                 type: "POST",
                 url: "/wishlist",
@@ -284,21 +339,35 @@
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 },
                 data: {
-                    product: "{{ $product->slug }}"
+                    product: id
                 },
                 success: function(response) {
-                    swal.fire({
-                        icon: 'success',
+                    Toastify({
                         text: 'Product Added To Wishlist',
-                    })
+                        close: true,
+                        style: {
+                            background: "linear-gradient(to right, #4ade80, #bbf7d0)"
+                        }
+                    }).showToast();
                 },
                 error: function(response) {
-                    swal.fire({
-                        icon: 'warning',
-                        text: response.responseText
-                    })
+                    Toastify({
+                        text: response.responseText,
+                        close: true,
+                        style: {
+                            background: "linear-gradient(to right, salmon, #fecdd3)"
+                        }
+                    }).showToast()
                 }
             });
-        })
+        }
+    </script>
+    <script>
+        function resetFilters() {
+            $.each($('form#filters input'), function(i, input) {
+                input.value = ""
+                location = '/products'
+            });
+        }
     </script>
 @endsection

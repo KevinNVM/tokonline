@@ -106,10 +106,13 @@
                     'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
                 },
                 success: (res) => {
-                    swal.fire({
-                        icon: 'success',
-                        text: `Deleted From Your Wishlist`
-                    });
+                    Toastify({
+                        text: 'Removed From Wishlist',
+                        style: {
+                            background: "linear-gradient(to right, #00b09b, #96c93d)",
+                        },
+                        close: true,
+                    }).showToast()
                     $(node.parentNode).hide(200);
                 },
             })

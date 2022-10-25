@@ -47,7 +47,7 @@
     @include('layouts.navbar')
 
     <main>
-        <div class="container py-3">
+        <div class="container-xl py-3">
             @include('utilities.breadcrumb', ['title' => '#' . $order->number])
 
             <a href="/orders" class="btn btn-outline-warning btn-sm d-print-none"><i class="bi bi-arrow-left"></i> Back</a>

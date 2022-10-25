@@ -68,8 +68,10 @@ class WishlistController extends Controller
         }
         $product = Product::where('slug', $request->product)->first();
 
-        if ($user->wishlist()->first()->products()->where('id', $product->id)->count()) return response('Product Already Exist In Selected Wishlist', 400);
-        else
+        if ($user->wishlist()->first()->products()->where('id', $product->id)->count()) {
+            $user->wishlist()->first()->products()->detach($product->id);
+            return response('Removed From Wishlist', 400);
+        } else
             $user->wishlist->first()->products()->attach($product->id);
 
         return response([

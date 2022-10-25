@@ -24,7 +24,7 @@ class ProductFactory extends Factory
             'slug' => \Illuminate\Support\Str::of('Barang' . mt_rand(1, 10e5))->slug('-'),
             'desc' => $this->faker->paragraph(10, 24),
             'weight' => mt_rand(1, 10),
-            'condition' => mt_rand(0, 1),
+            'condition' => mt_rand(1, 2),
             'stock' => mt_rand(1, 999),
             'price' => floor(mt_rand(1000, 10e5)),
             'sold' => mt_rand(1, 200),

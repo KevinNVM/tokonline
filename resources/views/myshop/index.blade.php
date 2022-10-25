@@ -7,7 +7,7 @@
 @section('content')
     @include('layouts.navbar')
     <main style="margin-top: 4rem;">
-        <div class="container py-3">
+        <div class="container-xl py-3">
             @include('utilities.breadcrumb')
 
             <div class="row">

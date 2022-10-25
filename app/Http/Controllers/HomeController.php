@@ -26,7 +26,7 @@ class HomeController extends Controller
         // $products = $products->count() ? $products : Product::latest()->get();
         return view('search', [
             'title' => 'Semua Produk',
-            'products' => Product::query(request('search'))->filters(request(['subcategory', 'shop']))->visibility('public')->get(),
+            'products' => Product::filters(request()->all())->query(request('search'))->visibility('public')->get(),
             'others' => Product::visibility('public')->get(),
             'store_location' => Shop::all()->pluck('location'),
         ]);

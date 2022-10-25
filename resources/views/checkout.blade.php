@@ -7,7 +7,7 @@
 @section('content')
     @include('layouts.navbar-light')
     <main style="margin-top: 4rem; min-height: 85vh;">
-        <div class="container py-3">
+        <div class="container-xl py-3">
             @include('utilities.breadcrumb')
 
             <h5 class="fw-semibold text-muted">Checkout</h5>

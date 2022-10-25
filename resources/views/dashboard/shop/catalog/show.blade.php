@@ -20,7 +20,7 @@
 @section('content')
     @include('layouts.navbar')
     <main>
-        <div class="container py-3">
+        <div class="container-xl py-3">
 
             @include('utilities.breadcrumb', ['title' => "{$catalog->name}"])
 

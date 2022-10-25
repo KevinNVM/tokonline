@@ -3,7 +3,7 @@
 @section('content')
     @include('layouts.navbar')
     <main style="margin-top: 4em;">
-        <div class="container py-3">
+        <div class="container-xl py-3">
             @include('utilities.breadcrumb')
 
             <div class="row g-3 d-flex justify-content-center">
