@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->text('image')->default(json_encode(['default_product.png']));
-            $table->foreignId('shop_id');
-            $table->foreignId('catalog_id');
+            $table->foreignId('shop_id')->constrained('shops', 'id')->cascadeOnDelete()->cascadeOnUpdate();
+            $table->foreignId('catalog_id')->constrained('shop_catalogs')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreignId('sub_category_id');
+            // $table->foreign('sub_category_id')->references('id')->on('product_sub_categories')->onDelete('cascade');
             $table->string('name', 255);
             $table->string('slug');
             $table->mediumText('desc')->nullable();

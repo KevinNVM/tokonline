@@ -26,52 +26,44 @@
                         Produk</span>
                     <button class="btn btn-primary mb-1"><i class="bi bi-chat-dots"></i> Chat
                         Seller</button>
-                    <button class="btn btn-outline-primary mb-1" data-bs-toggle="modal"
-                        data-bs-target="#aboutShopModal"><i class="bi bi-info-circle"></i>
-                        Tentang
-                        Toko</button>
-                    <button class="btn btn-outline-primary mb-1" data-bs-toggle="modal" data-bs-target="#ShareButton">
-                        <i class="bi bi-share"></i> Bagikan
+                    <button class="btn btn-outline-primary mb-1" onclick="openModals('shareThisShop', this)">
+                        <i class="bi bi-share"></i>
+                        Bagikan
                     </button>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="aboutShopModal" tabindex="-1" aria-labelledby="aboutShopModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="aboutShopModalLabel">Tentang Toko</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-12">
 
-                        <h3 class="fw-semibold">{{ $shop->name ?? '' }}</h3>
-                        <small class="d-block fw-bold">Bergabung Sejak</small>
-                        <span class="d-block">{{ date('d m Y', strtotime($shop->created_at)) }}</span>
-                        <hr>
-                        <small class="d-block fw-bold">Deskripsi Toko</small>
-                        <p>
-                            {{ $shop->desc ?? 'Lorem Ipsum' }}
-                        </p>
-                        <hr>
-                        <small class="d-block fw-bold">Tautan</small>
-                        @if ($shop->link)
-                            @php $links = json_decode($shop->link) @endphp
-                            @foreach ($links as $link)
-                                <a href="{{ $link }}" class="link d-block"
-                                    target="_blank">{{ $link }}</a>
-                            @endforeach
-                        @endif
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+
+<div id="shareThisShop" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content shareThisShopModal">
+        <div class="modal-header">
+            <span class="closeModalShare">&times;</span>
+            <h4><i class="bi bi-share"></i> Bagikan</h4>
+        </div>
+        <div class="modal-body py-5">
+            <div class="d-flex justify-content-center">
+                <a onclick="Share.facebook('{{ url()->current() }}','Check Ini! {{ $title }}','','Ini Mungkin Aja Bisa Menarik Perhatian Mu!')"
+                    role="button" title="Facebook" class="mx-2 fs-2 link-primary">
+                    <i class="fa-brands fa-facebook fa-2xl"></i>
+                </a>
+
+                <a onclick="Share.twitter({{ url()->current() }},'Toko Kevin')" title="Twitter"
+                    class="mx-2 fs-2 link-info" role="button">
+                    <i class="fa-brands fa-twitter fa-2xl"></i>
+                </a>
+
+                <a href="whatsapp://send?text=%2ACoba+Cek+Toko+Ini+Deh%21+Dijamin+Ga+Bakal+Nyesel%2A%0D%0A{{ url()->current() }}"
+                    data-action="share/whatsapp/share" title="Whatsapp" class="mx-2 fs-2 link-success">
+                    <i class="fa-brands fa-whatsapp fa-2xl"></i>
+                </a>
             </div>
         </div>
+
     </div>
+
 </div>

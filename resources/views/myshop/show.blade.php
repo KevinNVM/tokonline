@@ -40,8 +40,7 @@
                             <div class="row justify-content-center">
                                 <div class="col col-md-6 col-lg-12">
 
-                                    <img role="button" data-bs-toggle="modal" data-bs-target="#showImage"
-                                        onclick="$('#ImagePreview').attr('src', this.src)"
+                                    <img role="button" onclick="swal.fire({imageUrl:this.src})"
                                         src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
                                         class="card-img img-main-thumbnail" alt="Product Thumbnail" id="mainImg">
 
@@ -613,9 +612,9 @@
                     }).showToast()
                 },
                 error: function(response) {
-                    // console.log(response)
+                    console.log(response)
                     Toastify({
-                        text: response.responseText,
+                        text: response.responseJSON.message,
                         close: true,
                         style: {
                             background: "linear-gradient(to right, salmon, #fecdd3)"
@@ -649,5 +648,11 @@
             });
         })
     </script>
-
+    <script>
+        function imagePreview(src) {
+            swal.fire({
+                imageUrl: src
+            })
+        }
+    </script>
 @endsection

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="_token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     @include('resource.swal')
     @include('resource.icons')
     <link rel="stylesheet" href="/css/bootstrap5.css">
@@ -13,6 +14,8 @@
     <link rel="stylesheet" href="/css/color.css">
     <link rel="stylesheet" href="/css/product-card.css">
     <link rel="stylesheet" href="/css/autocomplete.css">
+    <link rel="stylesheet" href="/css/modal.css">
+    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/jquery-ui.js"></script>
     <script src="/js/bootstrap5.js"></script>
@@ -164,6 +167,7 @@
 
 <body>
 
+    @include('utilities.pre-loader')
     @include('layouts.navbar')
 
     <main>
@@ -507,11 +511,6 @@
                     });
                 }
             });
-        }
-
-
-        if (!mobileCheck()) {
-            $('#bottombar').remove();
         }
     </script>
     @if (session('alert'))

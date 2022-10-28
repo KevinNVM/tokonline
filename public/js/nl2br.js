@@ -8,4 +8,5 @@ function nl2br(str, is_xhtml) {
         /([^>\r\n]?)(\r\n|\n\r|\r|\n)/g,
         "$1" + breakTag + "$2"
     );
+    return this;
 }

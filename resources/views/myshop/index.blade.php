@@ -12,37 +12,6 @@
 
             <div class="row">
                 @include('myshop.profile')
-                <div class="modal fade" id="ShareButton" tabindex="-1" aria-labelledby="ShareButtonLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">
-                                    <i class="bi bi-share"></i> Bagikan
-                                </h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body py-5">
-                                <div class="d-flex justify-content-center">
-                                    <a onclick="Share.facebook('{{ url()->current() }}','Check Ini! {{ $title }}','','Ini Mungkin Aja Bisa Menarik Perhatian Mu!')"
-                                        role="button" title="Facebook" class="mx-2 fs-2 link-primary">
-                                        <i class="fa-brands fa-facebook fa-2xl"></i>
-                                    </a>
-
-                                    <a onclick="Share.twitter({{ url()->current() }},'Toko Kevin')" title="Twitter"
-                                        class="mx-2 fs-2 link-info" role="button">
-                                        <i class="fa-brands fa-twitter fa-2xl"></i>
-                                    </a>
-
-                                    <a href="whatsapp://send?text=%2ACoba+Cek+Toko+Ini+Deh%21+Dijamin+Ga+Bakal+Nyesel%2A%0D%0A{{ url()->current() }}"
-                                        data-action="share/whatsapp/share" title="Whatsapp" class="mx-2 fs-2 link-success">
-                                        <i class="fa-brands fa-whatsapp fa-2xl"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="col mt-5">
                     <div id="tabs">
                         <ul>
@@ -248,11 +217,38 @@
             </div>
 
     </main>
+
     @include('utilities.footer')
     <script src="/js/share.js"></script>
     <script>
         $(function() {
             $("#tabs").tabs();
         });
+    </script>
+    <script>
+        function openModals(id, btn) {
+            // Get the modal
+            var modal = document.querySelector(`#${id}`);
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName(`closeModalShare`)[0];
+
+            // When the user clicks the button, open the modal
+            btn.onclick = function() {
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        }
     </script>
 @endsection

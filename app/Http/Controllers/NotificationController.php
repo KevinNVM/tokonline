@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Notification;
 use Auth;
 use Illuminate\Http\Request;
+use Str;
 
 class NotificationController extends Controller
 {
@@ -15,7 +16,7 @@ class NotificationController extends Controller
      */
     public function index()
     {
-        if (!Auth::user()->isAdmin)
+        if (!(Auth::user()->isAdmin ?? true))
             $data = Notification::where('receiver', Auth::user()->username)->orWhere('receiver', '*')->paginate(10);
         else
             $data = Notification::paginate(100);
@@ -40,13 +41,17 @@ class NotificationController extends Controller
      */
     public function store(Request $request)
     {
-        if (!Auth::user()->isAdmin) return abort(404);
+        if (!(Auth::user()->isAdmin ?? true)) return abort(404);
 
         $validated = $request->validate([
             'name' => 'required',
             'body' => 'required',
             'receiver' => 'required'
         ]);
+
+        $validated['body'] = preg_replace('<user>', $validated['body'], $validated['receiver']);
+
+        $validated['slug'] = Str::slug($validated['name']);
 
         Notification::create($validated);
 
@@ -72,7 +77,7 @@ class NotificationController extends Controller
      */
     public function edit(Notification $notification)
     {
-        if (!Auth::user()->isAdmin) return abort(404);
+        if (!(Auth::user()->isAdmin ?? true)) return abort(404);
     }
 
     /**
@@ -84,7 +89,7 @@ class NotificationController extends Controller
      */
     public function update(Request $request, Notification $notification)
     {
-        if (!Auth::user()->isAdmin) return abort(404);
+        if (!(Auth::user()->isAdmin ?? true)) return abort(404);
     }
 
     /**
@@ -95,7 +100,7 @@ class NotificationController extends Controller
      */
     public function destroy(Notification $notification)
     {
-        if (!Auth::user()->isAdmin) return abort(404);
+        if (!(Auth::user()->isAdmin ?? true)) return abort(404);
         $notification->delete();
         return response('', 200);
     }

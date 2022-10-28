@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="_token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <title>{{ $title ?? 'Dashboard' }} - EComm</title>
     <link href="/css/dashboard.style.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -75,6 +76,14 @@
                 text: '{{ session('msg')['body'] ?? '' }}',
                 icon: '{{ session('msg')['status'] ?? '' }}',
                 title: '{{ session('msg')['title'] ?? '' }}'
+            })
+        </script>
+    @endif
+    @if (session('toast'))
+        <script>
+            swal.fire({
+                text: '{{ session('toast')['text'] ?? '' }}',
+                close: true
             })
         </script>
     @endif

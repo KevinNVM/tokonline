@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="_token" content="{{ csrf_token() }}">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     @include('resource.swal')
     @include('resource.icons')
     <link rel="stylesheet" href="/css/bootstrap5.css">
@@ -13,8 +14,10 @@
     <link rel="stylesheet" href="/css/hover.css">
     <link rel="stylesheet" href="/css/color.css">
     <link rel="stylesheet" href="/css/autocomplete.css">
+    <link rel="stylesheet" href="/css/modal.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="https://unpkg.com/micromodal/dist/micromodal.min.js"></script>
     <script src="/js/jquery.js"></script>
     <script src="/js/jquery-ui.js"></script>
     <script src="/js/bootstrap5.js"></script>
@@ -42,6 +45,7 @@
 </head>
 
 <body>
+    @include('utilities.pre-loader')
     @yield('content')
     @stack('script')
 
@@ -53,11 +57,11 @@
 
 
 
-        if (mobileCheck()) {
-            $('#topbar').removeClass('fixed-top')
-        } else {
-            $('#bottombar').remove()
-        }
+        // if (mobileCheck()) {
+        //     $('#topbar').removeClass('fixed-top')
+        // } else {
+        //     $('#bottombar').remove()
+        // }
     </script>
     @if (session('alert'))
         <script>

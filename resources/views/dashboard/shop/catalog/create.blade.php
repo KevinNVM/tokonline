@@ -68,7 +68,7 @@
                                 @enderror
                             </div>
                             <div class="mb-3">
-                                <button class="btn btn-outline-primary px-4">Buat</button>
+                                <button class="btn btn-outline-primary px-4" type="submit">Buat</button>
                             </div>
                         </form>
 
@@ -77,4 +77,32 @@
             </div>
         </div>
     </div>
+    <script>
+        $('form').on('submit', (e) => {
+            e.preventDefault()
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.ajax({
+                type: "post",
+                url: "{{ route('catalogs.store') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name=_token]').attr('content')
+                },
+                data: data,
+                success: function(response) {
+                    Toastify({
+                        text: 'Success',
+                        close: true,
+                        onClick: () => {
+                            location.href = '/shop'
+                        }
+                    }).showToast()
+                    location = '/shop'
+                },
+                error: (e) => Toastify(e.responseJSON.message).showToast()
+            });
+        })
+    </script>
 @endsection

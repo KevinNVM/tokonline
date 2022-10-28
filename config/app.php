@@ -211,6 +211,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
+        'MobileCheck' => App\Helper\MobileCheck::class,
     ])->toArray(),
 
 ];

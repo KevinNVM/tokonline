@@ -23,7 +23,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 
 # Test Route
 Route::get('/test', function () {
-    return 'test';
+    return view('test');
 });
 Route::get('/test/var', function () {
     return request()->all();
@@ -32,13 +32,15 @@ Route::get('/test/var', function () {
 # Untitled
 Route::post('payments/midtrans-notification', [PaymentCallbackController::class, 'receive']);
 
-Route::resource('notification', NotificationController::class)->only(['index', 'store', 'destroy']);
 
 ## Redirect ##
 Route::redirect('/dashboard/shop', '/shop');
 
 ## Global Middleware Routes ##
 Route::middleware(['throttle:global', 'verified'])->group(function () {
+
+    ## Notification ##
+    Route::resource('notification', NotificationController::class)->only(['index', 'store', 'destroy']);
 
 
     ## Home ##
@@ -95,6 +97,8 @@ Route::middleware(['throttle:global', 'verified'])->group(function () {
             return redirect('/category');
         });
         Route::get('/category/{category}/{sub_category}', 'show');
+        Route::post('/category', 'store')->name('category.store')->middleware('verified');
+        Route::post('/category/subcategory', 'subcategory_store')->name('category.subcategory.store')->middleware('verified');
     });
 
     # Cart

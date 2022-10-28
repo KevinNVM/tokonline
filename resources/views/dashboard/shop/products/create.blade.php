@@ -28,8 +28,8 @@
 
                         {{-- Main Form --}}
                         <form action="{{ route('products.store') }}" method="POST" enctype="multipart/form-data">
-                            @method('POST')
                             @csrf
+                            @method('POST')
                             <div class="d-flex flex-column">
                                 <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex flex-column align-items-center">
@@ -66,9 +66,12 @@
                                     </div>
                                     <div class="mb-3 d-flex flex-column gap-1">
                                         <label>Gambar Produk Lainnya</label>
-                                        <input type="file" class="form-control" id="img2" name="image[]">
-                                        <input type="file" class="form-control" id="img3" name="image[]">
-                                        <input type="file" class="form-control" id="img4" name="image[]">
+                                        <input type="file" accept="image/*" class="form-control" id="img2"
+                                            name="image[]">
+                                        <input type="file" accept="image/*" class="form-control" id="img3"
+                                            name="image[]">
+                                        <input type="file" accept="image/*" class="form-control" id="img4"
+                                            name="image[]">
                                     </div>
                                 </div>
                                 @if ($errors->any())
@@ -210,7 +213,8 @@
                                     </label>
                                 </div>
                                 <div class="mb-3 d-grid col-6 col-md-4 col-lg-2">
-                                    <button class="btn btn-primary shadow-hover" id="submit" disabled>Buat
+                                    <button class="btn btn-primary shadow-hover" id="submit" type="submit"
+                                        disabled>Buat
                                         Produk</button>
                                 </div>
                             </div>
@@ -222,4 +226,32 @@
         </div>
     </div>
     <script src="/js/curr_format.js"></script>
+    <script>
+        $('form').on('submit', (e) => {
+            e.preventDefault()
+            var data = $('form').serializeArray().reduce(function(obj, item) {
+                obj[item.name] = item.value;
+                return obj;
+            }, {});
+            $.ajax({
+                type: "post",
+                url: "{{ route('products.store') }}",
+                headers: {
+                    "X-CSRF-TOKEN": $('meta[name=_token]').attr('content')
+                },
+                data: data,
+                success: function(response) {
+                    Toastify({
+                        text: 'Success',
+                        close: true,
+                        onClick: () => {
+                            location.href = '/shop'
+                        }
+                    }).showToast()
+                    location = '/shop'
+                },
+                error: (e) => Toastify(e.responseJSON.message).showToast()
+            });
+        })
+    </script>
 @endsection

@@ -25,4 +25,31 @@ class ProductCategoryController extends Controller
             'sub_category' => $sub_category
         ]);
     }
+
+    public function store(Request $request)
+    {
+        $valid = $request->validate([
+            'name' => 'required|string',
+            'slug' => 'required|string|unique:product_categories',
+            'desc' => 'max:2000'
+        ]);
+
+        ProductCategory::create($valid);
+
+        return response('success', 200);
+    }
+
+    public function subcategory_store(Request $request)
+    {
+        $valid = $request->validate([
+            'name' => 'required|string',
+            'category_id' => 'required|integer',
+            'slug' => 'required|string|unique:product_categories',
+            'desc' => 'max:2000'
+        ]);
+
+        ProductSubCategory::create($valid);
+
+        return response('success', 200);
+    }
 }
