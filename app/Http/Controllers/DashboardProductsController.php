@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
 use Auth;
+use File;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Arr;
 
@@ -56,9 +57,8 @@ class DashboardProductsController extends Controller
         if ($request->hasFile('image')) {
             $imgNames = [];
             foreach ($request->file('image') as $image) {
-                $imageName = $image->hashName();
-                $image->storeAs('/images/products', $imageName, 'public');
-                $imgNames[] = $imageName;
+                $storeImg = $image->store('/images/products', 'public');
+                $imgNames[] = str_replace('images/products/', '', $storeImg);
             }
             $valid['image'] = json_encode($imgNames);
         } else $valid['image'] = json_encode(['default_product.png']);
@@ -111,9 +111,17 @@ class DashboardProductsController extends Controller
         if ($request->hasFile('image')) {
             $imgNames = [];
             foreach ($request->file('image') as $image) {
-                $imageName = $image->hashName();
-                $image->storeAs('/images/products', $imageName, 'public');
-                $imgNames[] = $imageName;
+                // $imageName = $image->hashName();
+                // $imgNames[] = $imageName;
+                $storeImg = $image->store('/images/products', 'public');
+                $imgNames[] = str_replace('images/products/', '', $storeImg);
+            }
+            // delete old image
+            $old = json_decode($product->image);
+            foreach ($old as $image) {
+                if (File::exists(public_path("/storage/images/products/$image"))) {
+                    File::delete(public_path("/storage/images/products/$image"));
+                }
             }
             $valid['image'] = json_encode($imgNames);
         }
@@ -139,6 +147,10 @@ class DashboardProductsController extends Controller
             return back()->with('alert', "Error Deleting: $product->name, reason: Product is on someone else`s cart");
         else {
             $product->delete();
+            $productImages = json_decode($product->image);
+            foreach ($productImages as $image) {
+                File::delete(public_path("/storage/images/products/$image"));
+            }
             return back()->with('alert', "Deleted: $product->name");
         }
     }
