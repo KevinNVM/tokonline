@@ -241,8 +241,8 @@
             <div class="row">
                 @foreach ($top_shops as $key => $item)
                     <div class="col-lg-4">
-                        <img src="{{ asset('storage/images/profiles/' . $item->owner->image) }}" width="140"
-                            height="140" class="img-fixed rounded-circle border ">
+                        <img loading="lazy"src="{{ asset('storage/images/profiles/' . $item->owner->image) }}"
+                            width="140" height="140" class="img-fixed rounded-circle border ">
 
                         <h2 class="fw-normal">{{ $item->name }}</h2>
                         <p>{{ $item->desc ?? 'Some representative placeholder content foreach the three columns of text below the carousel. This is the first column.' }}
@@ -264,7 +264,7 @@
                         @break($key == 6)
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                <img loading="lazy"src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
                                     class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="{{ 'Lorem ipsum dolor sit amet' }}">
@@ -307,7 +307,7 @@
                             @break($key == 6)
                             <div class="col mb-3">
                                 <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                    <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                    <img loading="lazy"src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
                                         class="card-img-top p-2" alt="Product Thumbnail">
                                     <div class="card-body">
                                         <h5 title="{{ $item->name }}">
@@ -349,7 +349,7 @@
                         @break($key == 6)
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                <img loading="lazy"src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
                                     class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="{{ $item->name }}">
@@ -496,7 +496,7 @@
                         $('.inf-col').append(`
                         <div class="col mb-3">
                             <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="/storage/images/products/${JSON.parse(valueOfElement.image)[0]}" class="card-img-top p-2" alt="Product Thumbnail">
+                                <img loading="lazy"src="/storage/images/products/${JSON.parse(valueOfElement.image)[0]}" class="card-img-top p-2" alt="Product Thumbnail">
                                 <div class="card-body">
                                     <h5 title="${valueOfElement.name}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"

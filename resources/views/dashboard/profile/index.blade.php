@@ -64,7 +64,7 @@
                                     <label for="image">
                                         <div class="p-1 border rounded d-flex justify-content-center" role="button"
                                             id="imageWrapper">
-                                            <img src="{{ asset('storage/images/profiles/' . $user->image) }}"
+                                            <img loading="lazy"src="{{ asset('storage/images/profiles/' . $user->image) }}"
                                                 id="imagePreview" alt="Profile Picture" width="100">
                                         </div>
                                         @error('image')

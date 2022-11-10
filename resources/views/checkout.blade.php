@@ -28,7 +28,7 @@
                         <div class="my-1">
                             <div class="divider mb-4">
                                 <div class="profile d-flex align-items-center">
-                                    <img src="/img/icons-512.png" alt="Seller Profile Picture" width="30"
+                                    <img loading="lazy"src="/img/icons-512.png" alt="Seller Profile Picture" width="30"
                                         class="img-fluid rounded-circle">
                                     <h6 class="fw-bold ms-2">Nama Seller</h6>
                                 </div>
@@ -37,8 +37,8 @@
                                     <div class="row">
                                         <div class="col">
                                             <div class="d-flex align-items-center">
-                                                <img src="/img/icons-512.png" alt="Seller Profile Picture" width="50"
-                                                    class="img-fluid">
+                                                <img loading="lazy"src="/img/icons-512.png" alt="Seller Profile Picture"
+                                                    width="50" class="img-fluid">
                                                 <h6 class="fw-bold ms-2">Nama Barang</h6>
                                             </div>
                                             <small class="d-block">1 Barang (500Gr)</small>

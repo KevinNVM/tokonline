@@ -10,7 +10,8 @@
                 <li class="list-group-item d-flex justify-content-between lh-sm">
                     <div>
                         <div class="d-flex align-items-center">
-                            <img src="/img/icons-512.png" alt="Product Thumbnail" width="25" class="img-fluid me-3">
+                            <img loading="lazy"src="/img/icons-512.png" alt="Product Thumbnail" width="25"
+                                class="img-fluid me-3">
                             <span class="my-0 h6"><a class="link text-dark"
                                     href="/{{ $item->shop->url . '/' . $item->slug }}/">{{ $item->name }}</a>
                                 ·

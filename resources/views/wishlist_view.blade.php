@@ -3,7 +3,7 @@
         @foreach ($wishlist as $key => $product)
             <div class="col mb-3">
                 <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                    <img src="{{ asset('/storage/images/products/' . json_decode($product->image, true)[0]) }}"
+                    <img loading="lazy"src="{{ asset('/storage/images/products/' . json_decode($product->image, true)[0]) }}"
                         class="card-img-top p-2" alt="Product Thumbnail">
                     <div class="card-body">
                         <h5 title="{{ $product->name }}">

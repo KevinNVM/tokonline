@@ -35,26 +35,26 @@
                                     <div class="d-flex flex-column align-items-center">
                                         <div class="mb-3">
                                             <label for="img1" role="button">
-                                                <img id="imgPreview1" src="/img/icons-512.png" width="250">
+                                                <img loading="lazy"id="imgPreview1" src="/img/icons-512.png" width="250">
                                             </label>
                                         </div>
                                         <div class="d-block d-lg-flex flex-row">
                                             <div class="mb-3">
                                                 <label for="img2" role="button">
-                                                    <img id="imgPreview2" src="/img/icons-512.png" width="125"
-                                                        class="mx-1">
+                                                    <img loading="lazy"id="imgPreview2" src="/img/icons-512.png"
+                                                        width="125" class="mx-1">
                                                 </label>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="img3" role="button">
-                                                    <img id="imgPreview3" src="/img/icons-512.png" width="125"
-                                                        class="mx-1">
+                                                    <img loading="lazy"id="imgPreview3" src="/img/icons-512.png"
+                                                        width="125" class="mx-1">
                                                 </label>
                                             </div>
                                             <div class="mb-3">
                                                 <label for="img4" role="button">
-                                                    <img id="imgPreview4" src="/img/icons-512.png" width="125"
-                                                        class="mx-1">
+                                                    <img loading="lazy"id="imgPreview4" src="/img/icons-512.png"
+                                                        width="125" class="mx-1">
                                                 </label>
                                             </div>
                                         </div>

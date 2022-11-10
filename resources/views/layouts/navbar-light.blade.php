@@ -17,7 +17,7 @@
                     return false;
                 }
               })">
-                <img src="/img/icons-512.png" alt="Web Icons" width="30" class="p-0 m-0 ">
+                <img loading="lazy"src="/img/icons-512.png" alt="Web Icons" width="30" class="p-0 m-0 ">
                 E-Comm
             </a>
         </div>

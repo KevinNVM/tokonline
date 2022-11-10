@@ -40,7 +40,7 @@
                             <div class="row justify-content-center">
                                 <div class="col col-md-6 col-lg-12">
 
-                                    <img role="button" onclick="swal.fire({imageUrl:this.src})"
+                                    <img loading="lazy"role="button" onclick="swal.fire({imageUrl:this.src})"
                                         src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
                                         class="card-img img-main-thumbnail" alt="Product Thumbnail" id="mainImg">
 
@@ -48,7 +48,8 @@
                             </div>
                             <div class="card-body d-flex justify-content-center">
                                 @foreach (json_decode($product->image) as $img)
-                                    <img src="{{ asset('storage/images/products/' . $img) }}" width="50" height="50"
+                                    <img loading="lazy"src="{{ asset('storage/images/products/' . $img) }}" width="50"
+                                        height="50"
                                         class="img-sub-thumbnail img-fixed rounded shadow-sm mx-1 outline-salmon"
                                         style="width: 50px;" onclick="$('#mainImg').attr('src', this.src)">
                                 @endforeach
@@ -65,7 +66,7 @@
                             <h6 class="card-subtitle mb-2 text-muted">Terjual
                                 <span class="font-monospace fw-bold">{{ $product->sold }}</span>
                                 &#8226;
-                                <img src="/img/star-big.svg" alt="Ulasan" width="18">
+                                <img loading="lazy"src="/img/star-big.svg" alt="Ulasan" width="18">
                                 4.9 (213 Ulasan)
                             </h6>
                             <h2 class="price fw-bold mt-2 mb-3">Rp{{ number_format($product->price, 0, ',', '.') }}</h2>
@@ -118,7 +119,7 @@
                                     <div class="row g-0 justify-content-center">
                                         <div class="col-12 d-flex align-items-center">
                                             <a href="#" class="fw-semibold text-decoration-none link-dark ms-3">
-                                                <img src="{{ asset('storage/images/profiles/' . $product->shop->owner->image) }}"
+                                                <img loading="lazy"src="{{ asset('storage/images/profiles/' . $product->shop->owner->image) }}"
                                                     alt="Seller Profile" width="40" class="img-fluid rounded-circle">
                                             </a>
                                             <h5><a href="/{{ $product->shop->url }}"
@@ -462,7 +463,7 @@
                                 <div class="user-info border-bottom my-1 py-2 px-2 d-flex">
                                     <div class="row g-0 justify-content-center">
                                         <div class="col-12 d-flex align-items-center">
-                                            <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                            <img loading="lazy"src="{{ asset('storage/images/profiles/default.jpg') }}"
                                                 alt="Seller Profile" width="40" class="img-fluid rounded-circle">
                                             <h5 class="fw-semibold ms-3">User Name</h5>
                                         </div>
@@ -509,7 +510,7 @@
                                 <div class="my-1 py-2 px-2 d-flex border rounded mb-4">
                                     <div class="row g-0justify-content-center">
                                         <div class="col-12 d-flex align-items-center">
-                                            <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                            <img loading="lazy"src="{{ asset('storage/images/profiles/default.jpg') }}"
                                                 alt="Seller Profile" width="35" class="img-fluid rounded-circle">
                                             <h5 class="fw-semibold ms-3">Buyers Name · <small
                                                     class="fs-6 fw-light font-monospace">26
@@ -526,7 +527,7 @@
                                             </p>
                                             <div class="bg-light border rounded px-2 py-2">
                                                 <div class="col-12 d-flex align-items-center">
-                                                    <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                                    <img loading="lazy"src="{{ asset('storage/images/profiles/default.jpg') }}"
                                                         alt="Seller Profile" width="30"
                                                         class="img-fluid rounded-circle">
                                                     <h6 class="fw-semibold ms-3">Seller Name · <small
@@ -543,7 +544,7 @@
                                                     voluptatum?
                                                 </p>
                                                 <div class="col-12 d-flex align-items-center">
-                                                    <img src="{{ asset('storage/images/profiles/default.jpg') }}"
+                                                    <img loading="lazy"src="{{ asset('storage/images/profiles/default.jpg') }}"
                                                         alt="Seller Profile" width="35"
                                                         class="img-fluid rounded-circle me-2">
                                                     <textarea onfocus="$('.btn-send{{ $i }}').show()" type="text" class="form-control input-discuss"
@@ -571,8 +572,8 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body d-flex justify-content-center align-items-center p-4">
-                    <img src="" id="ImagePreview" class="img-fluid" onclick="openNewTab(this.src)"
-                        role="button">
+                    <img loading="lazy"src="" id="ImagePreview" class="img-fluid"
+                        onclick="openNewTab(this.src)" role="button">
                 </div>
             </div>
         </div>

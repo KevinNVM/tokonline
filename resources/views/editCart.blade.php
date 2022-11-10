@@ -61,7 +61,8 @@
         <main class="mb-5">
             <div class="py-5 text-center">
                 @include('utilities.breadcrumb')
-                <img class="d-block mx-auto mb-4" src="/img/icons-512.png" alt="" width="72" height="57">
+                <img loading="lazy"class="d-block mx-auto mb-4" src="/img/icons-512.png" alt="" width="72"
+                    height="57">
                 <h2><a href="/cart" class="link link-dark">Keranjang</a></h2>
 
             </div>
@@ -80,8 +81,8 @@
                                     <li class="list-group-item d-flex justify-content-between lh-sm">
                                         <div>
                                             <div class="d-flex align-items-center">
-                                                <img src="/img/icons-512.png" alt="Product Thumbnail" width="25"
-                                                    class="img-fluid me-3">
+                                                <img loading="lazy"src="/img/icons-512.png" alt="Product Thumbnail"
+                                                    width="25" class="img-fluid me-3">
                                                 <span class="my-0 h6"><a class="link text-dark"
                                                         href="/{{ $product->shop->url . '/' . $product->slug }}/">{{ $product->name }}</a>
                                                     ·

@@ -32,7 +32,7 @@
         style="z-index: 50">
         <div class="container">
             <a class="navbar-brand" href="/">
-                <img src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
+                <img loading="lazy"src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -187,7 +187,7 @@
 
 <nav class="d-none d-print-block">
     <a class="navbar-brand" href="/">
-        <img src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
+        <img loading="lazy"src="/img/icons-512.png" alt="Logo" width="35" class="img-fluid">
     </a>
 </nav>
 <div class="modal" id="notificationModal" aria-labelledby="notificationModalLabel" aria-hidden="true">

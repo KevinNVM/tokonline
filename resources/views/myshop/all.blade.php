@@ -72,7 +72,7 @@
                             @foreach ($products as $key => $product)
                                 <div class="col mb-3">
                                     <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                        <img src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
+                                        <img loading="lazy"src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
                                             class="card-img-top p-2" alt="Product Thumbnail">
                                         <div class="card-body">
                                             <small class="badge text-bg-warning">{{ $product->catalog->name }}</small>

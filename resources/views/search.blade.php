@@ -213,7 +213,7 @@
                                     <div class="col hp">
                                         <div class="card-product card h-100 shadow-hover">
                                             <a href="/{{ $product->shop->url . '/' . $product->slug }}">
-                                                <img src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
+                                                <img loading="lazy"src="{{ asset('storage/images/products/' . json_decode($product->image)[0]) }}"
                                                     class="card-img-top" alt="product.title" />
                                             </a>
 
@@ -293,7 +293,8 @@
                             @foreach ($shops as $key => $shop)
                                 <div class="col mb-3">
                                     <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                        <img src="/img/icons-512.png" class="card-img-top p-2" alt="Product Thumbnail">
+                                        <img loading="lazy"src="/img/icons-512.png" class="card-img-top p-2"
+                                            alt="Product Thumbnail">
                                         <div class="card-body">
                                             <h5 title="{{ $shop->name }}">
                                                 <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"

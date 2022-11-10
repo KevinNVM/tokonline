@@ -24,17 +24,17 @@
                                 {{-- <div class="d-flex flex-column align-items-center">
                                     <div class="d-flex flex-column align-items-center">
                                         <div class="mb-3">
-                                            <img src="/img/icons-512.png" width="250">
+                                            <img loading="lazy"src="/img/icons-512.png" width="250">
                                         </div>
                                         <div class="d-block d-lg-flex flex-row">
                                             <div class="mb-3">
-                                                <img src="/img/icons-512.png" width="125" class="mx-1">
+                                                <img loading="lazy"src="/img/icons-512.png" width="125" class="mx-1">
                                             </div>
                                             <div class="mb-3">
-                                                <img src="/img/icons-512.png" width="125" class="mx-1">
+                                                <img loading="lazy"src="/img/icons-512.png" width="125" class="mx-1">
                                             </div>
                                             <div class="mb-3">
-                                                <img src="/img/icons-512.png" width="125" class="mx-1">
+                                                <img loading="lazy"src="/img/icons-512.png" width="125" class="mx-1">
                                             </div>
                                         </div>
                                     </div>
