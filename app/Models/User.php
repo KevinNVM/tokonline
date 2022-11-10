@@ -64,18 +64,6 @@ class User extends Authenticatable implements MustVerifyEmail
 
         if ($result == "EXIST") return false;
         else if ($result) {
-            // prevent glitch where u can't add item to cart
-
-            $i = 0;
-            while ($i <= 10) {
-                Cart::find($user_id)->products()->attach(Product::first()->id, [
-                    'count' => 69,
-                    'subtotal' => 6900,
-                    'notes' => '6xtynine',
-                ]);
-                $i++;
-            }
-
             Cart::find($user_id)->products()->detach();
             return true;
         } else return false;

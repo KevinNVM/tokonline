@@ -12,7 +12,7 @@ class Shop extends Model
     use HasFactory;
 
     public $guarded = ['id'];
-    protected $primaryKey = 'user_id';
+    // protected $primaryKey = 'user_id';
 
     public function owner()
     {

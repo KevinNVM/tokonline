@@ -4,7 +4,7 @@
     @include('layouts.navbar')
 
     <main>
-        <div class="container-xl py-3">
+        <div class="container-xl py-3 mt-5">
             @include('utilities.breadcrumb', ['title' => 'Order List'])
 
             {{-- List --}}

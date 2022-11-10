@@ -8,6 +8,7 @@ use App\Models\Product;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ProductCategory;
+use Auth;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Support\Arr;
 
@@ -63,7 +64,7 @@ class DashboardProductsController extends Controller
         } else $valid['image'] = json_encode(['default_product.png']);
 
 
-        $valid['shop_id'] = Shop::where('user_id', auth()->user()->id)->sum('user_id');
+        $valid['shop_id'] = Shop::where('user_id', Auth::user()->id)->first()->id;
         $valid['slug'] = Str::of($valid['name'])->slug();
         $valid['sold'] = 0;
 
@@ -115,7 +116,7 @@ class DashboardProductsController extends Controller
                 $imgNames[] = $imageName;
             }
             $valid['image'] = json_encode($imgNames);
-        } else $valid['image'] = json_encode(['default_product.png']);
+        }
 
         $product->update($valid);
 

@@ -92,6 +92,7 @@
                 },
                 data: data,
                 success: function(response) {
+                    console.log(response)
                     Toastify({
                         text: 'Success',
                         close: true,
@@ -101,7 +102,12 @@
                     }).showToast()
                     location = '/shop'
                 },
-                error: (e) => Toastify(e.responseJSON.message).showToast()
+                error: (e) => {
+                    console.log(e)
+                    Toastify({
+                        text: e.responseJSON.message || e.responseText
+                    }).showToast();
+                }
             });
         })
     </script>

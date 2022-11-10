@@ -226,32 +226,4 @@
         </div>
     </div>
     <script src="/js/curr_format.js"></script>
-    <script>
-        $('form').on('submit', (e) => {
-            e.preventDefault()
-            var data = $('form').serializeArray().reduce(function(obj, item) {
-                obj[item.name] = item.value;
-                return obj;
-            }, {});
-            $.ajax({
-                type: "post",
-                url: "{{ route('products.store') }}",
-                headers: {
-                    "X-CSRF-TOKEN": $('meta[name=_token]').attr('content')
-                },
-                data: data,
-                success: function(response) {
-                    Toastify({
-                        text: 'Success',
-                        close: true,
-                        onClick: () => {
-                            location.href = '/shop'
-                        }
-                    }).showToast()
-                    location = '/shop'
-                },
-                error: (e) => Toastify(e.responseJSON.message).showToast()
-            });
-        })
-    </script>
 @endsection

@@ -11,7 +11,7 @@ unset($items[0]);
 
         @foreach ($items as $key => $item)
             @if ($key == count($items))
-                <li class="breadcrumb-item active" aria-current="page">{{ $title ?? '' }}</li>
+                <li class="breadcrumb-item active" aria-current="page">{{ str()->words($title, 2, '...') ?? '' }}</li>
             @else
                 <?php
                 $cut_from = array_search($item, $items, true);

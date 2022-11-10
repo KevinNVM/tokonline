@@ -270,7 +270,7 @@
                                     <h5 title="{{ 'Lorem ipsum dolor sit amet' }}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
                                             href="/{{ $item->shop->url ?? '' }}/{{ $item->slug }}">
-                                            {{ Str::limit($item->name, 25, '...') }}
+                                            {{ Str::limit($item->name, 75, '...') }}
                                         </a>
                                     </h5>
                                     <span
@@ -281,7 +281,8 @@
                                         @endif
                                     </small>
                                     <p class="card-text">
-                                        <i class="bi bi-star-half"></i> {{ $item->rating ?? '0.0' }}
+                                        <i class="bi bi-star-half"></i>
+                                        {{ number_format($item->ratings / 10, 1) ?? '0.0' }}
                                         <i class="bi bi-dot"></i>
                                         Terjual
                                         {{ $item->sold ?? '' }}
@@ -297,39 +298,42 @@
             <hr class="featurette-divider">
 
             <h2 class="featurette-heading fw-normal">Teratas Pada Kategori <span
-                    class="fw-semibold">{{ $top_on_category->name }}</span>
+                    class="fw-semibold">{{ $top_on_category->name ?? '' }}</span>
             </h2>
             <div class="card-container">
                 <div class="row row-cols-xxl-6">
-                    @foreach ($top_on_category->products()->visibility('public')->get() as $key => $item)
-                        @break($key == 6)
-                        <div class="col mb-3">
-                            <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
-                                <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
-                                    class="card-img-top p-2" alt="Product Thumbnail">
-                                <div class="card-body">
-                                    <h5 title="{{ $item->name }}">
-                                        <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
-                                            href="/{{ $item->shop->url }}/{{ $item->slug }}">
-                                            {{ Str::limit($item->name, 25, '...') }}
-                                        </a>
-                                    </h5>
-                                    <span
-                                        class="h5 fw-bold d-block">Rp{{ number_format($item->price, 0, ',', '.') ?? '' }}</span>
-                                    <small>
-                                        @if ($item->shop->location)
-                                            {{ json_decode($item->shop->location, 1)['regency'] }}
-                                        @endif
-                                    </small>
-                                    <p class="card-text">
-                                        <i class="bi bi-star-half"></i> {{ $item->rating ?? '5.0' }}
-                                        <i class="bi bi-dot"></i> Terjual
-                                        {{ $item->sold ?? '' }}
-                                    </p>
+                    @if ($top_on_category)
+                        @foreach ($top_on_category->products()->visibility('public')->get() as $key => $item)
+                            @break($key == 6)
+                            <div class="col mb-3">
+                                <div class="card-product card border-0 shadow-hover" style="min-height: 24rem;">
+                                    <img src="{{ asset('/storage/images/products/' . json_decode($item->image, true)[0]) }}"
+                                        class="card-img-top p-2" alt="Product Thumbnail">
+                                    <div class="card-body">
+                                        <h5 title="{{ $item->name }}">
+                                            <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
+                                                href="/{{ $item->shop->url }}/{{ $item->slug }}">
+                                                {{ Str::limit($item->name, 75, '...') }}
+                                            </a>
+                                        </h5>
+                                        <span
+                                            class="h5 fw-bold d-block">Rp{{ number_format($item->price, 0, ',', '.') ?? '' }}</span>
+                                        <small>
+                                            @if ($item->shop->location)
+                                                {{ json_decode($item->shop->location, 1)['regency'] }}
+                                            @endif
+                                        </small>
+                                        <p class="card-text">
+                                            <i class="bi bi-star-half"></i>
+                                            {{ number_format($item->ratings / 10, 1) ?? '0.0' }}
+                                            <i class="bi bi-dot"></i> Terjual
+                                            {{ $item->sold ?? '' }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    @endif
                     <small><a href="/products" class="text-decoration-none">Tampilkan Lebih Banyak</a></small>
                 </div>
             </div>
@@ -351,7 +355,7 @@
                                     <h5 title="{{ $item->name }}">
                                         <a class="stretched-link card-title fw-semibold text-decoration-none link-dark"
                                             href="/{{ $item->shop->url }}/{{ $item->slug }}">
-                                            {{ Str::limit($item->name, 25, '...') }}
+                                            {{ Str::limit($item->name, 75, '...') }}
                                         </a>
                                     </h5>
                                     <span
@@ -362,7 +366,9 @@
                                         @endif
                                     </small>
                                     <p class="card-text">
-                                        <i class="bi bi-star-half"></i> 5.0 <i class="bi bi-dot"></i> Terjual
+                                        <i class="bi bi-star-half"></i>
+                                        {{ number_format($item->ratings / 10, 1) ?? '0.0' }} <i class="bi bi-dot"></i>
+                                        Terjual
                                         {{ $item->sold }}
                                     </p>
                                 </div>
@@ -502,7 +508,7 @@
                                         class="h5 fw-bold d-block">${formatter.format(valueOfElement.price)}</span>
                                     <small>${(JSON.parse(valueOfElement.shop.location))['regency']}</small>
                                     <p class="card-text">
-                                        <i class="bi bi-star-half"></i> 5.0 <i class="bi bi-dot"></i> Terjual
+                                        <i class="bi bi-star-half"></i> ${valueOfElement.ratings / 10} <i class="bi bi-dot"></i> Terjual
                                         ${valueOfElement.sold}
                                     </p>
                                 </div>

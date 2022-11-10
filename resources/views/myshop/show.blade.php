@@ -102,9 +102,17 @@
 
                                 <div class="desc border-bottom mt-3">
 
-                                    <p class="desc-p">
-                                        <?= strlen($product->desc) > 200 ? Str::limit(nl2br(e($product->desc)), 200, '... <a role="button" class="link-success fw-semibold text-decoration-none" onclick="descMore()">Read More</a>') : nl2br(e($product->desc)) ?>
-                                    </p>
+                                    <div>
+                                        <p class="desc-p">
+                                            @if (Str::length($product->desc) > 200)
+                                                {{ Str::limit($product->desc, 200, '...') }}
+                                                <a role="button" class="link-success fw-semibold text-decoration-none"
+                                                    onclick="descMore()">Read More</a>
+                                            @else
+                                                <?= nl2br(e($product->desc)) ?>
+                                            @endif
+                                        </p>
+                                    </div>
                                 </div>
                                 <div class="seller-info border-bottom my-1 py-2 px-2 d-flex">
                                     <div class="row g-0 justify-content-center">
@@ -572,22 +580,21 @@
     @include('utilities.footer')
     <script src="/js/openNewTab.js"></script>
     <script>
-        function descMore() {
-            $('p.desc-p').html(
-                '{{ $product->desc }} <a role="button" class="link-success fw-semibold text-decoration-none" onclick="descLess()">Read Less</a>'
-            );
-            $('html, body').animate({
-                scrollTop: $('#product-info').offset().top - 90
-            }, 500)
-        }
+        let isDescMore;
 
-        function descLess() {
-            $('p.desc-p').html(
-                '{{ Str::limit($product->desc, 200, '') }}... <a role="button" class="link-success fw-semibold text-decoration-none" onclick="descMore()">Read More</a>'
-            );
-            $('html, body').animate({
-                scrollTop: $('#product-info').offset().top - 90
-            }, 50)
+        function descMore() {
+            if (!isDescMore) {
+                $('p.desc-p').html(
+                    `<?= nl2br(e($product->desc)) ?> <a role="button" class="link-success fw-semibold text-decoration-none d-block" onclick="descMore()">Read Less</a>`
+                );
+                isDescMore = true;
+            } else {
+                $('p.desc-p').html(
+                    (`<?= e($product->desc) ?>`.substring(0, 200)) +
+                    '... <a role="button" class="link-success fw-semibold text-decoration-none" onclick="descMore()">Read Less</a>'
+                );
+                isDescMore = false;
+            }
         }
     </script>
     <script>

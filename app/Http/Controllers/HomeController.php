@@ -12,10 +12,11 @@ class HomeController extends Controller
 {
     public function index(Shop $shop, Product $product, ProductCategory $category)
     {
+        $top_on_category = ProductCategory::find(mt_rand(1, $category->count()));
         return view('home', [
             'top_shops' => $shop->all(),
             'newest_products' => $product->latest()->visibility('public')->get(),
-            'top_on_category' => $category->find(mt_rand(2, 3))->subcategory->first(),
+            'top_on_category' => $top_on_category ? $top_on_category->subcategory->first() : null,
             'best_seller' => $product->orderBy('sold', 'desc')->visibility('public')->get()
         ]);
     }

@@ -45,11 +45,7 @@ class DashboardCatalogController extends Controller
 
         ShopCatalog::create($valid);
 
-        return redirect('/shop')->with('msg', [
-            'body' => "Katalog $request->name Telah Dibuat",
-            'status' => 'success',
-            'title' => 'Success!'
-        ]);
+        return response('Success', 200);
     }
 
     /**

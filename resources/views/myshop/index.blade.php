@@ -163,11 +163,10 @@
                                         <small class="d-block fw-bold">Tautan</small>
                                         @if ($shop->link)
                                             @php
-                                                $links = json_decode($link, true);
-                                                dd($links);
+                                                $links = json_decode($shop->link, true);
                                             @endphp
                                             @foreach ($links as $link)
-                                                @if (filter_var($link, FILTER_VALIDATE_EMAIL))
+                                                @if (filter_var($link, FILTER_VALIDATE_URL))
                                                     <a href="{{ $link }}"
                                                         class="d-block link-primary">{{ $link }}</a>
                                                 @endif

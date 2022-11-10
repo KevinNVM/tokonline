@@ -27,163 +27,102 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-
-        // Order::create([
-        //     'number' =>  mt_rand(10000000, 100000000),
-        //     'user_id' => 2,
-        //     'products_json' => json_encode([
-        //         [
-        //             'id' => 1,
-        //             'name' => 'Lorem',
-        //             'shop' => 'Made Store',
-        //             'price' => 10000,
-        //             'quantity' => 2,
-        //             'url' => '/made-store/barang24480'
-        //         ]
-        //     ]),
-        //     'total_price' => 270000,
-        //     'payment_status' => 2
-        // ]);
-
-        // Order::create([
-        //     'number' =>  mt_rand(10000000, 100000000),
-        //     'user_id' => 2,
-        //     'products_json' => json_encode([[
-        //         'id' => 1,
-        //         'name' => 'Lorem',
-        //         'shop' => 'Made Store',
-        //         'price' => 10000,
-        //         'quantity' => 2,
-        //         'url' => '/made-store/barang24480'
-        //     ], [
-        //         'id' => 1,
-        //         'name' => 'Lorem',
-        //         'shop' => 'Made Store',
-        //         'price' => 10000,
-        //         'quantity' => 2,
-        //         'url' => '/made-store/barang24480'
-        //     ], [
-        //         'id' => 1,
-        //         'name' => 'Lorem',
-        //         'shop' => 'Made Store',
-        //         'price' => 10000,
-        //         'quantity' => 2,
-        //         'url' => '/made-store/barang24480'
-        //     ]]),
-        //     'total_price' => 270000,
-        //     'payment_status' => 2
-        // ]);
-
-        // Order::factory(10)->create();
-
-        \App\Models\User::factory()->create([
-            'name' => 'Made',
-            'username' => 'made',
+        User::create([
+            'name' => 'Kevin Darmawan',
+            'username' => 'kevind',
+            'email' => 'personal.kevindarmawan@gmail.com',
             'password' => bcrypt(''),
-            'email' => 'made@example.com',
-            'phone' => '0812345699'
+            'email_verified_at' => now()
         ]);
-
-        \App\Models\User::factory()->create([
-            'name' => 'Kevin',
-            'username' => 'kevin',
-            'password' => bcrypt(''),
-            'email' => 'kevin@example.com',
-            'phone' => '0812345699',
-            'isAdmin' => true
-        ]);
-
-        \App\Models\User::factory(10)->create();
 
         Shop::create([
             'user_id' => 1,
-            'name' => 'Made Store',
-            'location' => json_encode(['province' => 'DKI JAKARTA', 'regency' => "BOGOR"]),
-            'whatsapp' => '085904312300',
-            'url' => 'made-store'
-        ]);
-
-        Shop::create([
-            'user_id' => 2,
             'name' => 'Toko Kevin',
-            'location' => json_encode(['province' => 'DKI JAKARTA', 'regency' => 'Jakarta Timur']),
-            'whatsapp' => '085904312300',
             'url' => 'toko-kevin',
+            'location' => '{"province":"DKI JAKARTA","regency":"KOTA JAKARTA TIMUR"}',
+            'desc' => 'Toko Kevin Official
+            @mkevin_1
+
+            Creator Of This Websites',
+            'link' => '["https:\/\/instagram.com\/mkevin_1","https:\/\/github.com\/kevinnvm"]'
         ]);
 
         ShopCatalog::create([
             'shop_id' => 1,
-            'slug' => 'barang-MADE',
-            'name' => 'Barang MADE',
-            'desc' => 'Lorem Ipsum'
+            'name' => 'Produk Lainnya',
+            'slug' => 'produk-lainnya',
+            'desc' => 'Produk Lainnya Dari Toko Ini.'
         ]);
 
         ShopCatalog::create([
             'shop_id' => 1,
-            'slug' => 'barang-murah-MADE',
-            'name' => 'Barang Murah-MADE',
-            'desc' => 'Lorem Ipsum'
-        ]);
-
-        ShopCatalog::create([
-            'shop_id' => 2,
-            'slug' => 'barang-teknologi-KEVIN',
-            'name' => 'Barang Teknologi-KEVIN',
-            'desc' => 'Lorem Ipsum'
-        ]);
-
-        ShopCatalog::create([
-            'shop_id' => 2,
-            'slug' => 'barang-murah-KEVIn',
-            'name' => 'Barang Murah-KEVIn',
-            'desc' => 'Lorem Ipsum'
+            'name' => 'Keyboard Gaming',
+            'slug' => 'keyboard-gaming',
+            'desc' => 'Produk Gaming Keyboard'
         ]);
 
         ProductCategory::create([
-            'name' => 'Kebutuhan Sehari-hari',
-            'slug' => 'kebutuhan-sehari-hari'
-        ]);
-
-        ProductCategory::create([
-            'name' => 'Komputer',
-            'slug' => 'komputer'
-        ]);
-
-        ProductCategory::create([
-            'name' => 'Aksesoris Pria',
-            'slug' => 'aksesoris-pria'
+            'name' => 'Semua Produk',
+            'slug' => 'semua-produk',
+            'desc' => 'Kategori untuk semua produk atau produk yang belum memiliki kategori-nya sendiri.',
         ]);
 
         ProductSubCategory::create([
-            'category_id' => 2,
-            'name' => 'Laptop Gaming',
-            'slug' => 'laptop-gaming'
+            'category_id' => 1,
+            'name' => 'Bagan 1',
+            'slug' => 'bagan-1'
         ]);
 
-        ProductSubCategory::create([
-            'category_id' => 2,
-            'name' => 'Laptop Budget',
-            'slug' => 'laptop-budget'
-        ]);
+        Product::create([
+            'image' => '["25frZu7vnvzWEVcD0HICyzmaxDG8elqHeOitWfUL.jpg","hEHAC4hpd26zA2XMjCHtLymQFtoj6PUAMm5zz3Z9.jpg","3ufntBUhAHQ6WQI2XyPNDj4r7DBRJC5MC4ICphGG.jpg","PlrdsSrsQ5aucb56mcgR2x5iyvWu1z49D7OtwPDG.jpg"]',
+            'shop_id' => 1,
+            'catalog_id' => 2,
+            'sub_category_id' => 1,
+            'name' => 'GLORIOUS GMMK PRO 75% Barebone BLACK - Gaming Keyboard',
+            'slug' => 'glorious-gmmk-pro-75-barebone-black-gaming-keyboard',
+            'weight' => 3,
+            'condition' => 1,
+            'stock' => 200,
+            'price' => 2845000,
+            'sold' => mt_rand(1, 200),
+            'visibility' => 1,
+            'desc' => 'Noted penting :
+            - Jika barang ada masalah / eror, langsung chat admin
+            - Garansi tukar baru apabila barang diterima terdapat cacat fisik WAJIB VIDEO UNBOXING NO CUT / PAUSE
+            - jumlah stock yang ready, sesuai dengan qty di tokopedia
+            - barang yang kita jual BNIB + SEGEL (brand new in box)
 
-        ProductSubCategory::create([
-            'category_id' => 2,
-            'name' => 'Laptop Sekolah',
-            'slug' => 'laptop-sekolah'
-        ]);
+            Batch terbaru , Sudah Bisa menggunakan Third Party Stabs / Durock dengan minim penyesuaian yg mudah hanya di bagian Screw.
 
-        ProductSubCategory::create([
-            'category_id' => 3,
-            'name' => 'Jam Tangan',
-            'slug' => 'jam-tangan'
-        ]);
+            BAREBONE
+            TECH SPECS
+            ➡️ LAYOUT : US ANSI (83 keys, including clickable Rotary Encoder)
+            ➡️ PLATE MOUNTING TYPE : Gasket mounted design
+            ➡️ RGB : 16.8 million color RGB LED backlight (south-facing) and LED sidelights
+            ➡️ KEYCAP PULLER TOOL : Included
+            ➡️ SWITCH PULLER TOOL : Included
+            ➡️ SWITCHES : Not Included
+            ➡️ CASE MATERIAL : Aluminum
+            ➡️ STABILIZERS : Pre-lubed Glorious GOAT stabilizers (screw-in)
+            ➡️ CORD LENGTH : 6 feet
+            ➡️ N-KEY ROLLOVER : Full NKRO
+            ➡️ REMOVABLE KEYCAPS : Yes
+            ➡️ REMOVABLE USB CORD :Yes
+            ➡️ MODULAR (HOT SWAP) SWITCHES : Yes
+            ➡️ INTERFACE : USB-C 2.0
+            ➡️ TYPING ANGLE : 6 Degrees
+            ➡️ DIMENSIONS : 332mm x 32mm x 135mm
 
-        ProductSubCategory::create([
-            'category_id' => 3,
-            'name' => 'Baju Pria',
-            'slug' => 'baju-pria'
+            GLORIOUS CABLE
+            TECH SPECS
+            ➡️ GOLD PLATED USB 2.0 CABLE
+            ➡️ USB-C (CONNECTS TO KEYBOARD) TO USB-A (CONNECTS TO PC)
+            ➡️ 5-PIN DETACHABLE AVIATOR CONNECTOR
+            ➡️ PLASTIC MOLDED USB HOUSING
+            ➡️ CABLE ORIENTATION:DEVICE SIDE + 90-DEGREES
+            ➡️ TOTAL CABLE LENGTH (INCLUDING COILS): 4.5FT
+            ➡️ STRAIGHT CABLE LENGTH: 4FT
+            ➡️ COIL LENGTH: 6 INCH'
         ]);
-
-        Product::factory(75)->create();
     }
 }

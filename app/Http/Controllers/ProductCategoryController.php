@@ -44,7 +44,7 @@ class ProductCategoryController extends Controller
         $valid = $request->validate([
             'name' => 'required|string',
             'category_id' => 'required|integer',
-            'slug' => 'required|string|unique:product_categories',
+            'slug' => 'required|string|unique:product_sub_categories',
             'desc' => 'max:2000'
         ]);
 
